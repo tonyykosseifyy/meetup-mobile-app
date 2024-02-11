@@ -15,12 +15,13 @@ export default function PreLogin() {
         />
       </View>
 
-      <View className="flex flex-col pl-5">
-        <View>
-          <Text className="">
-
-          </Text>
-        </View>
+      <View className="pl-5">
+        <Text className="font-sans font-bold text-xl">
+          Ahla w Sahla bi Le2ine!
+        </Text>
+        <Text className='font-sans font-regular w-72 mt-3 leading-5'>
+          Yalla, join us at Le2ine! Find friends who love what you love.
+        </Text>
       </View>
     </View>
   );
