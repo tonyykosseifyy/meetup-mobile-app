@@ -38,8 +38,8 @@ export default function RootLayout() {
 function RootLayoutNav() {
 
   return (
-    <SafeAreaView className="flex-1">
-      <Stack screenOptions={{ headerShown: false }} />
+    <SafeAreaView className="flex-1 p-2">
+        <Stack screenOptions={{ headerShown: false }} />
     </SafeAreaView>
   );
 }
