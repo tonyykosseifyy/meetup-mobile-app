@@ -14,6 +14,14 @@ export default function PreLogin() {
           resizeMode="contain"
         />
       </View>
+
+      <View className="flex flex-col pl-5">
+        <View>
+          <Text className="">
+
+          </Text>
+        </View>
+      </View>
     </View>
   );
 }

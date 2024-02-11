@@ -26,6 +26,7 @@ module.exports = {
         sans: [
           'Inter_400Regular', 
           'Inter_500Medium', 
+          'Inter_600SemiBold',
           'Inter_700Bold',
           'system-ui', 
           '-apple-system', 
