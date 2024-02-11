@@ -2,8 +2,9 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { useFonts, Inter_400Regular, Inter_500Medium, Inter_700Bold } from '@expo-google-fonts/inter';
+import { View } from "react-native";
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -37,8 +38,8 @@ export default function RootLayout() {
 function RootLayoutNav() {
 
   return (
-    <SafeAreaProvider>
-      <Stack />
-    </SafeAreaProvider>
+    <SafeAreaView className="flex-1">
+      <Stack screenOptions={{ headerShown: false }} />
+    </SafeAreaView>
   );
 }
