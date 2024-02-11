@@ -4,7 +4,7 @@ import { FullLogo, LogoNavbar } from '@/components/logo';
 
 
 export default function NotFoundScreen() {
-  console.log("i am here");
+  
   return (
       <View className="bg-white flex-1">
         <LogoNavbar />
