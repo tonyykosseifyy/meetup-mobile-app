@@ -2,7 +2,7 @@ import { Image, View } from "react-native";
 
 const FullLogo = () => {
   return (
-    <View className="w-32 h-8 ">
+    <View className="w-32 h-8">
       <Image
         className="w-full h-full object-contain"
         source={require("@/assets/images/full_logo3.png")}
@@ -18,7 +18,7 @@ const Logo = () => {
 
 const LogoNavbar = () => {
   return (
-    <View className="flex flex-column items-center justify-center w-full">
+    <View className="flex flex-row items-center justify-center w-full mt-5">
       <FullLogo />
     </View>
   );
