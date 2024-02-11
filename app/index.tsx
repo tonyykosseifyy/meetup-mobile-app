@@ -1,4 +1,3 @@
-import { Link } from "expo-router";
 import { Text, View, Image } from "react-native";
 import { LogoNavbar } from "@/components/logo";
 
