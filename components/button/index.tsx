@@ -1,4 +1,5 @@
-import { TouchableOpacity, Text, View, StyleSheet } from "react-native";
+import { TouchableOpacity, View, StyleSheet } from "react-native";
+import Text from "@/components/text";
 
 const Button = (props: any) => {
   const { rounded, children, icon } = props;

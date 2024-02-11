@@ -1,7 +1,8 @@
-import { Text, View, Image } from "react-native";
+import { View, Image } from "react-native";
 import { LogoNavbar } from "@/components/logo";
 import { Button } from "@/components/button";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Text from "@/components/text";
 
 
 export default function PreLogin() {
@@ -27,7 +28,7 @@ export default function PreLogin() {
           </Text>
         </View>
 
-        <View className="mt-8 flex flex-row">
+        <View className="mt-8 flex flex-row -ml-2">
           <Button
             rounded
             icon={
@@ -40,6 +41,12 @@ export default function PreLogin() {
           >
             Login with Email
           </Button>
+        </View>
+
+        <View className="mt-12 flex flex-col">
+            <Text className="font-sans font-regular text-xs">
+              Don’t have an account? 
+            </Text>
         </View>
       </View>
     </View>
