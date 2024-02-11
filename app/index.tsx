@@ -2,7 +2,7 @@ import { View, Image } from "react-native";
 import { LogoNavbar } from "@/components/logo";
 import { Button } from "@/components/button";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import Text from "@/components/text";
+import { Text, Link } from "@/components";
 
 
 export default function PreLogin() {
