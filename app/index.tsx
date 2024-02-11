@@ -1,5 +1,6 @@
 import { Text, View, Image } from "react-native";
 import { LogoNavbar } from "@/components/logo";
+import { Button } from "@/components/button";
 
 export default function PreLogin() {
   return (
@@ -22,6 +23,7 @@ export default function PreLogin() {
           Yalla, join us at Le2ine! Find friends who love what you love.
         </Text>
       </View>
+      <Button />
     </View>
   );
 }
