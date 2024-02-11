@@ -7,7 +7,6 @@ import { useFonts, Inter_400Regular, Inter_500Medium, Inter_700Bold } from '@exp
 
 export { ErrorBoundary } from 'expo-router';
 
-
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -18,14 +17,13 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error;
   }, [error]);
 
   useEffect(() => {
     if (loaded) {
-      // SplashScreen.hideAsync();
+      SplashScreen.hideAsync();
     }
   }, [loaded]);
 
