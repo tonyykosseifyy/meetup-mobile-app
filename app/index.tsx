@@ -1,6 +1,8 @@
 import { Text, View, Image } from "react-native";
 import { LogoNavbar } from "@/components/logo";
 import { Button } from "@/components/button";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 
 export default function PreLogin() {
   return (
@@ -15,15 +17,31 @@ export default function PreLogin() {
         />
       </View>
 
-      <View className="pl-5">
-        <Text className="font-sans font-bold text-xl">
-          Ahla w Sahla bi Le2ine!
-        </Text>
-        <Text className='font-sans font-regular w-72 mt-3 leading-5'>
-          Yalla, join us at Le2ine! Find friends who love what you love.
-        </Text>
+      <View className="pl-5 w-10/12 flex flex-col items-start justify-start">
+        <View>
+          <Text className="font-sans font-bold text-xl">
+            Ahla w Sahla bi Le2ine!
+          </Text>
+          <Text className="font-sans font-regular w-72 mt-3 leading-5">
+            Yalla, join us at Le2ine! Find friends who love what you love.
+          </Text>
+        </View>
+
+        <View className="mt-8 flex flex-row">
+          <Button
+            rounded
+            icon={
+              <MaterialCommunityIcons
+                name="email-outline"
+                size={21}
+                color="#d14d72"
+              />
+            }
+          >
+            Login with Email
+          </Button>
+        </View>
       </View>
-      <Button />
     </View>
   );
 }

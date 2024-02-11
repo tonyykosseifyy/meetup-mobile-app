@@ -8,6 +8,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        beige: {
+          500: "#FEF2F4",
+        },
         cabaret: {
           50: '#fbf4f7',
           100: '#f9eaf0',

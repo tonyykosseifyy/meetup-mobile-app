@@ -1,20 +1,43 @@
-import { Pressable, Text, View } from "react-native";
-
+import { TouchableOpacity, Text, View, StyleSheet } from "react-native";
 
 const Button = (props: any) => {
+  const { rounded, children, icon } = props;
+  
   return (
-    <Pressable
-      className={`bg-cabaret-500 flex flex-row items-center justify-center p-3 shadow-lg ${props.rounded ? 'rounded-lg' : 'rounded-xl'}`}
+    <TouchableOpacity
+      className={`bg-cabaret-500 w-full flex flex-row justify-center p-4 relative shadow-lg ${
+        rounded ? "rounded-full" : "rounded-lg"
+      }`}
       {...props}
+      style={styles.button}
     >
-    <View className={`border-radius: 50; backgroundColor: beige; h-4 w-4 flex flex-row items-center justify-center ${props.rounded ? 'flex' : 'none'}`}>
-        {/* <Icon /> */}
-    </View>
-    <Text className="text-white font-sans font-bold">Continue</Text>
-    </Pressable>
+      <View className="absolute inset-y-0 left-0 flex flex-col items-center justify-center ">
+        <View
+          className={`bg-white ml-2 h-9 w-9 flex flex-row items-center justify-center rounded-full ${
+            rounded ? "flex" : "hidden"
+          }`}
+        >
+            {icon}
+        </View>
+      </View>
+      <Text className="text-white font-sans font-bold text-center">
+        {children}
+      </Text>
+    </TouchableOpacity>
   );
 };
 
-
-
 export { Button };
+
+const styles = StyleSheet.create({
+  button: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 2
+  },
+});
