@@ -2,11 +2,12 @@ import { Image, View } from "react-native";
 
 const FullLogo = () => {
   return (
-    <View className="w-32 h-8">
+    <View>
       <Image
-        className="w-full h-full object-contain"
+        className="w-30 h-8"
         source={require("@/assets/images/full_logo3.png")}
         alt="Logo Full"
+        resizeMode="contain"
       />
     </View>
   );

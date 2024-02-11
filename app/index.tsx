@@ -1,18 +1,15 @@
-import { Link, Stack } from 'expo-router';
-import { Text, View } from 'react-native';
-import { FullLogo, LogoNavbar } from '@/components/logo';
+import { Link } from 'expo-router';
+import { Text, View, Image } from 'react-native';
+import { LogoNavbar } from '@/components/logo';
 
 
-export default function NotFoundScreen() {
-  
+export default function PreLogin() {
   return (
       <View className="bg-white flex-1">
         <LogoNavbar />
-        <Text >Home</Text>
-        <Text className="text-white">asdasdasdasd</Text>
-        <Link href="/">
-          <Text></Text>
-        </Link>
+        <View className='w-full'>
+          <Image source={require("@/assets/images/pre_login.png")} alt="Pre Login" className="w-full h-96" />
+        </View>
       </View>
   );
 };
