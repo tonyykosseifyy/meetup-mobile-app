@@ -3,9 +3,9 @@ import { Link } from "expo-router";
 
 const CustomLink = (props: any) => {
   return (
-    <Link href={props.href} className={` ${props.className}`} asChild>
+    <Link href={props.href} asChild>
       <Pressable>
-        <Text>{props.children}</Text>
+        <Text className="font-sans text-xs text-cabaret-500">{props.children}</Text>
       </Pressable>
     </Link>
   );

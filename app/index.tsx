@@ -49,10 +49,14 @@ export default function PreLogin() {
             <Text className="font-sans font-regular text-xs">
               Don’t have an account? 
             </Text>
-            <View className="flex flex-row items-baseline justify-between w-full bg-red-500">
-              {/* <Link>
-
-              </Link> */}
+            <View className="mt-5 pr-10 flex flex-row items-baseline justify-between w-full">
+              <Link href="/">
+              Sign up as myself
+              </Link>
+              <Text>Or</Text>
+              <Link href="/">
+              Sign up Mom
+              </Link>
             </View>
         </View>
     </View>
