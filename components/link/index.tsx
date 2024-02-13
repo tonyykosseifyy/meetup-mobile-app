@@ -1,12 +1,12 @@
-import { Pressable, Text } from "react-native";
+import { TouchableOpacity, Text } from "react-native";
 import { Link } from "expo-router";
 
 const CustomLink = (props: any) => {
   return (
     <Link href={props.href} asChild>
-      <Pressable>
-        <Text className="font-sans text-xs text-cabaret-500">{props.children}</Text>
-      </Pressable>
+      <TouchableOpacity>
+        <Text className="font-sans text-xs text-cabaret-500 underline underline-offset-8">{props.children}</Text>
+      </TouchableOpacity>
     </Link>
   );
 };

@@ -51,11 +51,11 @@ export default function PreLogin() {
             </Text>
             <View className="mt-5 pr-10 flex flex-row items-baseline justify-between w-full">
               <Link href="/">
-              Sign up as myself
+                Sign up as myself
               </Link>
-              <Text>Or</Text>
+              <Text className="font-sans text-gray-500 text-xs">Or</Text>
               <Link href="/">
-              Sign up Mom
+                Sign up Mom
               </Link>
             </View>
         </View>
