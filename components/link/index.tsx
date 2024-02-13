@@ -4,8 +4,8 @@ import { Link } from "expo-router";
 const CustomLink = (props: any) => {
   return (
     <Link href={props.href} asChild>
-      <TouchableOpacity>
-        <Text className="font-sans text-xs text-cabaret-500 underline underline-offset-8">{props.children}</Text>
+      <TouchableOpacity className="border-b-[0.5px] border-red-500">
+        <Text className="font-sans text-xs text-cabaret-500">{props.children}</Text>
       </TouchableOpacity>
     </Link>
   );
