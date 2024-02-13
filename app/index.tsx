@@ -1,4 +1,4 @@
-import { View, Image } from "react-native";
+import { View, Image, ScrollView } from "react-native";
 import { LogoNavbar } from "@/components/logo";
 import { Button } from "@/components/button";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -7,7 +7,7 @@ import { Text, Link } from "@/components";
 
 export default function PreLogin() {
   return (
-    <View className="bg-white flex-1">
+    <ScrollView className="bg-white flex-1">
       <LogoNavbar />
       <View className="w-full h-96 mt-10">
         <Image
@@ -59,6 +59,6 @@ export default function PreLogin() {
               </Link>
             </View>
         </View>
-    </View>
+    </ScrollView>
   );
 }
