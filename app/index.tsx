@@ -28,7 +28,7 @@ export default function PreLogin() {
           </Text>
         </View>
 
-        <View className="mt-8 flex flex-row -ml-2">
+        <View className="mt-11 flex flex-row -ml-2">
           <Button
             rounded
             icon={
@@ -43,12 +43,18 @@ export default function PreLogin() {
           </Button>
         </View>
 
-        <View className="mt-12 flex flex-col">
+        
+      </View>
+      <View className="ml-5  mt-11 flex flex-col w-full">
             <Text className="font-sans font-regular text-xs">
               Don’t have an account? 
             </Text>
+            <View className="flex flex-row items-baseline justify-between w-full bg-red-500">
+              {/* <Link>
+
+              </Link> */}
+            </View>
         </View>
-      </View>
     </View>
   );
 }
