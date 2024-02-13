@@ -1,5 +1,6 @@
 import { TouchableOpacity, View, StyleSheet } from "react-native";
 import Text from "@/components/text";
+import { AntDesign } from '@expo/vector-icons';
 
 const Button = (props: any) => {
   const { rounded, children, icon } = props;
@@ -24,6 +25,14 @@ const Button = (props: any) => {
       <Text className="text-white font-sans font-bold text-center">
         {children}
       </Text>
+    </TouchableOpacity>
+  );
+};
+
+const BackButton = () => {
+  return (
+    <TouchableOpacity>
+      <AntDesign name="arrowleft" size={24} color="black" />
     </TouchableOpacity>
   );
 };
