@@ -19,7 +19,7 @@ const Logo = () => {
 
 const LogoNavbar = () => {
   return (
-    <View className="flex flex-row items-center justify-center w-full mt-5">
+    <View className="flex flex-row items-center justify-center w-full">
       <FullLogo />
     </View>
   );
