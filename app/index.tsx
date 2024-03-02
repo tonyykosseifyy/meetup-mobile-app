@@ -2,7 +2,8 @@ import { View, Image, ScrollView } from "react-native";
 import { LogoNavbar } from "@/components/logo";
 import { Button } from "@/components/button";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Text, Link } from "@/components";
+import { Text } from "@/components";
+import { Link } from "expo-router";
 
 export default function PreLogin() {
   return (
@@ -32,18 +33,20 @@ export default function PreLogin() {
           </View>
 
           <View className="mt-11 flex flex-row -ml-2">
-            <Button
-              rounded
-              icon={
-                <MaterialCommunityIcons
-                  name="email-outline"
-                  size={21}
-                  color="#d14d72"
-                />
-              }
-            >
-              Login with Email
-            </Button>
+            <Link href="/login/" asChild>
+              <Button
+                rounded
+                icon={
+                  <MaterialCommunityIcons
+                    name="email-outline"
+                    size={21}
+                    color="#d14d72"
+                  />
+                }
+              >
+                Login with Email
+              </Button>
+            </Link>
           </View>
         </View>
         <View className="ml-5  mt-11 flex flex-col w-full">
@@ -60,4 +63,3 @@ export default function PreLogin() {
     </View>
   );
 }
-

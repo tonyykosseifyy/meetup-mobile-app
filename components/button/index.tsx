@@ -1,12 +1,17 @@
+import React from "react";
 import { TouchableOpacity, View, StyleSheet } from "react-native";
 import Text from "@/components/text";
 import { AntDesign } from '@expo/vector-icons';
+import { ButtonProps } from "./interface.button";
 
-const Button = (props: any) => {
+
+
+const Button = React.forwardRef<TouchableOpacity, ButtonProps>((props, ref) => {
   const { rounded, children, icon } = props;
   
   return (
     <TouchableOpacity
+      ref={ref}
       className={`bg-cabaret-500 w-full flex flex-row justify-center p-4 relative shadow-lg ${
         rounded ? "rounded-full" : "rounded-lg"
       }`}
@@ -27,7 +32,7 @@ const Button = (props: any) => {
       </Text>
     </TouchableOpacity>
   );
-};
+});
 
 const BackButton = () => {
   return (
