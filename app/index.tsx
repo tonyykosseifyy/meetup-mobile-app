@@ -3,7 +3,6 @@ import { LogoNavbar } from "@/components/logo";
 import { Button } from "@/components/button";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text, Link } from "@/components";
-import { StyleSheet } from "react-native";
 
 export default function PreLogin() {
   return (
@@ -62,17 +61,3 @@ export default function PreLogin() {
   );
 }
 
-
-
-const styles = StyleSheet.create({
-  header: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 1.41,
-    elevation: 2
-  },
-});
