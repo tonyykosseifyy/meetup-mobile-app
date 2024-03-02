@@ -9,7 +9,7 @@ import { Link as ExpoLink } from "expo-router";
 export default function PreLogin() {
   return (
     <View className="flex-1 bg-white">
-      <View className="fixed top-0 right-0 left-0 pt-4 pb-4">
+      <View className="pt-4 pb-4">
         <LogoNavbar />
       </View>
 

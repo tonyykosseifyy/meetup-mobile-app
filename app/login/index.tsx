@@ -12,7 +12,7 @@ export default function Login() {
 
       <FontAwesome5 name="arrow-left" size={24} color="black" />
 
-      
+
       
     </View>
   );
