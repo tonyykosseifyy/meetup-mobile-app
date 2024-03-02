@@ -4,7 +4,7 @@ const FullLogo = () => {
   return (
     <View>
       <Image
-        className="w-30 h-8"
+        className="h-8"
         source={require("@/assets/images/full_logo3.png")}
         alt="Logo Full"
         resizeMode="contain"
