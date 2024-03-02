@@ -2,8 +2,9 @@ import { View, Image, ScrollView } from "react-native";
 import { LogoNavbar } from "@/components/logo";
 import { Button } from "@/components/button";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Text } from "@/components";
-import { Link } from "expo-router";
+import { Text, Link } from "@/components";
+import { Link as ExpoLink } from "expo-router";
+
 
 export default function PreLogin() {
   return (
@@ -33,7 +34,7 @@ export default function PreLogin() {
           </View>
 
           <View className="mt-11 flex flex-row -ml-2">
-            <Link href="/login/" asChild>
+            <ExpoLink href="/login/" asChild>
               <Button
                 rounded
                 icon={
@@ -46,7 +47,7 @@ export default function PreLogin() {
               >
                 Login with Email
               </Button>
-            </Link>
+            </ExpoLink>
           </View>
         </View>
         <View className="ml-5  mt-11 flex flex-col w-full">
