@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { View, TouchableOpacity, Text, TextInput } from "react-native";
 import Header from "@/components/header";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, AntDesign, Feather } from "@expo/vector-icons";
 
 export default function Login(): React.JSX.Element {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  
+  const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+
   return (
     <View className="flex-1 bg-white flex">
       <Header leftButton />
@@ -23,7 +24,7 @@ export default function Login(): React.JSX.Element {
         </View>
 
         <View className="mt-14 mx-6">
-          <View className="p-2 pl-5 pr-5 bg-white h-12 rounded-full flex flex-row items-center justify-between">
+          <View className="p-2 pl-5 pr-5 bg-white h-14 rounded-full flex flex-row items-center justify-between">
             <View>
               <Ionicons name="person-outline" size={19} color="black" style={{ opacity: 0.5 }} />
             </View>
@@ -37,18 +38,24 @@ export default function Login(): React.JSX.Element {
             />
           </View>
 
-          <View className="p-2 pl-5 pr-5 mt-6 bg-white h-12 rounded-full flex flex-row items-center justify-between">
+          <View className="p-2 pl-5 pr-5 mt-6 bg-white h-14 rounded-full flex flex-row items-center justify-between">
             <View>
-              <Ionicons name="person-outline" size={19} color="black" style={{ opacity: 0.5 }} />
+              <AntDesign name="lock" size={19} color="black" style={{ opacity: 0.5 }} />
             </View>
             <TextInput
-              onChangeText={setEmail}
-              value={email}
-              placeholder="Your Email"
-              keyboardType="email-address"
+              secureTextEntry={!passwordVisible}
+              placeholder="Your Password"
               className="flex-1 h-6 ml-3 font-normal"
               placeholderTextColor={"#666666"}
             />
+            <TouchableOpacity onPress={() => setPasswordVisible(!passwordVisible)}>
+              <Feather
+                name={passwordVisible ? "eye-off" : "eye"}
+                size={19}
+                color="black"
+                style={{ opacity: 0.5 }}
+              />
+            </TouchableOpacity>
           </View>
         </View>
       </View>
