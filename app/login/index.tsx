@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { View, TouchableOpacity, Text, TextInput } from "react-native";
 import Header from "@/components/header";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function Login(): React.JSX.Element {
   const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  
   return (
     <View className="flex-1 bg-white flex">
       <Header leftButton />
@@ -19,14 +22,32 @@ export default function Login(): React.JSX.Element {
           <Text className="text-white text-center mt-3">Please login to access your account</Text>
         </View>
 
-        <View className="mt-14 mx-7">
-          <View className="p-2 bg-white h-10 rounded-full flex flex-row items-start justify-between">
+        <View className="mt-14 mx-6">
+          <View className="p-2 pl-5 pr-5 bg-white h-12 rounded-full flex flex-row items-center justify-between">
+            <View>
+              <Ionicons name="person-outline" size={19} color="black" style={{ opacity: 0.5 }} />
+            </View>
             <TextInput
               onChangeText={setEmail}
               value={email}
-              placeholder="Your email"
+              placeholder="Your Email"
               keyboardType="email-address"
-              className="flex-1 h-6"
+              className="flex-1 h-6 ml-3 font-normal"
+              placeholderTextColor={"#666666"}
+            />
+          </View>
+
+          <View className="p-2 pl-5 pr-5 mt-6 bg-white h-12 rounded-full flex flex-row items-center justify-between">
+            <View>
+              <Ionicons name="person-outline" size={19} color="black" style={{ opacity: 0.5 }} />
+            </View>
+            <TextInput
+              onChangeText={setEmail}
+              value={email}
+              placeholder="Your Email"
+              keyboardType="email-address"
+              className="flex-1 h-6 ml-3 font-normal"
+              placeholderTextColor={"#666666"}
             />
           </View>
         </View>
