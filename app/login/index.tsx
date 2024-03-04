@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, TouchableOpacity, Text, TextInput } from "react-native";
+import { View, TouchableOpacity, Text, TextInput, StyleSheet } from "react-native";
 import Header from "@/components/header";
 import { Ionicons, AntDesign, Feather } from "@expo/vector-icons";
 
@@ -23,8 +23,8 @@ export default function Login(): React.JSX.Element {
           <Text className="text-white text-center mt-3">Please login to access your account</Text>
         </View>
 
-        <View className="mt-14 mx-6">
-          <View className="p-2 pl-5 pr-5 bg-white h-14 rounded-full flex flex-row items-center justify-between">
+        <View className="mt-14 mx-4">
+          <View style={styles.shadow} className="p-2 pl-5 pr-5 bg-white h-14 rounded-full flex flex-row items-center justify-between">
             <View>
               <Ionicons name="person-outline" size={19} color="black" style={{ opacity: 0.5 }} />
             </View>
@@ -38,7 +38,7 @@ export default function Login(): React.JSX.Element {
             />
           </View>
 
-          <View className="p-2 pl-5 pr-5 mt-6 bg-white h-14 rounded-full flex flex-row items-center justify-between">
+          <View style={styles.shadow} className="p-2 pl-5 pr-5 mt-6 bg-white h-14 rounded-full flex flex-row items-center justify-between">
             <View>
               <AntDesign name="lock" size={19} color="black" style={{ opacity: 0.5 }} />
             </View>
@@ -65,7 +65,10 @@ export default function Login(): React.JSX.Element {
           </View>
 
           <View className="mt-28">
-            <TouchableOpacity className="p-2 bg-white h-14 rounded-full flex flex-row items-center justify-center">
+            <TouchableOpacity
+              style={styles.shadow}
+              className="p-2 bg-white h-14 rounded-full flex flex-row items-center justify-center"
+            >
               <Text className="text-cabaret-500 font-bold text-base">Continue</Text>
             </TouchableOpacity>
           </View>
@@ -74,3 +77,17 @@ export default function Login(): React.JSX.Element {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  shadow: {
+    shadowColor: "#656566",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    // Android Shadow
+    elevation: 4,
+  },
+});
