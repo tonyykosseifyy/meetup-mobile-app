@@ -57,6 +57,12 @@ export default function Login(): React.JSX.Element {
               />
             </TouchableOpacity>
           </View>
+
+          <View className="flex flex-row w-full mt-3 justify-end">
+            <TouchableOpacity>
+              <Text className="text-white font-bold text-xs">Forgot Password?</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </View>
