@@ -63,6 +63,12 @@ export default function Login(): React.JSX.Element {
               <Text className="text-white font-bold text-xs">Forgot Password?</Text>
             </TouchableOpacity>
           </View>
+
+          <View className="mt-28">
+            <TouchableOpacity className="p-2 bg-white h-14 rounded-full flex flex-row items-center justify-center">
+              <Text className="text-cabaret-500 font-bold text-base">Continue</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </View>
