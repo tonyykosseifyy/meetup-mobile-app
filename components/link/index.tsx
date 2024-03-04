@@ -1,11 +1,13 @@
 import { TouchableOpacity, Text } from "react-native";
 import { Link } from "expo-router";
+import { LinkProps } from "./interface.link";
 
-const CustomLink = (props: any) => {
+
+const CustomLink = ({ href, className, children }: LinkProps) => {
   return (
-    <Link href={props.href} asChild>
-      <TouchableOpacity className="border-b-[0.5px] border-red-500">
-        <Text className="font-sans text-xs text-cabaret-500">{props.children}</Text>
+    <Link href={href as any} asChild>
+      <TouchableOpacity className={`border-b-[0.5px] border-red-500 ${className && className}`}>
+        <Text className="font-sans text-xs text-cabaret-500">{children}</Text>
       </TouchableOpacity>
     </Link>
   );
