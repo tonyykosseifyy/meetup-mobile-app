@@ -1,5 +1,5 @@
 export interface LinkProps {
   href: string;
-  className?: string;
+  light?: boolean;
   children: string;
 }
