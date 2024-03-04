@@ -1,4 +1,4 @@
 export interface HeaderProps {
-    leftButton?: boolean;
-    rightButton?: boolean;
+  leftButton?: boolean;
+  rightButton?: boolean;
 }

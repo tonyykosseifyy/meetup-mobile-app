@@ -1,10 +1,7 @@
 import { Text } from "react-native";
 
-
 const CustomText = (props: any) => {
-    return (
-        <Text className="font-sans font-regular" {...props}/>
-    );
-}
+  return <Text className="font-sans font-regular" {...props} />;
+};
 
-export default CustomText ;
+export default CustomText;

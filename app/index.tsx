@@ -23,9 +23,7 @@ export default function PreLogin() {
 
       <View className="pl-5 w-10/12 flex flex-col items-start justify-start">
         <View>
-          <Text className="font-sans font-bold text-xl">
-            Ahla w Sahla bi Le2ine!
-          </Text>
+          <Text className="font-sans font-bold text-xl">Ahla w Sahla bi Le2ine!</Text>
           <Text className="font-sans font-regular w-72 mt-3 leading-5">
             Yalla, join us at Le2ine! Find friends who love what you love.
           </Text>
@@ -35,13 +33,7 @@ export default function PreLogin() {
           <ExpoLink href="/login/" asChild>
             <Button
               rounded
-              icon={
-                <MaterialCommunityIcons
-                  name="email-outline"
-                  size={21}
-                  color="#d14d72"
-                />
-              }
+              icon={<MaterialCommunityIcons name="email-outline" size={21} color="#d14d72" />}
             >
               Login with Email
             </Button>
@@ -49,9 +41,7 @@ export default function PreLogin() {
         </View>
       </View>
       <View className="ml-5  mt-11 flex flex-col w-full">
-        <Text className="font-sans font-regular text-xs">
-          Don’t have an account?
-        </Text>
+        <Text className="font-sans font-regular text-xs">Don’t have an account?</Text>
         <View className="mt-5 pr-10 flex flex-row items-baseline justify-between w-full">
           <Link href="/">Sign up as myself</Link>
           <Text className="font-sans text-gray-500 text-xs">Or</Text>

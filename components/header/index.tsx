@@ -10,6 +10,7 @@ const Header = (props: HeaderProps) => {
   const onPress = () => {
     console.log("backkk");
     router.back();
+    console.log("asd");
   };
 
   return (

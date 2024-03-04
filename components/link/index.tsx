@@ -11,5 +11,4 @@ const CustomLink = (props: any) => {
   );
 };
 
-
 export default CustomLink;

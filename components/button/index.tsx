@@ -1,14 +1,12 @@
 import React from "react";
 import { TouchableOpacity, View, StyleSheet } from "react-native";
 import Text from "@/components/text";
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign } from "@expo/vector-icons";
 import { ButtonProps } from "./interface.button";
-
-
 
 const Button = React.forwardRef<TouchableOpacity, ButtonProps>((props, ref) => {
   const { rounded, children, icon } = props;
-  
+
   return (
     <TouchableOpacity
       ref={ref}
@@ -24,12 +22,10 @@ const Button = React.forwardRef<TouchableOpacity, ButtonProps>((props, ref) => {
             rounded ? "flex" : "hidden"
           }`}
         >
-            {icon}
+          {icon}
         </View>
       </View>
-      <Text className="text-white font-sans font-bold text-center">
-        {children}
-      </Text>
+      <Text className="text-white font-sans font-bold text-center">{children}</Text>
     </TouchableOpacity>
   );
 });
@@ -53,6 +49,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.3,
     shadowRadius: 1.41,
-    elevation: 2
+    elevation: 2,
   },
 });
