@@ -109,7 +109,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.2,
     shadowRadius: 5,
-    // Android Shadow
     elevation: 4,
   },
   cabaret_shadow: {
@@ -120,7 +119,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.4,
     shadowRadius: 8,
-    // Android Shadow
     elevation: 4,
   }
 });
