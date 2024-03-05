@@ -86,12 +86,12 @@ export default function Login(): React.JSX.Element {
         </View>
 
         <View className="mt-12 flex items-center">
-          <Text className="font-sans font-regular text-sm text-white">Don’t have an account?</Text>
+          <Text className="font-sans font-regular text-base text-white">Don’t have an account?</Text>
           <View className="mt-5 flex px-6 flex-row items-baseline justify-between w-full">
             <Link href="/">
-              Sign up as myself
+              Sign up Myself
             </Link>
-            <Text className="font-sans text-white text-xs">Or</Text>
+            <Text className="font-sans text-white text-sm">Or</Text>
             <Link href="/">
               Sign up Mom
             </Link>
