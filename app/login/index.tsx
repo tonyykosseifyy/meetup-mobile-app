@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { View, TouchableOpacity, Text, TextInput, StyleSheet } from "react-native";
-import Header from "@/components/header";
 import { Ionicons, AntDesign, Feather } from "@expo/vector-icons";
-import { Link } from "@/components";
+import { Link, Header } from "@/components";
 
-export default function Login(): React.JSX.Element {
+export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
@@ -18,7 +17,10 @@ export default function Login(): React.JSX.Element {
         </Text>
       </View>
 
-      <View style={styles.cabaret_shadow} className="flex-1 mt-8 bg-cabaret-500 flex justify-between pb-10">
+      <View
+        style={styles.cabaret_shadow}
+        className="flex-1 mt-8 bg-cabaret-500 flex justify-between pb-10"
+      >
         <View className="flex-1">
           <View>
             <Text className="text-white text-center font-bold text-2xl mt-7">Welcome Back</Text>
@@ -86,15 +88,13 @@ export default function Login(): React.JSX.Element {
         </View>
 
         <View className="mt-12 flex items-center">
-          <Text className="font-sans font-regular text-base text-white">Don’t have an account?</Text>
+          <Text className="font-sans font-regular text-base text-white">
+            Don’t have an account?
+          </Text>
           <View className="mt-5 flex px-6 flex-row items-baseline justify-between w-full">
-            <Link href="/">
-              Sign up Myself
-            </Link>
+            <Link href="/signup/myself">Register Myself</Link>
             <Text className="font-sans text-white text-sm">Or</Text>
-            <Link href="/">
-              Sign up Mom
-            </Link>
+            <Link href="/signup/mom">Register Mom</Link>
           </View>
         </View>
       </View>
@@ -122,5 +122,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.4,
     shadowRadius: 8,
     elevation: 4,
-  }
+  },
 });

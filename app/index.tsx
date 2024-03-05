@@ -43,9 +43,13 @@ export default function PreLogin() {
       <View className="ml-5  mt-11 flex flex-col w-full">
         <Text className="font-sans font-regular text-base">Don’t have an account?</Text>
         <View className="mt-4 pr-10 flex h-10 flex-row items-baseline justify-between w-full">
-          <Link light href="/">Sign up Myself</Link>
+          <Link light href="/signup/myself">
+            Register Myself
+          </Link>
           <Text className="font-sans text-gray-500 text-xs">Or</Text>
-          <Link light href="/">Sign up Mom</Link>
+          <Link light href="/signup/mom">
+            Register Mom 
+          </Link>
         </View>
       </View>
     </View>
