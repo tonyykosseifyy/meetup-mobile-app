@@ -18,7 +18,7 @@ export default function Login(): React.JSX.Element {
         </Text>
       </View>
 
-      <View className="flex-1 ml-2 mr-2 mt-8 bg-cabaret-500 rounded-t-[40px] flex justify-between pb-1">
+      <View style={styles.cabaret_shadow} className="flex-1 mt-8 bg-cabaret-500 flex justify-between pb-10">
         <View className="flex-1">
           <View>
             <Text className="text-white text-center font-bold text-2xl mt-7">Welcome Back</Text>
@@ -112,4 +112,15 @@ const styles = StyleSheet.create({
     // Android Shadow
     elevation: 4,
   },
+  cabaret_shadow: {
+    shadowColor: "#D14D72",
+    shadowOffset: {
+      width: 0,
+      height: -4,
+    },
+    shadowOpacity: 0.4,
+    shadowRadius: 8,
+    // Android Shadow
+    elevation: 4,
+  }
 });

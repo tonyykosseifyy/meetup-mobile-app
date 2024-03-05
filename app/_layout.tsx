@@ -41,7 +41,7 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView edges={['top']} className="flex-1">
       <Stack screenOptions={{ headerShown: false }} />
     </SafeAreaView>
   );
