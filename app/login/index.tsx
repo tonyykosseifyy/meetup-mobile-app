@@ -55,6 +55,8 @@ export default function Login(): React.JSX.Element {
                 placeholder="Your Password"
                 className="flex-1 h-6 ml-3 font-normal"
                 placeholderTextColor={"#666666"}
+                onChangeText={setPassword}
+                value={password}
               />
               <TouchableOpacity onPress={() => setPasswordVisible(!passwordVisible)}>
                 <Feather
