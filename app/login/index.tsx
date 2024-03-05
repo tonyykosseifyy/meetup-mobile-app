@@ -93,7 +93,7 @@ export default function Login() {
           </Text>
           <View className="mt-5 flex px-6 flex-row items-baseline justify-between w-full">
             <Link href="/signup/myself">Register Myself</Link>
-            <Text className="font-sans text-white text-sm">Or</Text>
+            {/* <Text className="font-sans text-white text-sm">Or</Text> */}
             <Link href="/signup/mom">Register Mom</Link>
           </View>
         </View>
