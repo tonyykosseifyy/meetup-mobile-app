@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { ScrollView, Text, View, TextInput, StyleSheet } from "react-native";
+import { ScrollView, Text, View, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import { Header, Input } from "@/components";
 import { Ionicons, AntDesign, Feather, Fontisto } from "@expo/vector-icons";
 
 export default function SignupMyself() {
+  const [password, setPassword] = useState<string>("");
+  const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   return (
     <View className="flex-1 bg-white flex">
       <Header leftButton theme="light" />
@@ -43,6 +45,28 @@ export default function SignupMyself() {
               placeholderTextColor={"#666666"}
             />
           </View>
+          {/* password */}
+
+          <View className="mt-6 py-2 px-5 bg-white h-14 rounded-lg flex flex-row items-center justify-between border-[1px] border-solid border-cabaret-500">
+            <AntDesign name="lock" size={19} color="black" style={{ opacity: 0.5 }} />
+            <TextInput
+              secureTextEntry={!passwordVisible}
+              placeholder="Your Password"
+              className="flex-1 h-6 ml-3"
+              placeholderTextColor={"#666666"}
+              onChangeText={setPassword}
+              value={password}
+            />
+            <TouchableOpacity onPress={() => setPasswordVisible(!passwordVisible)}>
+              <Feather
+                name={passwordVisible ? "eye-off" : "eye"}
+                size={19}
+                color="black"
+                style={{ opacity: 0.5 }}
+              />
+            </TouchableOpacity>
+          </View>
+
           {/* <TextInput
             multiline 
             className="" style={{ textAlignVertical: "top", height: 100 }} placeholder="name" 
