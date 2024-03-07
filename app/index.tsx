@@ -29,7 +29,7 @@ export default function PreLogin() {
         </View>
 
         <View className="mt-10 flex flex-row -ml-2 ">
-          <ExpoLink href="/login/" asChild>
+          <ExpoLink href="/signup-otp/" asChild>
             <Button
               rounded
               icon={<MaterialCommunityIcons name="email-outline" size={21} color="#d14d72" />}
