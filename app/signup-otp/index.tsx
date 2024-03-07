@@ -11,6 +11,10 @@ export default function SignUpOtp() {
           <Text className="text-black font-medium text-2xl">Verification Code</Text>
           <Text className="text-slate-800 mt-1 leading-5">Please enter code we just send to <Text className="color-cabaret-500 font-bold">michelle@gmail.com</Text></Text>
         </View>
+
+        <View className="">
+
+        </View>
       </View>
     </View>
   );
