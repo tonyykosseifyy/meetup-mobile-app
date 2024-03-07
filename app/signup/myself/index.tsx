@@ -1,19 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { ScrollView, Text, View, TextInput, StyleSheet } from "react-native";
 import { Header } from "@/components";
 import { Input } from "@/components/input";
 
 export default function SignupMyself() {
-  // const inputRef = useRef<>(null);
-  const [error, setError] = useState<string | undefined>(undefined);
-
-  const showError = () => {
-    setError("This is your error message!");
-  };
-
-  const hideError = () => {
-    setError(undefined);
-  };
 
   return (
     <View className="flex-1 bg-white flex">
