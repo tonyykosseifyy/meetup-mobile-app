@@ -12,7 +12,7 @@ const Footer = (props: FooterProps) => {
         <Link theme={theme} href="/signup/myself">
           Register Myself
         </Link>
-        <Link theme={theme} href="/signup/mom">
+        <Link theme={theme} href="/signup-otp">
           Register Mom
         </Link>
       </View>
