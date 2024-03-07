@@ -1,7 +1,7 @@
-import { View, Image, ScrollView } from "react-native";
+import { View, Image } from "react-native";
 import { LogoNavbar } from "@/components/logo";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Text, Link, Footer, Button } from "@/components";
+import { Text, Footer, Button } from "@/components";
 import { Link as ExpoLink } from "expo-router";
 
 export default function PreLogin() {
