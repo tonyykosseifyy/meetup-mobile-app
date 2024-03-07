@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { ScrollView, Text, View, TextInput, StyleSheet } from "react-native";
-import { Header } from "@/components";
-import { Input } from "@/components/input";
+import { Header, Input } from "@/components";
 
 export default function SignupMyself() {
 
   return (
     <View className="flex-1 bg-white flex">
       <Header leftButton theme="light" />
-      <ScrollView className="mt-7 px-5">
+      <ScrollView className="mt-8 px-5">
         <View>
           <Text className="font-medium text-2xl">Start your Story</Text>
           <Text className="mt-1 opacity-70">Join Le2ine, find friends, and share laughs</Text>
