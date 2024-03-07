@@ -21,9 +21,7 @@ export default function Login() {
 
           <View className="mt-14">
             <View className="py-2 px-5 bg-white h-14 rounded-lg flex flex-row items-center justify-between border-[1px] border-solid border-cabaret-500">
-              <View>
-                <Ionicons name="person-outline" size={19} color="black" style={{ opacity: 0.5 }} />
-              </View>
+              <Ionicons name="person-outline" size={19} color="black" style={{ opacity: 0.5 }} />
               <TextInput
                 onChangeText={setEmail}
                 value={email}
@@ -35,9 +33,7 @@ export default function Login() {
             </View>
 
             <View className="mt-6 py-2 px-5 bg-white h-14 rounded-lg flex flex-row items-center justify-between border-[1px] border-solid border-cabaret-500">
-              <View>
-                <AntDesign name="lock" size={19} color="black" style={{ opacity: 0.5 }} />
-              </View>
+              <AntDesign name="lock" size={19} color="black" style={{ opacity: 0.5 }} />
               <TextInput
                 secureTextEntry={!passwordVisible}
                 placeholder="Your Password"
