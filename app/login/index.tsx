@@ -14,8 +14,8 @@ export default function Login() {
 
       <View className="flex-1 mt-8 flex justify-between pb-10 px-5">
         <View className="flex-1">
-          <View>
-            <Text className="text-black font-bold text-2xl mt-7">Welcome Back</Text>
+          <View className="mt-7">
+            <Text className="text-black font-bold text-2xl">Welcome Back</Text>
             <Text className="text-slate-800 mt-2">Please login to access your account</Text>
           </View>
 
@@ -27,7 +27,7 @@ export default function Login() {
                 value={email}
                 placeholder="Your Email"
                 keyboardType="email-address"
-                className="flex-1 h-6 ml-3 font-normal"
+                className="flex-1 h-6 ml-3"
                 placeholderTextColor={"#666666"}
               />
             </View>
@@ -37,7 +37,7 @@ export default function Login() {
               <TextInput
                 secureTextEntry={!passwordVisible}
                 placeholder="Your Password"
-                className="flex-1 h-6 ml-3 font-normal"
+                className="flex-1 h-6 ml-3"
                 placeholderTextColor={"#666666"}
                 onChangeText={setPassword}
                 value={password}
