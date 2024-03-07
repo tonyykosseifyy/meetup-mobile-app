@@ -1,11 +1,32 @@
 import React, { useState } from "react";
-import { ScrollView, Text, View, TextInput, TouchableOpacity } from "react-native";
+import { ScrollView, Text, View, TextInput, TouchableOpacity, Button } from "react-native";
 import { Header } from "@/components";
 import { Ionicons, AntDesign, Feather, Fontisto } from "@expo/vector-icons";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+
+const formatDate = (date: Date): string => {
+  let day: string = date.getDate().toString().padStart(2, "0");
+  let month: string = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are zero based
+  let year: string = date.getFullYear().toString();
+
+  return `${month}/${day}/${year}`;
+};
 
 export default function SignupMyself() {
   const [password, setPassword] = useState<string>("");
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [dateChanged, setDateChanged] = useState<boolean>(false);
+
+  const [date, setDate] = useState(new Date());
+
+
+  const handleConfirm = (date: any) => {
+    setDate(date);
+    setDatePickerVisibility(false);
+  };
+
   return (
     <View className="flex-1 bg-white flex">
       <Header leftButton theme="light" />
@@ -67,11 +88,31 @@ export default function SignupMyself() {
             </TouchableOpacity>
           </View>
 
+          <View className="mt-6 py-2 px-5 bg-white h-14 rounded-lg flex flex-row items-center justify-between border-[1px] border-solid border-cabaret-500">
+            <TouchableOpacity
+              onPress={() => setDatePickerVisibility(true)}
+              className="flex flex-row items-center w-full"
+            >
+              <Fontisto name="date" size={19} color="black" style={{ opacity: 0.5 }} />
+              <Text className={`ml-3 ${dateChanged ? "text-black" : "text-[#666666]"}`}>
+                {dateChanged ? formatDate(date): "Date Of Birth" }
+              </Text>
+            </TouchableOpacity>
+
+            <DateTimePickerModal
+              isVisible={isDatePickerVisible}
+              mode="date"
+              onConfirm={handleConfirm}
+              onCancel={() => setDatePickerVisibility(false)}
+              maximumDate={new Date(2023, 0, 0)}
+              minimumDate={new Date(1900, 0, 0)}
+              onChange={() => setDateChanged(true)}
+            />
+          </View>
           {/* <TextInput
             multiline 
             className="" style={{ textAlignVertical: "top", height: 100 }} placeholder="name" 
           /> */}
-
         </View>
       </ScrollView>
     </View>
