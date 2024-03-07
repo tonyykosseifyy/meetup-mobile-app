@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { View, TouchableOpacity, Text, TextInput, StyleSheet } from "react-native";
 import { Ionicons, AntDesign, Feather } from "@expo/vector-icons";
-import { Link, Header, Footer } from "@/components";
+import { Header, Footer } from "@/components";
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
@@ -20,7 +20,7 @@ export default function Login() {
           </View>
 
           <View className="mt-14">
-            <View className="py-2 px-5 bg-white h-14 rounded-lg flex flex-row items-center justify-between">
+            <View className="py-2 px-5 bg-white h-14 rounded-lg flex flex-row items-center justify-between border-[1px] border-solid border-cabaret-500">
               <View>
                 <Ionicons name="person-outline" size={19} color="black" style={{ opacity: 0.5 }} />
               </View>
@@ -34,7 +34,7 @@ export default function Login() {
               />
             </View>
 
-            <View className="mt-3 py-2 px-5 bg-white h-14 rounded-lg flex flex-row items-center justify-between">
+            <View className="mt-6 py-2 px-5 bg-white h-14 rounded-lg flex flex-row items-center justify-between border-[1px] border-solid border-cabaret-500">
               <View>
                 <AntDesign name="lock" size={19} color="black" style={{ opacity: 0.5 }} />
               </View>
@@ -58,16 +58,16 @@ export default function Login() {
 
             <View className="flex flex-row w-full mt-3 justify-end">
               <TouchableOpacity>
-                <Text className="text-white font-bold text-xs">Forgot Password?</Text>
+                <Text className="text-gray-700 font-normal text-xs">Forgot Password?</Text>
               </TouchableOpacity>
             </View>
 
             <View className="mt-28">
               <TouchableOpacity
                 style={styles.shadow}
-                className="p-2 bg-white h-14 rounded-full flex flex-row items-center justify-center"
+                className="p-2 bg-cabaret-500 h-14 rounded-lg flex flex-row items-center justify-center"
               >
-                <Text className="text-cabaret-500 font-bold text-base">Continue</Text>
+                <Text className="text-white font-bold text-base">Continue</Text>
               </TouchableOpacity>
             </View>
           </View>

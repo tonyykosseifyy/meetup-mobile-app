@@ -28,7 +28,7 @@ export default function PreLogin() {
           </Text>
         </View>
 
-        <View className="mt-10 flex flex-row -ml-2">
+        <View className="mt-10 flex flex-row -ml-2 ">
           <ExpoLink href="/login/" asChild>
             <Button
               rounded
