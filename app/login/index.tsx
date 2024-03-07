@@ -15,8 +15,8 @@ export default function Login() {
       <View className="flex-1 mt-8 flex justify-between pb-10 px-5">
         <View className="flex-1">
           <View className="mt-7">
-            <Text className="text-black font-bold text-2xl">Welcome Back</Text>
-            <Text className="text-slate-800 mt-2">Please login to access your account</Text>
+            <Text className="text-black font-medium text-2xl">Welcome Back</Text>
+            <Text className="text-slate-800 mt-1">Please login to access your account</Text>
           </View>
 
           <View className="mt-14">

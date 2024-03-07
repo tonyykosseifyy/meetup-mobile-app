@@ -34,7 +34,7 @@ export default function Registration({ data }: RegistrationProps) {
         <View className="px-5">
           <View>
             <Text className="font-medium text-2xl">{data.title}</Text>
-            <Text className="mt-1 opacity-70">{data.subtitle}</Text>
+            <Text className="mt-1 text-slate-800">{data.subtitle}</Text>
           </View>
           <View className="mt-10">
             {/* name */}
