@@ -1,5 +1,5 @@
 export interface LinkProps {
   href: string;
-  light?: boolean;
+  theme?: "light" | "cabaret";
   children: string;
 }

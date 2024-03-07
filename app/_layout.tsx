@@ -3,7 +3,6 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from 'expo-status-bar';
-
 import {
   useFonts,
   Inter_400Regular,

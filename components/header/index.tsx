@@ -6,7 +6,7 @@ import { router } from "expo-router";
 import { Button } from "../button";
 
 const Header = (props: HeaderProps) => {
-  const { leftButton, rightButton } = props;
+  const { leftButton, rightButton, theme } = props;
   const onPress = () => {
     router.back();
   };
@@ -20,7 +20,11 @@ const Header = (props: HeaderProps) => {
       <View className="flex-1">
         {leftButton && (
           <TouchableOpacity onPress={onPress}>
-            <FontAwesome6 name="arrow-left" size={22} color="black" />
+            <FontAwesome6
+              name="arrow-left"
+              size={22}
+              color={theme === "light" ? "black" : "white"}
+            />
           </TouchableOpacity>
         )}
       </View>

@@ -21,6 +21,9 @@ module.exports = {
           900: "#742736",
           950: "#46111b",
         },
+        pink: {
+          50: "#FCD8D8",
+        },
       },
       fontFamily: {
         sans: [

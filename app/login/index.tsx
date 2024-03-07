@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { View, TouchableOpacity, Text, TextInput, StyleSheet } from "react-native";
 import { Ionicons, AntDesign, Feather } from "@expo/vector-icons";
-import { Link, Header } from "@/components";
+import { Link, Header, Footer } from "@/components";
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
@@ -10,28 +10,17 @@ export default function Login() {
 
   return (
     <View className="flex-1 bg-white flex">
-      <Header leftButton />
-      <View>
-        <Text className="text-cabaret-500 text-center font-medium">
-          Share Smiles, Women's Connections
-        </Text>
-      </View>
+      <Header leftButton theme={"light"} />
 
-      <View
-        style={styles.cabaret_shadow}
-        className="flex-1 mt-8 bg-cabaret-500 flex justify-between pb-10"
-      >
+      <View className="flex-1 mt-8 flex justify-between pb-10 px-5">
         <View className="flex-1">
           <View>
-            <Text className="text-white text-center font-bold text-2xl mt-7">Welcome Back</Text>
-            <Text className="text-white text-center mt-3">Please login to access your account</Text>
+            <Text className="text-black font-bold text-2xl mt-7">Welcome Back</Text>
+            <Text className="text-slate-800 mt-2">Please login to access your account</Text>
           </View>
 
-          <View className="mt-14 mx-4">
-            <View
-              style={styles.shadow}
-              className="p-2 pl-5 pr-5 bg-white h-14 rounded-full flex flex-row items-center justify-between"
-            >
+          <View className="mt-14">
+            <View className="py-2 px-5 bg-white h-14 rounded-lg flex flex-row items-center justify-between">
               <View>
                 <Ionicons name="person-outline" size={19} color="black" style={{ opacity: 0.5 }} />
               </View>
@@ -45,10 +34,7 @@ export default function Login() {
               />
             </View>
 
-            <View
-              style={styles.shadow}
-              className="p-2 pl-5 pr-5 mt-6 bg-white h-14 rounded-full flex flex-row items-center justify-between"
-            >
+            <View className="mt-3 py-2 px-5 bg-white h-14 rounded-lg flex flex-row items-center justify-between">
               <View>
                 <AntDesign name="lock" size={19} color="black" style={{ opacity: 0.5 }} />
               </View>
@@ -87,16 +73,7 @@ export default function Login() {
           </View>
         </View>
 
-        <View className="mt-12 flex items-center">
-          <Text className="font-sans font-regular text-base text-white">
-            Don’t have an account?
-          </Text>
-          <View className="mt-5 flex px-6 flex-row items-baseline justify-between w-full">
-            <Link href="/signup/myself">Register Myself</Link>
-            {/* <Text className="font-sans text-white text-sm">Or</Text> */}
-            <Link href="/signup/mom">Register Mom</Link>
-          </View>
-        </View>
+        <Footer />
       </View>
     </View>
   );
