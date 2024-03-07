@@ -120,10 +120,7 @@ export default function SignupMyself() {
               style={{ textAlignVertical: "top" }}
             />
           </View>
-          {/* <TextInput
-            multiline 
-            className="" style={{ textAlignVertical: "top", height: 100 }} placeholder="name" 
-          /> */}
+          
         </View>
       </ScrollView>
     </View>
