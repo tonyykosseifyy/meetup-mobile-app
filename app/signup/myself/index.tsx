@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { ScrollView, Text, View, TextInput, StyleSheet, TouchableOpacity } from "react-native";
-import { Header, Input } from "@/components";
+import { ScrollView, Text, View, TextInput, TouchableOpacity } from "react-native";
+import { Header } from "@/components";
 import { Ionicons, AntDesign, Feather, Fontisto } from "@expo/vector-icons";
 
 export default function SignupMyself() {
@@ -71,19 +71,9 @@ export default function SignupMyself() {
             multiline 
             className="" style={{ textAlignVertical: "top", height: 100 }} placeholder="name" 
           /> */}
+
         </View>
       </ScrollView>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  input: {
-    height: 100,
-    width: "80%",
-    margin: 12,
-    borderWidth: 1,
-    alignSelf: "flex-start",
-    padding: 10,
-  },
-});
