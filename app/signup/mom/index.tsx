@@ -1,11 +1,7 @@
-import React from "react";
-import { Text } from "react-native";
+import Registration from "@/components/registration";
+import data from "@/assets/data/registration_data";
 
-export default function SignupMom() {
-  return (
-    <Text>
-      SignupMom
-    </Text>
-  );
-}
 
+const SignUpMothers = () => <Registration data={data.mothers} />;
+
+export default SignUpMothers;
