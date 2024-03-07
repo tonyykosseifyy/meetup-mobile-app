@@ -7,7 +7,7 @@ export default function SignupMyself() {
 
   return (
     <View className="flex-1 bg-white flex">
-      <Header leftButton />
+      <Header leftButton theme="light" />
       <ScrollView className="mt-7 px-5">
         <View>
           <Text className="font-medium text-2xl">Start your Story</Text>
