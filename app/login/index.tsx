@@ -87,13 +87,13 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   cabaret_shadow: {
-    shadowColor: "#D14D72",
+    shadowColor: "#FF3366",
     shadowOffset: {
       width: 0,
-      height: -4,
+      height: 0,
     },
-    shadowOpacity: 0.4,
-    shadowRadius: 8,
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
     elevation: 4,
   },
 });

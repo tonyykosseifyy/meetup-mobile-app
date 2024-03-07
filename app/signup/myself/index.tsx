@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ScrollView, Text, View, TextInput, TouchableOpacity, Button } from "react-native";
+import { ScrollView, Text, View, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 import { Header } from "@/components";
 import { Ionicons, AntDesign, Feather, Fontisto, MaterialIcons } from "@expo/vector-icons";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -29,7 +29,7 @@ export default function SignupMyself() {
   return (
     <View className="flex-1 bg-white flex">
       <Header leftButton theme="light" />
-      <ScrollView className="mt-8 px-5">
+      <ScrollView className="mt-8 px-5 h-screen">
         <View>
           <Text className="font-medium text-2xl">Start your Story</Text>
           <Text className="mt-1 opacity-70">Join Le2ine, find friends, and share laughs</Text>
@@ -111,18 +111,46 @@ export default function SignupMyself() {
           </View>
 
           <View className="mt-6 py-2 px-5 bg-white rounded-lg border-[1px] border-solid border-cabaret-500 flex flex-row items-start justify-between">
-          <MaterialIcons name="description" size={19} color="black" style={{ opacity: 0.5, marginTop: 4 }} />
-           <TextInput 
-              multiline 
-              className="flex-1 h-32 ml-3" 
-              placeholder="Your Bio" 
+            <MaterialIcons
+              name="description"
+              size={19}
+              color="black"
+              style={{ opacity: 0.5, marginTop: 4 }}
+            />
+            <TextInput
+              multiline
+              className="flex-1 h-32 ml-3"
+              placeholder="Your Bio"
               placeholderTextColor={"#666666"}
               style={{ textAlignVertical: "top" }}
             />
           </View>
-          
+
+          <View className="mt-8">
+            <TouchableOpacity
+              style={styles.cabaret_shadow}
+              className="p-2 bg-cabaret-500 h-14 rounded-lg flex flex-row items-center justify-center"
+            >
+              <Text className="text-white font-bold text-base">Continue</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View className="mt-20" />
         </View>
       </ScrollView>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  cabaret_shadow: {
+    shadowColor: "#FF3366",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 4,
+  },
+});
