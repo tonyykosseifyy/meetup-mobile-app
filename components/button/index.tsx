@@ -1,7 +1,6 @@
 import React from "react";
 import { TouchableOpacity, View, StyleSheet } from "react-native";
 import Text from "@/components/text";
-import { AntDesign } from "@expo/vector-icons";
 import { ButtonProps } from "./interface.button";
 
 const Button = React.forwardRef<TouchableOpacity, ButtonProps>((props, ref) => {
@@ -14,7 +13,7 @@ const Button = React.forwardRef<TouchableOpacity, ButtonProps>((props, ref) => {
         rounded ? "rounded-full" : "rounded-lg"
       }`}
       {...props}
-      style={styles.button}
+      style={styles.cabaret_shadow}
     >
       <View className="absolute inset-y-0 left-0 flex flex-col items-center justify-center ">
         <View
@@ -25,30 +24,23 @@ const Button = React.forwardRef<TouchableOpacity, ButtonProps>((props, ref) => {
           {icon}
         </View>
       </View>
-      <Text className="text-white font-sans font-bold text-center">{children}</Text>
+      <Text className="text-white text-base text-center font-bold">{children}</Text>
     </TouchableOpacity>
   );
 });
 
-const BackButton = () => {
-  return (
-    <TouchableOpacity>
-      <AntDesign name="arrowleft" size={24} color="black" />
-    </TouchableOpacity>
-  );
-};
 
 export { Button };
 
 const styles = StyleSheet.create({
-  button: {
-    shadowColor: "#000",
+  cabaret_shadow: {
+    shadowColor: "#FF3366",
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 0,
     },
     shadowOpacity: 0.3,
-    shadowRadius: 1.41,
-    elevation: 2,
+    shadowRadius: 5,
+    elevation: 4,
   },
 });
