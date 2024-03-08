@@ -13,9 +13,9 @@ export default function SignUpOtp() {
           <Text className="text-slate-800 mt-1 leading-5">Please enter code we just send to <Text className="color-cabaret-500 font-bold">michelle@gmail.com</Text></Text>
         </View>
 
-        <View>
+        <View className="mt-12">
           <OtpInput />
-
+          
         </View>
         
       </View>
