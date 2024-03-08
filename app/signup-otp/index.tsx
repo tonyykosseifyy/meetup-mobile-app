@@ -16,7 +16,7 @@ export default function SignUpOtp() {
           </Text>
         </View>
 
-        <View className="mt-32 w-11/12 mx-auto">
+        <View className="mt-28 w-11/12 mx-auto">
           <OtpInput />
           <View className="mt-4">
             <TouchableOpacity
