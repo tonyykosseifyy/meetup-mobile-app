@@ -28,8 +28,8 @@ export default function SignUpOtp() {
           </View>
           <View className="flex flex-row items-baseline justify-center mt-4">
             <Text className="text-slate-800">Didn't receive the code?</Text>
-            <TouchableOpacity>
-              <Text className="text-cabaret-500 font-bold ml-1">Resend</Text>
+            <TouchableOpacity className="border-b-[0.5px] border-cabaret-500 ml-1">
+              <Text className="text-cabaret-500 font-bold">Resend Code</Text>
             </TouchableOpacity>
           </View>
         </View>
