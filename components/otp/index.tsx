@@ -5,7 +5,7 @@ const OTP: React.FC = () => {
   return (
     <View className="flex flex-row items-center justify-center">
       <OTPInputView
-        style={{ width: "93%", height: 100 }}
+        style={{ width: "100%", height: 100 }}
         pinCount={4}
         // code={this.state.code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
         // onCodeChanged = {code => { this.setState({code})}}

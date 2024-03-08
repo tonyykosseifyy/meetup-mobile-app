@@ -6,7 +6,7 @@ const CustomLink = ({ href, theme, children }: LinkProps) => {
   return (
     <Link href={href as any} asChild>
       <TouchableOpacity
-        className={`border-b-[0.5px] ${theme !== "light" ? "border-red-500" : "border-gray-700"}`}
+        className={`border-b-[0.5px] ${theme !== "light" ? "border-cabaret-500" : "border-gray-700"}`}
       >
         <Text
           className={`font-sans text-sm ${theme !== "light" ? "text-cabaret-500" : "text-gray-700"}`}
