@@ -5,5 +5,6 @@ import Link from "./link";
 import Header from "./header";
 import Footer from "./footer";
 import Input from "./input";
+import OtpInput from "./otp";
 
-export { Button, FullLogo, Logo, LogoNavbar, Text, Link, Header, Footer, Input };
+export { Button, FullLogo, Logo, LogoNavbar, Text, Link, Header, Footer, Input, OtpInput };

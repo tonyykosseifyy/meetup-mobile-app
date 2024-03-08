@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { Header } from "@/components";
+import { OtpInput } from "@/components";
 
 export default function SignUpOtp() {
   return (
@@ -12,6 +13,10 @@ export default function SignUpOtp() {
           <Text className="text-slate-800 mt-1 leading-5">Please enter code we just send to <Text className="color-cabaret-500 font-bold">michelle@gmail.com</Text></Text>
         </View>
 
+        <View>
+          <OtpInput />
+
+        </View>
         
       </View>
     </View>
