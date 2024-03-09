@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Header } from "@/components";
-import styles from "@/constants/styles";
 import CustomLink from "@/components/link";
 import Chip from "@/components/chip";
 import { ScrollView } from "react-native";
+import styles from "@/constants/styles";
 
 const Skip = (): React.JSX.Element => (
   <TouchableOpacity>

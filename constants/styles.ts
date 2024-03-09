@@ -10,5 +10,15 @@ export default StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 5,
     elevation: 4,
+  },
+  grey_shadow: {
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 0,
+      height: 1.2
+    },
+    shadowOpacity: 0.12,
+    shadowRadius: 2,
+    elevation: 3,
   }
 });
