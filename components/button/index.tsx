@@ -1,6 +1,5 @@
 import React from "react";
-import { TouchableOpacity, View, StyleSheet } from "react-native";
-import Text from "@/components/text";
+import { TouchableOpacity, View, StyleSheet, Text } from "react-native";
 import { ButtonProps } from "./interface.button";
 import styles from "@/constants/styles";
 
@@ -25,7 +24,7 @@ const Button = React.forwardRef<TouchableOpacity, ButtonProps>((props, ref) => {
           {icon}
         </View>
       </View>
-      <Text className="text-white text-base text-center font-bold">{children}</Text>
+      <Text className="text-white font-semibold text-base">{children}</Text>
     </TouchableOpacity>
   );
 });
