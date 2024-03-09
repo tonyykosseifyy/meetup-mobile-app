@@ -9,7 +9,7 @@ const Header = (props: HeaderProps) => {
 
   return (
     <View className="p-5 flex flex-row-reverse items-center justify-between">
-      <View className="flex-1">{rightButton && rightButton}</View>
+      <View className="flex-1  flex flex-row justify-end">{rightButton && rightButton}</View>
       <View className="flex-1">
         <LogoNavbar />
       </View>
