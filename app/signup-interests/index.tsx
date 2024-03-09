@@ -8,13 +8,24 @@ const Skip = (): React.JSX.Element => (
   <TouchableOpacity>
     <Text className="text-cabaret-500 font-bold">Skip</Text>
   </TouchableOpacity>
-)
+);
 
 export default function SignUpOtp() {
   return (
     <View className="flex-1 bg-white flex">
       <Header leftButton theme={"light"} rightButton={Skip()} />
-      <View className="px-5"></View>
+      <View className="px-5">
+        <View className="mt-7">
+          <Text className="text-black font-medium text-2xl">Select up to 3 interest</Text>
+          <Text className="text-slate-800 mt-1 leading-5">
+            Tell us about your interests and what excite you
+          </Text>
+        </View>
+
+        <View className="mt-20 bg-black">
+
+        </View>
+      </View>
     </View>
   );
 }
