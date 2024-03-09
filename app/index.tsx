@@ -3,6 +3,7 @@ import { LogoNavbar } from "@/components/logo";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text, Footer, Button } from "@/components";
 import { Link as ExpoLink } from "expo-router";
+import React from "react";
 
 export default function PreLogin() {
   return (

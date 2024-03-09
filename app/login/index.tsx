@@ -2,6 +2,8 @@ import { useState } from "react";
 import { View, TouchableOpacity, Text, TextInput, StyleSheet } from "react-native";
 import { Ionicons, AntDesign, Feather } from "@expo/vector-icons";
 import { Header, Footer } from "@/components";
+import { Link as ExpoLink } from "expo-router";
+import React from "react";
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
@@ -59,12 +61,14 @@ export default function Login() {
             </View>
 
             <View className="mt-28">
+            <ExpoLink href="/(tabs)/" asChild>
               <TouchableOpacity
                 style={styles.shadow}
                 className="p-2 bg-cabaret-500 h-14 rounded-lg flex flex-row items-center justify-center"
               >
                 <Text className="text-white font-bold text-base">Continue</Text>
               </TouchableOpacity>
+            </ExpoLink>
             </View>
           </View>
         </View>
