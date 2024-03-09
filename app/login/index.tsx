@@ -2,6 +2,7 @@ import { useState } from "react";
 import { View, TouchableOpacity, Text, TextInput, StyleSheet } from "react-native";
 import { Ionicons, AntDesign, Feather } from "@expo/vector-icons";
 import { Header, Footer } from "@/components";
+import styles from "@/constants/styles";
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
@@ -60,7 +61,7 @@ export default function Login() {
 
             <View className="mt-28">
               <TouchableOpacity
-                style={styles.shadow}
+                style={styles.cabaret_shadow}
                 className="p-2 bg-cabaret-500 h-14 rounded-lg flex flex-row items-center justify-center"
               >
                 <Text className="text-white font-bold text-base">Continue</Text>
@@ -75,25 +76,3 @@ export default function Login() {
   );
 }
 
-const styles = StyleSheet.create({
-  shadow: {
-    shadowColor: "#656566",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
-    elevation: 4,
-  },
-  cabaret_shadow: {
-    shadowColor: "#FF3366",
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
-    elevation: 4,
-  },
-});
