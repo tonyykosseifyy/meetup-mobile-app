@@ -4,17 +4,18 @@ import Text from "@/components/text";
 import { AntDesign } from "@expo/vector-icons";
 import { ButtonProps } from "./interface.button";
 
+
 const Button = React.forwardRef<TouchableOpacity, ButtonProps>((props, ref) => {
-  const { rounded, children, icon } = props;
+  const { rounded, children, icon, addClassName, textColor , disableShadow} = props;
 
   return (
     <TouchableOpacity
       ref={ref}
-      className={`bg-cabaret-500 w-full flex flex-row justify-center p-4 relative shadow-lg ${
+      className={` bg-cabaret-500 w-full flex flex-row justify-center p-4 relative ${!disableShadow? "shadow-lg": ""} ${
         rounded ? "rounded-full" : "rounded-lg"
-      }`}
+      } ${addClassName}`}
       {...props}
-      style={styles.button}
+      style={!disableShadow? styles.button: {}}
     >
       <View className="absolute inset-y-0 left-0 flex flex-col items-center justify-center ">
         <View
@@ -25,7 +26,7 @@ const Button = React.forwardRef<TouchableOpacity, ButtonProps>((props, ref) => {
           {icon}
         </View>
       </View>
-      <Text className="text-white font-sans font-bold text-center">{children}</Text>
+      <Text className={`text-${textColor ?? 'white'} font-sans font-bold text-center`}>{children}</Text>
     </TouchableOpacity>
   );
 });

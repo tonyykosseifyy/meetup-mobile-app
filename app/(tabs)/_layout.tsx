@@ -2,7 +2,7 @@ import React, { useEffect, useReducer, useRef } from 'react';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6.js';
 import FontAwesome from '@expo/vector-icons/FontAwesome.js';
 import { Tabs } from 'expo-router';
-import { LayoutChangeEvent, Pressable,  View } from 'react-native';
+import { LayoutChangeEvent, Pressable,  View , Text} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Path } from "react-native-svg"
 import Animated, { useAnimatedStyle, useDerivedValue, withTiming } from 'react-native-reanimated';
@@ -10,12 +10,15 @@ import {theme} from '../../tailwind.config.js';
 
 export default function TabLayout() {
   return (
-    <Tabs     tabBar={(props) => <AnimatedTabBar {...props} />} screenOptions={{ tabBarActiveTintColor: 'blue' , headerShown: false}}>
+    <Tabs     tabBar={(props) => <AnimatedTabBar {...props} />} screenOptions={{ tabBarInactiveTintColor: 'blue' , headerShown: false}}>
             <Tabs.Screen
         name="notifications"
         options={{
           title: 'Notifications',
-          tabBarIcon: ({ color }) => <FontAwesome6 size={28} name="bell" color={color} />,
+          tabBarIcon: ({ color }) => {
+            console.log(color)
+            return <FontAwesome6 size={28} name="bell" color={color} />;
+          },
         }}
       />
       <Tabs.Screen
@@ -26,9 +29,10 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="profile"
+        name="settings"
         options={{
-          title: 'Profile',
+          title: 'Settings',
+          headerShown: true,
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="user" color={color} />,
         }}
       />
@@ -166,7 +170,7 @@ const TabBarComponent = ({ active, options, onLayout, onPress }: any) => {
       className="absolute top-0 bottom-0 right-0 left-0 justify-center items-center"
       style={animatedIconContainerStyles}>
         {/* @ts-ignore */}
-        {options.tabBarIcon ? options.tabBarIcon({ ref }) : <Text>?</Text>}
+        {options.tabBarIcon ? options.tabBarIcon({ ref, color: active?  theme!.extend!.colors!.cabaret[500]: 'white' }) : <Text>?</Text>}
       </Animated.View>
     </Pressable>
   );

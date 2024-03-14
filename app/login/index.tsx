@@ -4,6 +4,7 @@ import { Ionicons, AntDesign, Feather } from "@expo/vector-icons";
 import { Header, Footer } from "@/components";
 import { Link as ExpoLink } from "expo-router";
 import React from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
@@ -11,6 +12,7 @@ export default function Login() {
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
 
   return (
+    <SafeAreaView edges={['top']} className="flex-1 bg-white">
     <View className="flex-1 bg-white flex">
       <Header leftButton theme={"light"} />
 
@@ -76,6 +78,7 @@ export default function Login() {
         <Footer />
       </View>
     </View>
+    </SafeAreaView>
   );
 }
 

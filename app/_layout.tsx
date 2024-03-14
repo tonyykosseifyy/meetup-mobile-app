@@ -44,9 +44,9 @@ function RootLayoutNav() {
   return (
     <>
     <StatusBar style="dark" hidden={false} />
-    <SafeAreaView edges={['top']} className="flex-1">
+    
       <Stack screenOptions={{ headerShown: false }} />
-    </SafeAreaView>
+
   </>
 
   );

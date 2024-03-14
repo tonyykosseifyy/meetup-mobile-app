@@ -2,9 +2,11 @@ import React from "react";
 import { View, Text } from "react-native";
 import { Header } from "@/components";
 import { OtpInput } from "@/components";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function SignUpOtp() {
   return (
+    <SafeAreaView edges={['top']} className="flex-1 bg-white">
     <View className="flex-1 bg-white flex">
       <Header leftButton theme={"light"} />
       <View className="px-5">
@@ -20,5 +22,6 @@ export default function SignUpOtp() {
         
       </View>
     </View>
+    </SafeAreaView>
   );
 }

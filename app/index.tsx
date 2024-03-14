@@ -4,10 +4,12 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text, Footer, Button } from "@/components";
 import { Link as ExpoLink } from "expo-router";
 import React from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function PreLogin() {
   return (
-    <View className="flex-1 flex justify-between pb-10 bg-white px-5">
+    <SafeAreaView edges={['top']} className="flex-1 bg-white">
+   <View className="flex-1 flex justify-between pb-10 bg-white px-5">
       <View className="pt-4 pb-4">
         <LogoNavbar />
       </View>
@@ -43,5 +45,7 @@ export default function PreLogin() {
 
       <Footer />
     </View>
+  </SafeAreaView>
+    
   );
 }
