@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { View, TouchableOpacity, Text, TextInput, StyleSheet } from "react-native";
+import { View, TouchableOpacity, Text, TextInput } from "react-native";
 import { Ionicons, AntDesign, Feather } from "@expo/vector-icons";
 import { Header, Footer } from "@/components";
 import { Link as ExpoLink } from "expo-router";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+import styles from "@/constants/styles";
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
@@ -63,7 +64,7 @@ export default function Login() {
             </View>
 
             <View className="mt-28">
-            <ExpoLink href="/(tabs)/" asChild>
+            <ExpoLink href="/" asChild>
               <TouchableOpacity
                 style={styles.cabaret_shadow}
                 className="p-2 bg-cabaret-500 h-14 rounded-lg flex flex-row items-center justify-center"

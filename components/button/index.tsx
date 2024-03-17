@@ -13,7 +13,7 @@ const Button = React.forwardRef<TouchableOpacity, ButtonProps>((props, ref) => {
         rounded ? "rounded-full" : "rounded-lg"
       } ${addClassName}`}
       {...props}
-      style={!disableShadow ? styles.button : {}}
+      style={!disableShadow ? styles.cabaret_shadow : {}}
     >
       {icon && (
         <View className="absolute inset-y-0 left-0 flex flex-col items-center justify-center ">
