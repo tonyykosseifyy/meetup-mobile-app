@@ -1,3 +1,4 @@
+import React from "react";
 import { TouchableOpacity, View } from "react-native";
 import { LogoNavbar } from "@/components/logo";
 import { FontAwesome6 } from "@expo/vector-icons";
