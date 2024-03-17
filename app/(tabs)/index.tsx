@@ -70,15 +70,3 @@ export default function Home() {
   );
 }
 
-// const styles = StyleSheet.create({
-//   shadow: {
-//     shadowColor: "#656566",
-//     shadowOffset: {
-//       width: 0,
-//       height: 2,
-//     },
-//     shadowOpacity: 0.2,
-//     shadowRadius: 2,
-//     elevation: 3,
-//   },
-// });
