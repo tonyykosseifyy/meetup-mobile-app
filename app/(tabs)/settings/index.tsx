@@ -13,10 +13,11 @@ import { Link as ExpoLink } from "expo-router";
 import NotificationsIcon from "@/assets/icons/settings/notifications.svg";
 import ArrowIcon from "@/assets/icons/settings/arrow.svg";
 import LocationIcon from "@/assets/icons/settings/location.svg";
+import AccountDetailsIcon from "@/assets/icons/settings/account-details.svg";
 
 export default function Settings() {
   const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   return (
     <ScrollView className="flex-1 bg-white">
       <Image
@@ -49,36 +50,24 @@ export default function Settings() {
               ios_backgroundColor="#D9D9D9"
               onValueChange={toggleSwitch}
               value={isEnabled}
-              style={{transform: "scale(0.9)"}}
+              style={{ transform: "scale(0.9)" }}
             />
           </View>
         </View>
 
-        <View className="h-px bg-gray-300 my-2" />
-        <Text className="text-lg mb-4">Account Information</Text>
-        <ExpoLink href="/settings/account-details" asChild>
-          <Button
-            addClassName="bg-[#F2F2F2] flex flex-row place-center mb-4"
-            textColor="black"
-            disableShadow
-            view
-          >
-            <View className="w-full flex flex-row justify-between place-center">
-              <View className="flex-row">
-                <View className="mr-4 ">
-                  <FontAwesome name="user-o" size={20} color="gray" />
-                </View>
-                <View className="">
-                  <Text>Account Details</Text>
-                </View>
-              </View>
+        <View className="h-px bg-gray-300 my-6" />
 
-              <View className="">
-                <Text>{">"}</Text>
-              </View>
-            </View>
-          </Button>
-        </ExpoLink>
+        <Text className="text-lg mb-4 mt-2">Account Information</Text>
+
+        <TouchableOpacity className="mb-4 flex p-4 flex-row items-center justify-between bg-[#F2F2F2] rounded-lg">
+          <View className="flex flex-row items-center">
+            <AccountDetailsIcon width={19} />
+            <Text className="ml-3">Account Details</Text>
+          </View>
+          <View>
+            <ArrowIcon width={19} />
+          </View>
+        </TouchableOpacity>
 
         <Button
           addClassName="bg-[#F2F2F2] flex flex-row place-center mb-4"
