@@ -20,6 +20,16 @@ const registrationDataMothers = {
   bio: "Her Bio",
 };
 
+const registrationDataEdit = {
+  title: "Account Details",
+  subtitle: "All your information can be edited here.",
+  name: "Your Name",
+  occupation: "Your Occupation",
+  email: "Your Email",
+  password: "Your Password",
+  dateOfBirth: "Date of Birth",
+  bio: "Your Bio",
+};
 
 interface IRegistrationData {
   title: string;
@@ -32,10 +42,10 @@ interface IRegistrationData {
   bio: string;
 }
 
-
 const registrationData = {
   myself: registrationDataMyself,
   mothers: registrationDataMothers,
+  edit: registrationDataEdit,
 };
 
 export { IRegistrationData };

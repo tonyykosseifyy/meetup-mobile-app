@@ -5,4 +5,5 @@ export interface ButtonProps {
   addClassName?: String;
   textColor?: String;
   disableShadow?: boolean;
+  view?: boolean;
 }
