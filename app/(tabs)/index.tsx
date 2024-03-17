@@ -1,22 +1,24 @@
 import React from "react";
-import { useState } from "react";
 import { View, Image, Text, TextInput, StyleSheet, FlatList, TouchableOpacity } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Header, Footer, Button } from "@/components";
 import { LogoNavbar } from "@/components/logo";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Chip from "@/components/chip";
 import ReadingIcon from "@/assets/icons/interests/reading.svg";
 import PhotographyIcon from "@/assets/icons/interests/photography.svg";
-import GamingIcon from "@/assets/icons/interests/gaming.svg";
 import CharityIcon from "@/assets/icons/interests/charity.svg";
 import { ScrollView } from "react-native";
 import styles from "@/constants/styles";
-import InviteIcon from "@/assets/icons/invite.svg";
+import InviteIcon from "@/assets/icons/home/invite.svg";
 
 const renderItem = () => {
   return (
-    <View className="bg-white px-2 pt-8 pb-3" style={override_styles.shadow}>
+    <View className="bg-white px-2 pt-6 pb-6 relative" style={override_styles.shadow}>
+      <TouchableOpacity
+        onPress={() => console.log("pressed")}
+        className="absolute z-10 top-8 right-5 w-12 h-8 flex-row justify-end"
+      >
+        <InviteIcon />
+      </TouchableOpacity>
       <View className="flex flex-row items-center mb-2">
         <View className="flex flex-row items-center h-full ">
           <View className="w-14 h-14 p-[0.5px] rounded-full border-solid border-2 border-cabaret-500 mx-4">
@@ -27,7 +29,7 @@ const renderItem = () => {
           </View>
         </View>
 
-        <View className="flex flex-1 ">
+        <View className="flex flex-1">
           <Text className="font-bold text-base">
             Michelle Saliba, <Text className="text-cabaret-500">35</Text>
           </Text>
@@ -89,10 +91,10 @@ const renderItem = () => {
         />
       </ScrollView>
       <View className="flex flex-row w-full justify-end ">
-        <TouchableOpacity className="border-b-[0.5px] border-cabaret-500 mr-4 flex-row">
+        {/* <TouchableOpacity className="border-b-[0.5px] border-cabaret-500 mr-4 flex-row">
           <InviteIcon fill={"#d14d72"} />
           <Text className="font-bold text-cabaret-500 text-sm">Invite</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </View>
   );
