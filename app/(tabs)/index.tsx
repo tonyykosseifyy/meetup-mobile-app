@@ -5,26 +5,32 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Header, Footer, Button } from "@/components";
 import { LogoNavbar } from "@/components/logo";
 import { SafeAreaView } from "react-native-safe-area-context";
-import styles from "@/constants/styles";
 
 const renderItem = () => {
   return (
-    <View className="bg-white px-2 py-6 mb-4" style={styles.grey_shadow}>
-      <View className="flex flex-row items-center">
-        <Image
-          source={require("@/assets/avatars/adjusted_avatar_1.png")}
-          className="w-16 h-16  rounded-full border-solid border-2 border-cabaret-500 mx-4"
-        />
-        <View className="flex flex-1 gap-2 mb-4">
-          <Text className="font-bold">
+    <View className="bg-white px-2 py-6 mb-4" style={styles.shadow}>
+      <View className="flex flex-row items-center mb-4">
+        <View className="flex flex-row items-center h-full ">
+          <View className="w-14 h-14 p-[0.5px] rounded-full border-solid border-2 border-cabaret-500 mx-4">
+            <Image
+              source={require("@/assets/avatars/adjusted_avatar_1.png")}
+              className="w-full h-full rounded-full object-contain"
+            />
+          </View>
+        </View>
+
+        <View className="flex flex-1 ">
+          <Text className="font-bold mb-1">
             Michelle Saliba, <Text className="text-cabaret-500">35</Text>
           </Text>
-          <Text className="text-cabaret-500 font-bold">Lawyer</Text>
+
+          <Text className="text-cabaret-500 font-bold mb-3">Lawyer</Text>
           <Text className="text-slate-500 text-[12px]">
             Fun and adventurous. I'm not afraid to try new things and I love to be spontaneous
           </Text>
         </View>
       </View>
+
       <View className="flex-row flex-wrap mt-4 justify-start gap-2">
         <View className="flex flex-row  items-center bg-white py-3 px-3 rounded-full  border-solid border-[1px] border-[#D9D9D9]">
           <MaterialCommunityIcons name="charity" size={16} color="black" />
@@ -59,7 +65,10 @@ export default function Home() {
           <TouchableOpacity className="flex-1 bg-cabaret-500 flex flex-row justify-center p-4 relative rounded-full">
             <Text className="text-white font-bold">For You</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.grey_shadow} className="ml-4 flex-1 bg-white flex flex-row justify-center p-4 relative rounded-full">
+          <TouchableOpacity
+            style={styles.shadow}
+            className="ml-4 flex-1 bg-white flex flex-row justify-center p-4 relative rounded-full"
+          >
             <Text className="text-black font-bold">Nearby</Text>
           </TouchableOpacity>
         </View>
@@ -70,3 +79,15 @@ export default function Home() {
   );
 }
 
+const styles = StyleSheet.create({
+  shadow: {
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 1,
+    elevation: 3,
+  },
+});
