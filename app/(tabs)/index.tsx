@@ -9,8 +9,8 @@ import styles from "@/constants/styles";
 
 const renderItem = () => {
   return (
-    <View className="bg-white px-2 pb-6 mb-4" style={styles.grey_shadow}>
-      <View className="flex-row items-center">
+    <View className="bg-white px-2 py-6 mb-4" style={styles.grey_shadow}>
+      <View className="flex flex-row items-center">
         <Image
           source={require("@/assets/images/sample_avatar.png")}
           className="w-16 h-16  rounded-full border-solid border-2 border-cabaret-500 mx-4"
@@ -64,7 +64,7 @@ export default function Home() {
           </TouchableOpacity>
         </View>
 
-        <FlatList className="mx-4" data={new Array(3).fill(0)} renderItem={renderItem} />
+        <FlatList className="py-4" data={new Array(3).fill(0)} renderItem={renderItem} />
       </View>
     </SafeAreaView>
   );
