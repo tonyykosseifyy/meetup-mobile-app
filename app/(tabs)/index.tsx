@@ -5,11 +5,18 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Header, Footer, Button } from "@/components";
 import { LogoNavbar } from "@/components/logo";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Chip from "@/components/chip";
+import ReadingIcon from "@/assets/icons/interests/reading.svg";
+import PhotographyIcon from "@/assets/icons/interests/photography.svg";
+import GamingIcon from "@/assets/icons/interests/gaming.svg";
+import CharityIcon from "@/assets/icons/interests/charity.svg";
+import { ScrollView } from "react-native";
+import styles from "@/constants/styles";
 
 const renderItem = () => {
   return (
-    <View className="bg-white px-2 py-6 mb-4" style={styles.shadow}>
-      <View className="flex flex-row items-center mb-4">
+    <View className="bg-white px-2 py-9" style={override_styles.shadow}>
+      <View className="flex flex-row items-center mb-2">
         <View className="flex flex-row items-center h-full ">
           <View className="w-14 h-14 p-[0.5px] rounded-full border-solid border-2 border-cabaret-500 mx-4">
             <Image
@@ -20,34 +27,70 @@ const renderItem = () => {
         </View>
 
         <View className="flex flex-1 ">
-          <Text className="font-bold mb-1">
+          <Text className="font-bold text-base">
             Michelle Saliba, <Text className="text-cabaret-500">35</Text>
           </Text>
-
-          <Text className="text-cabaret-500 font-bold mb-3">Lawyer</Text>
-          <Text className="text-slate-500 text-[12px]">
-            Fun and adventurous. I'm not afraid to try new things and I love to be spontaneous
-          </Text>
+          <Text className="text-cabaret-500 font-bold">Lawyer</Text>
         </View>
       </View>
+      <Text className="text-slate-500 text-[12px] mx-4 mt-4">
+        Fun and adventurous. I'm not afraid to try new things and I love to be spontaneous
+      </Text>
 
-      <View className="flex-row flex-wrap mt-4 justify-start gap-2">
-        <View className="flex flex-row  items-center bg-white py-3 px-3 rounded-full  border-solid border-[1px] border-[#D9D9D9]">
-          <MaterialCommunityIcons name="charity" size={16} color="black" />
-          <Text className="ml-2 text-[12px]">Charity</Text>
-        </View>
-        <View className="flex flex-row  items-center bg-white py-3 px-3 rounded-full  border-solid border-[1px] border-slate-200">
-          <MaterialCommunityIcons name="charity" size={16} color="black" />
-          <Text className="ml-2 text-[12px]">Charity</Text>
-        </View>
-        <View className="flex flex-row  items-center bg-white py-3 px-3 rounded-full  border-solid border-[1px] border-slate-200">
-          <MaterialCommunityIcons name="charity" size={16} color="black" />
-          <Text className="ml-2 text-[12px]">Charity</Text>
-        </View>
-        <View className="flex flex-row  items-center bg-white py-3 px-3 rounded-full  border-solid border-[1px] border-slate-200">
-          <MaterialCommunityIcons name="charity" size={16} color="black" />
-          <Text className="ml-2 text-[12px]">Charity</Text>
-        </View>
+      <ScrollView horizontal={true} className="ml-4 w-full pt-3 pb-1">
+        <Chip
+          pressableClassName="py-0 px-0"
+          textClassName="ml-1"
+          text=""
+          onPress={() => {}}
+          active={false}
+          Icon={CharityIcon}
+        />
+        <Chip
+          pressableClassName="py-0 px-0"
+          textClassName="ml-1"
+          text=""
+          onPress={() => {}}
+          active={false}
+          Icon={ReadingIcon}
+        />
+        <Chip
+          pressableClassName="py-0 px-0"
+          textClassName="ml-1"
+          text=""
+          onPress={() => {}}
+          active={false}
+          Icon={PhotographyIcon}
+        />
+        <Chip
+          pressableClassName="py-0 px-0"
+          textClassName="ml-1"
+          text=""
+          onPress={() => {}}
+          active={false}
+          Icon={CharityIcon}
+        />
+        <Chip
+          pressableClassName="py-0 px-0"
+          textClassName="ml-1"
+          text=""
+          onPress={() => {}}
+          active={false}
+          Icon={ReadingIcon}
+        />
+        <Chip
+          pressableClassName="py-0 px-0"
+          textClassName="ml-1"
+          text=""
+          onPress={() => {}}
+          active={false}
+          Icon={PhotographyIcon}
+        />
+      </ScrollView>
+      <View className="flex flex-row w-full justify-end">
+        <TouchableOpacity className="bg-cabaret-500">
+          
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -66,7 +109,7 @@ export default function Home() {
             <Text className="text-white font-bold">For You</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.shadow}
+            style={styles.grey_shadow}
             className="ml-4 flex-1 bg-white flex flex-row justify-center p-4 relative rounded-full"
           >
             <Text className="text-black font-bold">Nearby</Text>
@@ -79,14 +122,14 @@ export default function Home() {
   );
 }
 
-const styles = StyleSheet.create({
+const override_styles = StyleSheet.create({
   shadow: {
     shadowColor: "#000000",
     shadowOffset: {
       width: 0,
       height: 0,
     },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.2,
     shadowRadius: 1,
     elevation: 3,
   },
