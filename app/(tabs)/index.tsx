@@ -1,14 +1,15 @@
 import React from "react";
 import { useState } from "react";
-import { View, Image, Text, TextInput, StyleSheet, FlatList } from "react-native";
+import { View, Image, Text, TextInput, StyleSheet, FlatList, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Header, Footer, Button } from "@/components";
 import { LogoNavbar } from "@/components/logo";
 import { SafeAreaView } from "react-native-safe-area-context";
+import styles from "@/constants/styles";
 
 const renderItem = () => {
   return (
-    <View className="bg-white px-2 py-6 mb-4" style={styles.shadow}>
+    <View className="bg-white px-2 pb-6 mb-4" style={styles.grey_shadow}>
       <View className="flex-row items-center">
         <Image
           source={require("@/assets/images/sample_avatar.png")}
@@ -46,49 +47,38 @@ const renderItem = () => {
   );
 };
 
-export default function Login() {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
-
+export default function Home() {
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
-      <View className="flex-1 bg-white flex">
-        <View className="pt-4 pb-8">
+      <View className="flex-1">
+        <View className="pt-4 pb-4">
           <LogoNavbar />
         </View>
 
-        <View className="flex flex-row px-8 mb-8">
-          <Button addClassName="flex-1 mr-4">For you</Button>
-          <Button addClassName="flex-1 bg-white" textColor="black">
-            Nearby
-          </Button>
+        <View className="flex flex-row items-center justify-center w-4/5 mx-auto mb-5 mt-2">
+          <TouchableOpacity className="flex-1 bg-cabaret-500 flex flex-row justify-center p-4 relative rounded-full">
+            <Text className="text-white font-bold">For You</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.grey_shadow} className="ml-4 flex-1 bg-white flex flex-row justify-center p-4 relative rounded-full">
+            <Text className="text-black font-bold">Nearby</Text>
+          </TouchableOpacity>
         </View>
+
         <FlatList className="mx-4" data={new Array(3).fill(0)} renderItem={renderItem} />
       </View>
     </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
-  shadow: {
-    shadowColor: "#656566",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
-    elevation: 4,
-  },
-  cabaret_shadow: {
-    shadowColor: "#FFffff",
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
-    elevation: 4,
-  },
-});
+// const styles = StyleSheet.create({
+//   shadow: {
+//     shadowColor: "#656566",
+//     shadowOffset: {
+//       width: 0,
+//       height: 2,
+//     },
+//     shadowOpacity: 0.2,
+//     shadowRadius: 2,
+//     elevation: 3,
+//   },
+// });
