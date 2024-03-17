@@ -1,4 +1,3 @@
-import { Button } from "@/components";
 import React, { useState } from "react";
 import { View, Text, Image, ScrollView, TouchableOpacity, Switch } from "react-native";
 import { Link as ExpoLink } from "expo-router";

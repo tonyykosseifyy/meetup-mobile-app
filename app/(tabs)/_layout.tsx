@@ -4,7 +4,7 @@ import { Tabs } from "expo-router";
 import { Pressable, View, Text, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { theme } from "../../tailwind.config.js";
-import SettingsIcon from "@/assets/icons/settings.svg";
+import SettingsIcon from "@/assets/icons/navbar/settings.svg";
 
 export default function TabLayout() {
   return (
@@ -33,7 +33,7 @@ export default function TabLayout() {
         options={{
           title: "Settings",
           headerShown: true,
-          tabBarIcon: ({ color }) => <SettingsIcon width={20} height={20} fill={color} />,
+          tabBarIcon: ({ color }) => <SettingsIcon width={25} height={25} fill={color} />,
         }}
       />
     </Tabs>
@@ -84,7 +84,7 @@ const TabBarComponent = ({ active, options, onLayout, onPress }: any) => {
         {options.tabBarIcon ? (
           options.tabBarIcon({
             ref,
-            color: active ? theme!.extend!.colors!.cabaret[500] : "black",
+            color: active ? theme!.extend!.colors!.cabaret[500] : "#7a7a7a",
             active,
           })
         ) : (
