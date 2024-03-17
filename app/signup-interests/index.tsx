@@ -6,6 +6,8 @@ import Chip from "@/components/chip";
 import { ScrollView } from "react-native";
 import styles from "@/constants/styles";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { interests, icons } from "./data";
+import { SvgProps } from "react-native-svg";
 
 const Skip = (): React.JSX.Element => (
   <TouchableOpacity>
@@ -14,16 +16,8 @@ const Skip = (): React.JSX.Element => (
 );
 
 export default function SignUpOtp() {
-  const interests = [
-    "Technology",
-    "Design",
-    "Business",
-    "Entertainment",
-    "Education",
-    "Health",
-    "Science",
-    "Politics",
-  ];
+
+
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const toggleInterest = (interest: string) => {
     if (selectedInterests.includes(interest)) {
@@ -53,7 +47,7 @@ export default function SignUpOtp() {
                   key={interest}
                   active={selectedInterests.includes(interest)}
                   text={interest}
-                  icon={<View />}
+                  Icon={icons[interest]}
                 />
               ))}
             </View>
