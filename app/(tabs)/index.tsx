@@ -12,7 +12,7 @@ const renderItem = () => {
     <View className="bg-white px-2 py-6 mb-4" style={styles.grey_shadow}>
       <View className="flex flex-row items-center">
         <Image
-          source={require("@/assets/images/sample_avatar.png")}
+          source={require("@/assets/avatars/adjusted_avatar_1.png")}
           className="w-16 h-16  rounded-full border-solid border-2 border-cabaret-500 mx-4"
         />
         <View className="flex flex-1 gap-2 mb-4">
