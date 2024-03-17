@@ -1,10 +1,20 @@
 import React, { useState } from "react";
-import { ScrollView, Text, View, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  ScrollView,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { Header } from "@/components";
 import { Ionicons, AntDesign, Feather, Fontisto, MaterialIcons } from "@expo/vector-icons";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { formatDate } from "./utils";
 import { IRegistrationData } from "../../assets/data/registration_data";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 interface RegistrationProps {
   data: IRegistrationData;
@@ -27,10 +37,10 @@ export default function Registration({ data }: RegistrationProps) {
 
   return (
     <View className="flex-1 bg-white flex">
-      <ScrollView className="h-screen">
-        <View className="mb-4">
+      <KeyboardAwareScrollView className="h-screen">
+        {/* <View className="mb-4">
           <Header leftButton theme="light" />
-        </View>
+        </View> */}
         <View className="px-5">
           <View>
             <Text className="font-medium text-2xl">{data.title}</Text>
@@ -141,7 +151,7 @@ export default function Registration({ data }: RegistrationProps) {
             <View className="mt-20" />
           </View>
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </View>
   );
 }

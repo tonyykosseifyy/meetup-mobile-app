@@ -2,7 +2,7 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from "expo-status-bar";
 import {
   useFonts,
   Inter_400Regular,
@@ -10,6 +10,7 @@ import {
   Inter_600SemiBold,
   Inter_700Bold,
 } from "@expo-google-fonts/inter";
+import React from "react";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -43,11 +44,9 @@ export default function RootLayout() {
 function RootLayoutNav() {
   return (
     <>
-    <StatusBar style="dark" hidden={false} />
-    <SafeAreaView edges={['top']} className="flex-1">
-      <Stack screenOptions={{ headerShown: false }} />
-    </SafeAreaView>
-  </>
+      <StatusBar style="dark" hidden={false} />
 
+      <Stack screenOptions={{ headerShown: false }} />
+    </>
   );
 }
