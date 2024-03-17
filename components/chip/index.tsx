@@ -11,7 +11,7 @@ const Chip = ({ active, icon, text, onPress }: ChipProps) => {
     // Animate the value when `active` changes
     Animated.timing(animatedValue, {
       toValue: active ? 1 : 0,
-      duration: 200, // Duration of the animation
+      duration: 100, // Duration of the animation
       useNativeDriver: false, // `useNativeDriver` should be false when animating colors
     }).start();
   }, [active]);

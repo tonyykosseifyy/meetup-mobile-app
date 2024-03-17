@@ -16,7 +16,7 @@ export default function Settings() {
     <ScrollView className="flex-1 bg-white">
       <Image
         source={require("@/assets/images/sample_avatar.png")}
-        className="w-32 h-32 mx-auto mt-8 mb-2 self-center  rounded-full border-solid border-2 border-cabaret-500 mx-4"
+        className="w-32 h-32 mx-auto mt-8 mb-2 self-center rounded-full border-solid border-2 border-cabaret-500 mx-4"
       />
       <Text className="text-center font-bold text-lg">Michelle Saliba</Text>
       <View className="mx-4">

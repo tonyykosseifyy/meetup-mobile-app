@@ -21,7 +21,7 @@ export default function SignUpOtp() {
 
         <View className="mt-20 w-11/12 mx-auto">
           <OtpInput />
-          <View className="mt-4">
+          <View className="mt-32">
             <TouchableOpacity
               style={styles.cabaret_shadow}
               className="p-2 bg-cabaret-500 h-[60px] rounded-full flex flex-row items-center justify-center"
