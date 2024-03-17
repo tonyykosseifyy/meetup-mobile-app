@@ -9,10 +9,10 @@ const Footer = (props: FooterProps) => {
     <View className="mt-12 flex">
       <Text className="font-sans font-light text-base text-gray-700">Don’t have an account?</Text>
       <View className="mt-3 flex flex-row items-baseline justify-between w-full">
-        <Link theme={theme} href="/signup/mom">
+        <Link theme={theme} href="/(tabs)/">
           Register Myself
         </Link>
-        <Link theme={theme} href="/signup-otp">
+        <Link theme={theme} href="/signup-interests">
           Register Mom
         </Link>
       </View>
