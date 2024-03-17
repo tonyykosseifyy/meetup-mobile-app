@@ -1,3 +1,4 @@
+import React from "react";
 import Registration from "@/components/registration";
 import data from "@/assets/data/registration_data";
 import { SafeAreaView } from "react-native-safe-area-context";

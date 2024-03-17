@@ -38,9 +38,9 @@ export default function Registration({ data }: RegistrationProps) {
   return (
     <View className="flex-1 bg-white flex">
       <KeyboardAwareScrollView className="h-screen">
-        {/* <View className="mb-4">
+        <View className="mb-4">
           <Header leftButton theme="light" />
-        </View> */}
+        </View>
         <View className="px-5">
           <View>
             <Text className="font-medium text-2xl">{data.title}</Text>
