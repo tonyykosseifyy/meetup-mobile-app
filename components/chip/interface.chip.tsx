@@ -1,8 +1,9 @@
 import React from "react";
+import { SvgProps } from "react-native-svg";
 
 export interface ChipProps {
   active: boolean;
   text: string;
-  icon: React.ReactElement;
+  Icon: React.FC<SvgProps>;
   onPress: () => void
 }
