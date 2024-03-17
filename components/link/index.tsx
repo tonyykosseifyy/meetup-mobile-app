@@ -1,3 +1,4 @@
+import React from "react";
 import { TouchableOpacity, Text } from "react-native";
 import { Link } from "expo-router";
 import { LinkProps } from "./interface.link";

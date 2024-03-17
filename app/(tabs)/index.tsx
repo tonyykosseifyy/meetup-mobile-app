@@ -12,10 +12,11 @@ import GamingIcon from "@/assets/icons/interests/gaming.svg";
 import CharityIcon from "@/assets/icons/interests/charity.svg";
 import { ScrollView } from "react-native";
 import styles from "@/constants/styles";
+import InviteIcon from "@/assets/icons/invite.svg";
 
 const renderItem = () => {
   return (
-    <View className="bg-white px-2 py-9" style={override_styles.shadow}>
+    <View className="bg-white px-2 pt-8 pb-3" style={override_styles.shadow}>
       <View className="flex flex-row items-center mb-2">
         <View className="flex flex-row items-center h-full ">
           <View className="w-14 h-14 p-[0.5px] rounded-full border-solid border-2 border-cabaret-500 mx-4">
@@ -87,9 +88,10 @@ const renderItem = () => {
           Icon={PhotographyIcon}
         />
       </ScrollView>
-      <View className="flex flex-row w-full justify-end">
-        <TouchableOpacity className="bg-cabaret-500">
-          
+      <View className="flex flex-row w-full justify-end ">
+        <TouchableOpacity className="border-b-[0.5px] border-cabaret-500 mr-4 flex-row">
+          <InviteIcon fill={"#d14d72"} />
+          <Text className="font-bold text-cabaret-500 text-sm">Invite</Text>
         </TouchableOpacity>
       </View>
     </View>
