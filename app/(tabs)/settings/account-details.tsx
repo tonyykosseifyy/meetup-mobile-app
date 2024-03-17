@@ -43,5 +43,5 @@ export default function AccountDetails() {
       }
     };
   }, [isFocused, navigation]);
-  return <Registration data={data.edit} />;
+  return <Registration settings data={data.edit} />;
 }

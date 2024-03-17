@@ -18,9 +18,10 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 
 interface RegistrationProps {
   data: IRegistrationData;
+  settings?: boolean;
 }
 
-export default function Registration({ data }: RegistrationProps) {
+export default function Registration({ data, settings }: RegistrationProps) {
   const [password, setPassword] = useState<string>("");
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
 
@@ -33,15 +34,16 @@ export default function Registration({ data }: RegistrationProps) {
     setDate(date);
     setDatePickerVisibility(false);
   };
-  // Rest of the component code...
 
   return (
     <View className="flex-1 bg-white flex">
       <KeyboardAwareScrollView className="h-screen">
-        <View className="mb-6">
-          <Header leftButton theme="light" />
-        </View>
-        <View className="px-5">
+        {!settings && (
+          <View className="mb-6">
+            <Header leftButton theme="light" />
+          </View>
+        )}
+        <View className={`px-5 ${settings ? "mt-6" : "mt-0"}`}>
           <View>
             <Text className="font-medium text-2xl">{data.title}</Text>
             <Text className="mt-1 text-slate-800">{data.subtitle}</Text>
@@ -144,7 +146,9 @@ export default function Registration({ data }: RegistrationProps) {
                 style={styles.cabaret_shadow}
                 className="p-2 bg-cabaret-500 h-14 rounded-lg flex flex-row items-center justify-center"
               >
-                <Text className="text-white font-bold text-base">Continue</Text>
+                <Text className="text-white font-bold text-base">
+                  {settings ? "Confirm" : "Continue"}
+                </Text>
               </TouchableOpacity>
             </View>
 

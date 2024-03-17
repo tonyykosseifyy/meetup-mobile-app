@@ -1,7 +1,6 @@
 import { Button } from "@/components";
 import React, { useState } from "react";
 import { View, Text, Image, ScrollView, TouchableOpacity, Switch } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Link as ExpoLink } from "expo-router";
 import NotificationsIcon from "@/assets/icons/settings/notifications.svg";
 import ArrowIcon from "@/assets/icons/settings/arrow.svg";
@@ -55,15 +54,17 @@ export default function Settings() {
 
         <Text className="text-lg mb-4 mt-2">Account Information</Text>
 
-        <TouchableOpacity className="mb-4 flex p-4 flex-row items-center justify-between bg-[#F2F2F2] rounded-lg">
-          <View className="flex flex-row items-center">
-            <AccountDetailsIcon width={19} />
-            <Text className="ml-3">Account Details</Text>
-          </View>
-          <View>
-            <ArrowIcon width={19} />
-          </View>
-        </TouchableOpacity>
+        <ExpoLink href="/(tabs)/settings/account-details" asChild>
+          <TouchableOpacity className="mb-4 flex p-4 flex-row items-center justify-between bg-[#F2F2F2] rounded-lg">
+            <View className="flex flex-row items-center">
+              <AccountDetailsIcon width={19} />
+              <Text className="ml-3">Account Details</Text>
+            </View>
+            <View>
+              <ArrowIcon width={19} />
+            </View>
+          </TouchableOpacity>
+        </ExpoLink>
 
         <TouchableOpacity className="mb-4 flex p-4 flex-row items-center justify-between bg-[#F2F2F2] rounded-lg">
           <View className="flex flex-row items-center">
@@ -99,7 +100,6 @@ export default function Settings() {
           </View>
         </TouchableOpacity>
 
-      
         <View className="h-12" />
       </View>
     </ScrollView>
