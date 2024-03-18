@@ -3,8 +3,8 @@ import { Ref } from "react";
 
 export interface LoginResponse {
   data: {
-    accessToken: string;
-    refreshToken: string;
+    access: string;
+    refresh: string;
   };
 }
 

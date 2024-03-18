@@ -2,7 +2,7 @@ import { useState } from "react";
 import { View, TouchableOpacity, Text, TextInput, Alert } from "react-native";
 import { Ionicons, AntDesign, Feather } from "@expo/vector-icons";
 import { Header, Footer } from "@/components";
-import { Link as ExpoLink } from "expo-router";
+import { Link as ExpoLink, useRouter } from "expo-router";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "@/constants/styles";
@@ -12,16 +12,22 @@ export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+  const router = useRouter();
 
   const { mutate: loginUser, isLoading, isError, error, data } = useLogin();
   if (isError && error instanceof Error) {
     Alert.alert("Login Error", error!.message || "An error occurred during login.");
   }
   const handleLogin = () => {
-    loginUser({ email, password });
+    loginUser(
+      { email, password },
+      {
+        onSuccess: () => {
+          router.navigate("/signup-interests");
+        },
+      }
+    );
   };
-
-  console.log(data);
 
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
@@ -75,20 +81,18 @@ export default function Login() {
               </View>
 
               <View className="mt-28">
-                <ExpoLink href="/" asChild>
-                  <TouchableOpacity
-                    disabled={isLoading}
-                    onPress={handleLogin}
-                    style={styles.cabaret_shadow}
-                    className="p-2 bg-cabaret-500 h-14 rounded-lg flex flex-row items-center justify-center"
-                  >
-                    {isLoading ? (
-                      <Text className="text-white font-bold text-base">Logging in...</Text>
-                    ) : (
-                      <Text className="text-white font-bold text-base">Continue</Text>
-                    )}
-                  </TouchableOpacity>
-                </ExpoLink>
+                <TouchableOpacity
+                  disabled={isLoading}
+                  onPress={handleLogin}
+                  style={styles.cabaret_shadow}
+                  className="p-2 bg-cabaret-500 h-14 rounded-lg flex flex-row items-center justify-center"
+                >
+                  {isLoading ? (
+                    <Text className="text-white font-bold text-base">Logging in...</Text>
+                  ) : (
+                    <Text className="text-white font-bold text-base">Continue</Text>
+                  )}
+                </TouchableOpacity>
               </View>
             </View>
           </View>

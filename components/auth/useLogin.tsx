@@ -8,8 +8,8 @@ export function useLogin(): UseMutationResult<LoginResponse, unknown, LoginCrede
 
   return useMutation(({ email, password }) => login({ email, password }), {
     onSuccess: (response) => {
-      const { accessToken, refreshToken } = response.data; // Adjust according to your API response
-      updateTokens({ accessToken, refreshToken });
+      const { access, refresh } = response.data; // Adjust according to your API response
+      updateTokens({ accessToken: access, refreshToken: refresh });
     },
   });
 }
