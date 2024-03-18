@@ -49,7 +49,7 @@ const AnimatedTabBar = ({
   const { bottom } = useSafeAreaInsets();
 
   return (
-    <View className="bg-white py-1" style={[{ paddingBottom: bottom - 5 }, override_styles.shadow]}>
+    <View className="bg-white py-1" style={[{ paddingBottom: bottom - 30 }, override_styles.shadow]}>
       <View className="flex flex-row place-content-evenly justify-evenly">
         {routes.map((route: any, index: any) => {
           const active = index === activeIndex;
@@ -68,8 +68,6 @@ const AnimatedTabBar = ({
     </View>
   );
 };
-
-// Other imports remain unchanged
 
 const TabBarComponent = ({ active, options, onPress }: any) => {
   const iconAnim = useRef(new Animated.Value(0)).current; // Controls icon movement
@@ -108,7 +106,7 @@ const TabBarComponent = ({ active, options, onPress }: any) => {
             opacity: dotOpacityAnim, // Control opacity through animated value
           }}
         >
-          <View className="h-2 w-2 bg-cabaret-500 rounded-full" />
+          <View className="h-2 w-2 mt-2 mx-auto bg-cabaret-500 rounded-full" />
         </Animated.View>
       </Animated.View>
     </Pressable>
