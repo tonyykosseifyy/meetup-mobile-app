@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image, Text, TextInput, StyleSheet, FlatList, TouchableOpacity } from "react-native";
+import { View, Image, Text, StyleSheet, FlatList, TouchableOpacity } from "react-native";
 import { LogoNavbar } from "@/components/logo";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Chip from "@/components/chip";

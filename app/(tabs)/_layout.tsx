@@ -102,7 +102,6 @@ const TabBarComponent = ({ active, options, onPress }: any) => {
         )}
         <Animated.View
           style={{
-            // Other styles remain the same
             opacity: dotOpacityAnim, // Control opacity through animated value
           }}
         >
