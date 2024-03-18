@@ -1,22 +1,7 @@
 import { Button } from "@/components";
 import React, { useEffect } from "react";
-import {
-  View,
-  Text,
-  Image,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableOpacity,
-} from "react-native";
-import {
-  FontAwesome6,
-  FontAwesome,
-  EvilIcons,
-  Ionicons,
-  Octicons,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
+import { View, TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import data from "@/assets/data/registration_data";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import Registration from "@/components/registration";
@@ -58,5 +43,5 @@ export default function AccountDetails() {
       }
     };
   }, [isFocused, navigation]);
-  return <Registration data={data.edit} />;
+  return <Registration settings data={data.edit} />;
 }

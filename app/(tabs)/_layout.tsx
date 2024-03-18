@@ -1,12 +1,11 @@
-import React, { useEffect, useReducer, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6.js";
-import FontAwesome from "@expo/vector-icons/FontAwesome.js";
 import { Tabs } from "expo-router";
-import { LayoutChangeEvent, Pressable, View, Text } from "react-native";
+import { Pressable, View, Text, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Svg, { Path } from "react-native-svg";
-import Animated, { useAnimatedStyle, useDerivedValue, withTiming } from "react-native-reanimated";
 import { theme } from "../../tailwind.config.js";
+import SettingsIcon from "@/assets/icons/navbar/settings.svg";
+import { Animated } from "react-native";
 
 export default function TabLayout() {
   return (
@@ -19,7 +18,6 @@ export default function TabLayout() {
         options={{
           title: "Notifications",
           tabBarIcon: ({ color }) => {
-            console.log(color);
             return <FontAwesome6 size={28} name="bell" color={color} />;
           },
         }}
@@ -36,14 +34,12 @@ export default function TabLayout() {
         options={{
           title: "Settings",
           headerShown: true,
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="user" color={color} />,
+          tabBarIcon: ({ color }) => <SettingsIcon width={25} height={25} fill={color} />,
         }}
       />
     </Tabs>
   );
 }
-
-const AnimatedSvg = Animated.createAnimatedComponent(Svg);
 
 const AnimatedTabBar = ({
   state: { index: activeIndex, routes },
@@ -52,57 +48,8 @@ const AnimatedTabBar = ({
 }: any) => {
   const { bottom } = useSafeAreaInsets();
 
-  // get information about the components position on the screen -----
-
-  const reducer = (state: any, action: { x: number; index: number }) => {
-    // Add the new value to the state
-    return [...state, { x: action.x, index: action.index }];
-  };
-
-  const [layout, dispatch] = useReducer(reducer, []);
-  console.log(layout);
-
-  const handleLayout = (event: LayoutChangeEvent, index: number) => {
-    dispatch({ x: event.nativeEvent.layout.x, index });
-  };
-  // animations ------------------------------------------------------
-
-  const xOffset = useDerivedValue(() => {
-    // Our code hasn't finished rendering yet, so we can't use the layout values
-    if (layout.length !== routes.length) return 177 - 25;
-    // We can use the layout values
-    // Copy layout to avoid errors between different threads
-    // We subtract 25 so the active background is centered behind our TabBar Components
-    // 20 pixels is the width of the left part of the svg (the quarter circle outwards)
-    // 5 pixels come from the little gap between the active background and the circle of the TabBar Components
-    return [...layout].find(({ index }) => index === activeIndex)!.x - 25;
-    // Calculate the offset new if the activeIndex changes (e.g. when a new tab is selected)
-    // or the layout changes (e.g. when the components haven't finished rendering yet)
-  }, [activeIndex, layout]);
-
-  const animatedStyles = useAnimatedStyle(() => {
-    return {
-      // translateX to the calculated offset with a smooth transition
-      transform: [{ translateX: withTiming(xOffset.value, { duration: 250 }) }],
-    };
-  });
-
   return (
-    <View className="bg-cabaret-500" style={[{ paddingBottom: bottom }]}>
-      <AnimatedSvg
-        width={110}
-        height={60}
-        fill="none"
-        className="absolute bottom-[89px]"
-        viewBox="0 0 110 60"
-        style={animatedStyles}
-      >
-        <Path
-          fill={theme!.extend!.colors!.cabaret[500]}
-          d="M20 35C20 15.67 35.67 0 55 0s35 15.67 35 35v5c0 11.046 8.954 20 20 20H0c11.046 0 20-8.954 20-20v-5z"
-        />
-      </AnimatedSvg>
-
+    <View className="bg-white py-1" style={[{ paddingBottom: bottom - 30 }, override_styles.shadow]}>
       <View className="flex flex-row place-content-evenly justify-evenly">
         {routes.map((route: any, index: any) => {
           const active = index === activeIndex;
@@ -113,7 +60,6 @@ const AnimatedTabBar = ({
               key={route.key}
               active={active}
               options={options}
-              onLayout={(e: any) => handleLayout(e, index)}
               onPress={() => navigation.navigate(route.name)}
             />
           );
@@ -122,60 +68,59 @@ const AnimatedTabBar = ({
     </View>
   );
 };
-const TabBarComponent = ({ active, options, onLayout, onPress }: any) => {
-  // handle lottie animation -----------------------------------------
-  const ref = useRef(null);
+
+const TabBarComponent = ({ active, options, onPress }: any) => {
+  const iconAnim = useRef(new Animated.Value(0)).current; // Controls icon movement
+  const dotOpacityAnim = useRef(new Animated.Value(0)).current; // Controls dot visibility
 
   useEffect(() => {
-    if (active && ref?.current) {
-      // @ts-ignore
-      ref.current.play();
-    }
-  }, [active]);
-
-  // animations ------------------------------------------------------
-
-  const animatedComponentCircleStyles = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          scale: withTiming(active ? 1 : 0, { duration: 250 }),
-        },
-        {
-          translateY: withTiming(active ? -50 : 0, { duration: 250 }),
-        },
-      ],
-    };
-  });
-
-  const animatedIconContainerStyles = useAnimatedStyle(() => {
-    return {
-      opacity: withTiming(active ? 1 : 0.5, { duration: 250 }),
-      transform: [
-        {
-          translateY: withTiming(active ? -50 : 0, { duration: 250 }),
-        },
-      ],
-    };
-  });
+    // Animate icon upwards and dot opacity
+    Animated.parallel([
+      Animated.timing(iconAnim, {
+        toValue: active ? -10 : 0, // Move up by 10 units if active
+        duration: 200,
+        useNativeDriver: true, // Using native driver for better performance
+      }),
+      Animated.timing(dotOpacityAnim, {
+        toValue: active ? 1 : 0, // Fully visible if active, otherwise hidden
+        duration: 200,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, [active, iconAnim, dotOpacityAnim]);
 
   return (
-    <Pressable onPress={onPress} onLayout={onLayout} className="h-[60px] w-[60px] mt-[-5px]">
-      <Animated.View
-        className="flex-1 rounded-[30px] bg-white"
-        style={animatedComponentCircleStyles}
-      />
-      <Animated.View
-        className="absolute top-0 bottom-0 right-0 left-0 justify-center items-center"
-        style={animatedIconContainerStyles}
-      >
-        {/* @ts-ignore */}
+    <Pressable onPress={onPress} className="py-3">
+      <Animated.View style={{ transform: [{ translateY: iconAnim }] }}>
         {options.tabBarIcon ? (
-          options.tabBarIcon({ ref, color: active ? theme!.extend!.colors!.cabaret[500] : "white" })
+          options.tabBarIcon({
+            color: active ? theme!.extend!.colors!.cabaret[500] : "#7a7a7a",
+            active,
+          })
         ) : (
           <Text>?</Text>
         )}
+        <Animated.View
+          style={{
+            opacity: dotOpacityAnim, // Control opacity through animated value
+          }}
+        >
+          <View className="h-2 w-2 mt-2 mx-auto bg-cabaret-500 rounded-full" />
+        </Animated.View>
       </Animated.View>
     </Pressable>
   );
 };
+
+const override_styles = StyleSheet.create({
+  shadow: {
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+    elevation: 3,
+  },
+});

@@ -5,5 +5,7 @@ export interface ChipProps {
   active: boolean;
   text: string;
   Icon: React.FC<SvgProps>;
-  onPress: () => void
+  onPress: () => void;
+  pressableClassName?: string;
+  textClassName?: string;
 }

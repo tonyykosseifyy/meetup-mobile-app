@@ -12,7 +12,6 @@ import {
 import React from "react";
 import { AuthProvider } from "@/components/auth/AuthProvider";
 
-export { ErrorBoundary } from "expo-router";
 import { QueryClient, QueryClientProvider } from "react-query";
 import axios from "axios";
 
