@@ -1,27 +1,17 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-// Define the shape of the context data
 interface AuthContextType {
   accessToken: string | null;
   refreshToken: string | null;
-  updateTokens: ({
-    accessToken,
-    refreshToken,
-  }: {
-    accessToken: string;
-    refreshToken: string;
-  }) => void;
+  updateTokens: (tokens: { accessToken: string; refreshToken: string }) => Promise<void>;
 }
 
-// Create the context with an undefined initial value but specify the type
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Custom hook to use the auth context
 export function useAuth(): AuthContextType {
   const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
+  if (!context) throw new Error("useAuth must be used within an AuthProvider");
   return context;
 }
 
@@ -29,18 +19,23 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
-// AuthProvider component with proper typing
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [accessToken, setAccessToken] = useState<string | null>(() => {
-    return localStorage.getItem("accessToken");
-  });
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [refreshToken, setRefreshToken] = useState<string | null>(null);
 
-  const [refreshToken, setRefreshToken] = useState<string | null>(() => {
-    return localStorage.getItem("refreshToken");
-  });
+  useEffect(() => {
+    // Fetch tokens from AsyncStorage when the component mounts
+    const loadTokens = async () => {
+      const storedAccessToken = await AsyncStorage.getItem("accessToken");
+      const storedRefreshToken = await AsyncStorage.getItem("refreshToken");
+      setAccessToken(storedAccessToken);
+      setRefreshToken(storedRefreshToken);
+    };
 
-  // Specify the argument types directly in the function parameter
-  const updateTokens = ({
+    loadTokens();
+  }, []);
+
+  const updateTokens = async ({
     accessToken,
     refreshToken,
   }: {
@@ -49,12 +44,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }) => {
     setAccessToken(accessToken);
     setRefreshToken(refreshToken);
-    localStorage.setItem("accessToken", accessToken);
-    localStorage.setItem("refreshToken", refreshToken);
+    await AsyncStorage.setItem("accessToken", accessToken);
+    await AsyncStorage.setItem("refreshToken", refreshToken);
   };
 
-  // Provide the context value with explicit type
-  const value = { accessToken, refreshToken, updateTokens };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ accessToken, refreshToken, updateTokens }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };

@@ -10,10 +10,13 @@ import {
   Inter_700Bold,
 } from "@expo-google-fonts/inter";
 import React from "react";
+import { AuthProvider } from "@/components/auth/AuthProvider";
 
 export { ErrorBoundary } from "expo-router";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 SplashScreen.preventAutoHideAsync();
+const queryClient = new QueryClient();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
@@ -44,7 +47,11 @@ function RootLayoutNav() {
   return (
     <>
       <StatusBar style="dark" hidden={false} />
-      <Stack screenOptions={{ headerShown: false }} />
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <Stack screenOptions={{ headerShown: false }} />
+        </AuthProvider>
+      </QueryClientProvider>
     </>
   );
 }

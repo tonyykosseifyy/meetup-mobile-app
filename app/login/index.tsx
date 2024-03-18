@@ -13,13 +13,15 @@ export default function Login() {
   const [password, setPassword] = useState<string>("");
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
 
-  const { mutate: loginUser, isLoading, isError, error } = useLogin();
+  const { mutate: loginUser, isLoading, isError, error, data } = useLogin();
   if (isError && error instanceof Error) {
     Alert.alert("Login Error", error!.message || "An error occurred during login.");
   }
   const handleLogin = () => {
     loginUser({ email, password });
   };
+
+  console.log(data);
 
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
@@ -75,6 +77,8 @@ export default function Login() {
               <View className="mt-28">
                 <ExpoLink href="/" asChild>
                   <TouchableOpacity
+                    disabled={isLoading}
+                    onPress={handleLogin}
                     style={styles.cabaret_shadow}
                     className="p-2 bg-cabaret-500 h-14 rounded-lg flex flex-row items-center justify-center"
                   >
