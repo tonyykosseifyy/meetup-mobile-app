@@ -5,6 +5,7 @@ import { Pressable, View, Text, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { theme } from "../../tailwind.config.js";
 import SettingsIcon from "@/assets/icons/navbar/settings.svg";
+import { Animated } from "react-native";
 
 export default function TabLayout() {
   return (
@@ -48,7 +49,7 @@ const AnimatedTabBar = ({
   const { bottom } = useSafeAreaInsets();
 
   return (
-    <View className="bg-white py-1" style={[{ paddingBottom: bottom - 6 }, override_styles.shadow]}>
+    <View className="bg-white py-1" style={[{ paddingBottom: bottom - 5 }, override_styles.shadow]}>
       <View className="flex flex-row place-content-evenly justify-evenly">
         {routes.map((route: any, index: any) => {
           const active = index === activeIndex;
@@ -67,30 +68,49 @@ const AnimatedTabBar = ({
     </View>
   );
 };
-const TabBarComponent = ({ active, options, onLayout, onPress }: any) => {
-  const ref = useRef(null);
+
+// Other imports remain unchanged
+
+const TabBarComponent = ({ active, options, onPress }: any) => {
+  const iconAnim = useRef(new Animated.Value(0)).current; // Controls icon movement
+  const dotOpacityAnim = useRef(new Animated.Value(0)).current; // Controls dot visibility
 
   useEffect(() => {
-    if (active && ref?.current) {
-      // @ts-ignore
-      ref.current.play();
-    }
-  }, [active]);
+    // Animate icon upwards and dot opacity
+    Animated.parallel([
+      Animated.timing(iconAnim, {
+        toValue: active ? -10 : 0, // Move up by 10 units if active
+        duration: 200,
+        useNativeDriver: true, // Using native driver for better performance
+      }),
+      Animated.timing(dotOpacityAnim, {
+        toValue: active ? 1 : 0, // Fully visible if active, otherwise hidden
+        duration: 200,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, [active, iconAnim, dotOpacityAnim]);
 
   return (
-    <Pressable onPress={onPress} onLayout={onLayout} className="py-3">
-      <View>
-        {/* @ts-ignore */}
+    <Pressable onPress={onPress} className="py-3">
+      <Animated.View style={{ transform: [{ translateY: iconAnim }] }}>
         {options.tabBarIcon ? (
           options.tabBarIcon({
-            ref,
             color: active ? theme!.extend!.colors!.cabaret[500] : "#7a7a7a",
             active,
           })
         ) : (
           <Text>?</Text>
         )}
-      </View>
+        <Animated.View
+          style={{
+            // Other styles remain the same
+            opacity: dotOpacityAnim, // Control opacity through animated value
+          }}
+        >
+          <View className="h-2 w-2 bg-cabaret-500 rounded-full" />
+        </Animated.View>
+      </Animated.View>
     </Pressable>
   );
 };
