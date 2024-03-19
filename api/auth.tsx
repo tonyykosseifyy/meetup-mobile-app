@@ -66,6 +66,7 @@ export const login = ({ email, password }: LoginCredentials): Promise<LoginRespo
 
 export const register = ({ email, password }: RegisterCredentials): Promise<RegisterResponse> =>
   axios.post("/auth/register/", { email, password });
+
 export const refreshToken = ({
   refreshToken,
 }: RefreshTokenCredentials): Promise<RefreshTokenResponse> =>

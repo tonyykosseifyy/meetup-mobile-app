@@ -9,8 +9,12 @@ import CharityIcon from "@/assets/icons/interests/charity.svg";
 import { ScrollView } from "react-native";
 import styles from "@/constants/styles";
 import InviteIcon from "@/assets/icons/home/invite.svg";
+import { useQuery } from "react-query";
+import { lookup } from "@/api/users";
+import { AxiosError } from "axios";
 
 const renderItem = () => {
+  // request to get the users
   return (
     <View className="bg-white px-2 pt-6 pb-6 relative" style={override_styles.shadow}>
       <TouchableOpacity
@@ -101,6 +105,17 @@ const renderItem = () => {
 };
 
 export default function Home() {
+  const { isLoading, error, data: users } = useQuery("lookup", lookup);
+
+  if (isLoading) return <Text>Loading users...</Text>;
+  if (error as AxiosError) {
+    console.log("error=>>>", error);
+
+    return <Text>Error: </Text>;
+  }
+  if (!users) return <Text>No users found</Text>;
+  console.log(users);
+
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
       <View className="flex-1">

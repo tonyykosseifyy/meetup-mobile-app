@@ -11,7 +11,7 @@ import {
 } from "@expo-google-fonts/inter";
 import React from "react";
 import { AuthProvider } from "@/components/auth/AuthProvider";
-
+// import { DevToolsBubble } from "react-native-react-query-devtools";
 import { QueryClient, QueryClientProvider } from "react-query";
 import axios from "axios";
 
@@ -47,13 +47,12 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <StatusBar style="dark" hidden={false} />
-      <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <Stack screenOptions={{ headerShown: false }} />
-        </AuthProvider>
-      </QueryClientProvider>
-    </>
+      <AuthProvider>
+        <Stack screenOptions={{ headerShown: false }} />
+      </AuthProvider>
+      {/* <DevToolsBubble /> */}
+    </QueryClientProvider>
   );
 }
