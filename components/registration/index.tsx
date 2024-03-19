@@ -22,6 +22,7 @@ import { formatDate } from "./utils";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useRouter } from "expo-router";
+import { AxiosError } from "axios";
 
 interface RegistrationProps {
   data: IRegistrationData;
@@ -38,13 +39,18 @@ export default function Registration({ data, settings }: RegistrationProps) {
   const [dateChanged, setDateChanged] = useState<boolean>(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(() => {
+    const now = new Date();
+    return new Date(now.setFullYear(now.getFullYear() - 50));
+  });
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   // Setup the mutations
   const { mutate: registerUser, isLoading: isRegistering } = useRegister();
   const { mutate: setUserInfo, isLoading: isSettingUserInfo } = useSetUserInfo();
-  console.log(date?.toISOString().slice(0, 10));
-  const handleConfirm = (date: any) => {
+  const [error, setError] = useState<unknown>();
+
+  const handleConfirm = (date: Date) => {
+    console.log(date.toString());
     setDate(date);
     setDatePickerVisibility(false);
   };
@@ -53,6 +59,9 @@ export default function Registration({ data, settings }: RegistrationProps) {
     registerUser(
       { email, password },
       {
+        onError: (error) => {
+          setError(error);
+        },
         onSuccess: () => {
           setUserInfo(
             {
@@ -71,16 +80,8 @@ export default function Registration({ data, settings }: RegistrationProps) {
                 console.log("here");
                 router.replace("/signup-otp/");
               },
-              onError: (error) => {
-                // Handle error for setting user info
-                Alert.alert("Error setting user info");
-              },
             }
           );
-        },
-        onError: (error) => {
-          // Handle error for registration
-          Alert.alert("Registration Error");
         },
       }
     );
@@ -201,6 +202,13 @@ export default function Registration({ data, settings }: RegistrationProps) {
                 onChangeText={setBiography}
               />
             </View>
+            {error && (
+              <View className="mt-4">
+                <Text className="text-red-500">
+                  {error?.response?.data?.message ?? "An error occured with registration."}
+                </Text>
+              </View>
+            )}
 
             <View className="mt-8">
               <TouchableOpacity
@@ -218,7 +226,6 @@ export default function Registration({ data, settings }: RegistrationProps) {
                 )}
               </TouchableOpacity>
             </View>
-
             <View className="mt-20" />
           </View>
         </View>

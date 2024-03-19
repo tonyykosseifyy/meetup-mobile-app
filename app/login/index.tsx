@@ -12,12 +12,11 @@ export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+  const [error, setError] = useState<unknown>();
   const router = useRouter();
 
-  const { mutate: loginUser, isLoading, isError, error, data } = useLogin();
-  if (isError && error instanceof Error) {
-    Alert.alert("Login Error", error!.message || "An error occurred during login.");
-  }
+  const { mutate: loginUser, isLoading, isError } = useLogin();
+
   const handleLogin = () => {
     loginUser(
       { email, password },
@@ -27,6 +26,9 @@ export default function Login() {
             router.back();
           }
           router.replace("/(tabs)");
+        },
+        onError: (error) => {
+          setError(error);
         },
       }
     );
@@ -82,6 +84,18 @@ export default function Login() {
                   <Text className="text-gray-700 font-normal text-xs">Forgot Password?</Text>
                 </TouchableOpacity>
               </View>
+
+              {error ? (
+                <View className="mt-4">
+                  <Text className="text-red-500">
+                    {error?.response?.data?.message ??
+                      error?.response.data.detail ??
+                      "An error occured with registration."}
+                  </Text>
+                </View>
+              ) : (
+                <></>
+              )}
 
               <View className="mt-28">
                 <TouchableOpacity

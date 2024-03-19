@@ -68,11 +68,21 @@ export interface VerifyEmailResponse {
     refresh: string;
   };
 }
-export const login = ({ email, password }: LoginCredentials): Promise<LoginResponse> =>
-  axios.post("/auth/login/", { email, password });
+export const login = ({ email, password }: LoginCredentials): Promise<LoginResponse> => {
+  try {
+    return axios.post("/auth/login/", { email, password });
+  } catch (e) {
+    throw e;
+  }
+};
 
-export const register = ({ email, password }: RegisterCredentials): Promise<RegisterResponse> =>
-  axios.post("/auth/register/", { email, password });
+export const register = ({ email, password }: RegisterCredentials): Promise<RegisterResponse> => {
+  try {
+    return axios.post("/auth/register/", { email, password });
+  } catch (e) {
+    throw e;
+  }
+};
 
 export const refreshToken = ({
   refreshToken,
