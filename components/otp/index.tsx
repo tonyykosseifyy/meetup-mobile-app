@@ -1,11 +1,11 @@
 import React from "react";
 import OTPInputView from "@twotalltotems/react-native-otp-input";
-import React from "react";
+
 import { StyleSheet, View } from "react-native";
 
 interface OTPProps {
   value: string;
-  onChange: React.Dispatch<React.SetStateAction<String>>;
+  onChange: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const OTP = ({ value, onChange }: OTPProps) => {

@@ -61,6 +61,13 @@ export interface VerifyEmailCredentials {
   password: string;
   code: string;
 }
+
+export interface VerifyEmailResponse {
+  data: {
+    access: string;
+    refresh: string;
+  };
+}
 export const login = ({ email, password }: LoginCredentials): Promise<LoginResponse> =>
   axios.post("/auth/login/", { email, password });
 
@@ -85,7 +92,11 @@ export const setUserInfo = async (
   }
 };
 
-export const verifyEmail = async ({ email, password, code }: VerifyEmailCredentials) => {
+export const verifyEmail = async ({
+  email,
+  password,
+  code,
+}: VerifyEmailCredentials): Promise<VerifyEmailResponse> => {
   try {
     return await axios.post("/auth/verify-email/", { email, password, code });
   } catch (e) {

@@ -6,15 +6,31 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "@/constants/styles";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { useVerifyEmail } from "@/components/auth/useVerifyEmail";
+import { useRouter } from "expo-router";
 
 export default function SignUpOtp() {
   const auth = useAuth();
+  console.log(auth.userInfo);
   const email = auth.userInfo!.email;
   const password = auth.userInfo!.password;
   const { mutate: verifyEmail, isLoading } = useVerifyEmail();
-  const [code, onChangeCode] = useState<String>("");
+  const [code, onChangeCode] = useState<string>("");
+  const router = useRouter();
+
   const handleSubmit = () => {
-    verifyEmail({ email, password });
+    console.log(email, password);
+    if (email && password)
+      verifyEmail(
+        { email, password, code },
+        {
+          onSuccess: () => {
+            while (router.canGoBack()) {
+              router.back();
+            }
+            router.replace("/(tabs)");
+          },
+        }
+      );
   };
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
@@ -33,10 +49,13 @@ export default function SignUpOtp() {
             <OtpInput value={code} onChange={onChangeCode} />
             <View className="mt-32">
               <TouchableOpacity
+                onPress={handleSubmit}
                 style={styles.cabaret_shadow}
                 className="p-2 bg-cabaret-500 h-[60px] rounded-full flex flex-row items-center justify-center"
               >
-                <Text className="text-white font-bold text-base">Continue</Text>
+                <Text className="text-white font-bold text-base">
+                  {isLoading ? "Loading..." : "Continue"}
+                </Text>
               </TouchableOpacity>
             </View>
             <View className="flex flex-row items-baseline justify-center mt-4">
