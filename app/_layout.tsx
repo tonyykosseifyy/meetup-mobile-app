@@ -13,12 +13,10 @@ import React from "react";
 import { AuthProvider } from "@/components/auth/AuthProvider";
 // import { DevToolsBubble } from "react-native-react-query-devtools";
 import { QueryClient, QueryClientProvider } from "react-query";
-import axios from "axios";
 
 SplashScreen.preventAutoHideAsync();
 const queryClient = new QueryClient();
 
-axios.defaults.baseURL = "http://172.20.10.2:8000";
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({

@@ -7,6 +7,7 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "@/constants/styles";
 import { useLogin } from "@/components/auth/useLogin";
+import { setTokens, showTokens } from "@/api/tokens";
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
@@ -22,7 +23,10 @@ export default function Login() {
     loginUser(
       { email, password },
       {
-        onSuccess: () => {
+        onSuccess: (data) => {
+          const { access, refresh } = data.data;
+          setTokens(access, refresh);
+          showTokens();
           while (router.canGoBack()) {
             router.back();
           }

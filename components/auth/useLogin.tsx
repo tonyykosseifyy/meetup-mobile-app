@@ -1,15 +1,14 @@
 // Assuming '@/api/auth' is correctly pathed relative to this file
 import { useMutation, UseMutationResult } from "react-query";
-import { login, LoginCredentials, LoginResponse } from "@/api/auth"; // Adjust the import path as necessary
+import { LoginCredentials, LoginResponse } from "@/api/interfaces";
 import { useAuth } from "./AuthProvider";
+import { login } from "@/api/auth";
 
 export function useLogin(): UseMutationResult<LoginResponse, unknown, LoginCredentials, unknown> {
-  const { updateTokens } = useAuth();
-
   return useMutation(({ email, password }) => login({ email, password }), {
     onSuccess: (response) => {
-      const { access, refresh } = response.data; // Adjust according to your API response
-      updateTokens({ accessToken: access, refreshToken: refresh });
+      const { access, refresh } = response.data;
+      console.log("SUCCESSSS"); // Adjust according to your API response
     },
   });
 }

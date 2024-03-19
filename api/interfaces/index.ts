@@ -1,4 +1,4 @@
-import { IUser } from "./users.interface";
+import { IUser, UserInfo } from "./users.interface";
 import {
   RegisterCredentials,
   RegisterResponse,
@@ -8,6 +8,8 @@ import {
   LoginResponse,
   RefreshTokenCredentials,
   RefreshTokenResponse,
+  VerifyEmailResponse,
+  VerifyEmailCredentials,
 } from "./auth.interface";
 
 export {
@@ -20,4 +22,7 @@ export {
   LoginResponse,
   RefreshTokenCredentials,
   RefreshTokenResponse,
+  UserInfo,
+  VerifyEmailResponse,
+  VerifyEmailCredentials,
 };
