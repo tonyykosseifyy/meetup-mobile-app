@@ -22,14 +22,11 @@ const api = axios.create({
 // });
 
 api.interceptors.response.use(
-  (response) => {
-    console.log("response");
-    return response;
-  },
-  async (error) => {
+  (response) => response.data,
+  async (error: AxiosError) => {
     console.log("eeeeerrr");
 
-    if (error.response.status !== 401) {
+    if (error && error.response && error.response.status !== 401) {
       return Promise.reject(error); // Reject usual errors
     }
 
@@ -46,16 +43,19 @@ api.interceptors.response.use(
       const body = {
         refresh: refreshToken,
       };
-      const headers = {
-        "Content-Type": "application/json",
-      };
-      const response = await axios.post(`${API_URL}${url}`, body, { headers });
+      const response = await axios.post(`${API_URL}${url}`, body, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       await AsyncStorage.setItem("accessToken", response.data.access);
       // await AsyncStorage.setItem("refreshToken", response.data.refresh_token);
       console.log(response.data);
-      error.response.config.headers["Authorization"] = "Bearer " + response.data.access;
-      return axios(error.response.config); // Retry request with new token
+      if (error.response) {
+        error.response.config.headers["Authorization"] = "Bearer " + response.data.access;
+        return axios(error.response.config);
+      }
     } catch (err: any) {
       console.log("Error refresrhing token:", err);
       router.navigate("/login");
