@@ -3,18 +3,13 @@ import { View, Image, Text, StyleSheet, FlatList, TouchableOpacity } from "react
 import { LogoNavbar } from "@/components/logo";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Chip from "@/components/chip";
-import ReadingIcon from "@/assets/icons/interests/reading.svg";
-import PhotographyIcon from "@/assets/icons/interests/photography.svg";
 import CharityIcon from "@/assets/icons/interests/charity.svg";
 import { ScrollView } from "react-native";
 import styles from "@/constants/styles";
 import InviteIcon from "@/assets/icons/home/invite.svg";
 import { useQuery } from "react-query";
 import { lookup } from "@/api/users";
-import { AxiosError } from "axios";
 import { IUser } from "@/api/interfaces";
-
-
 
 function calculateAge(birthDate: string | Date | number): number {
   const birthday = new Date(birthDate);
@@ -29,14 +24,11 @@ function calculateAge(birthDate: string | Date | number): number {
   return age;
 }
 
-
-
 interface CardProps {
   item: IUser;
 }
+
 const renderItem = ({ item }: CardProps) => {
-  // request to get the users
-  console.log(item);
   return (
     <View className="bg-white px-2 pt-6 pb-6 relative" style={override_styles.shadow}>
       <TouchableOpacity
@@ -57,7 +49,8 @@ const renderItem = ({ item }: CardProps) => {
 
         <View className="flex flex-1">
           <Text className="font-bold text-base">
-            {item.user_info?.full_name}, <Text className="text-cabaret-500">
+            {item.user_info?.full_name},{" "}
+            <Text className="text-cabaret-500">
               {/* generate the age, dateofbirht - local date */}
               {calculateAge(item.user_info?.date_of_birth)}
             </Text>
@@ -65,9 +58,7 @@ const renderItem = ({ item }: CardProps) => {
           <Text className="text-cabaret-500 font-bold">{item.user_info?.occupation}</Text>
         </View>
       </View>
-      <Text className="text-slate-500 text-[12px] mx-4 mt-4">
-        {item.user_info?.biography}
-      </Text>
+      <Text className="text-slate-500 text-[12px] mx-4 mt-4">{item.user_info?.biography}</Text>
 
       <ScrollView horizontal={true} className="ml-4 w-full pt-3 pb-1">
         {/* map through the interests and display them as chips */
@@ -85,12 +76,6 @@ const renderItem = ({ item }: CardProps) => {
           );
         })}
       </ScrollView>
-      <View className="flex flex-row w-full justify-end ">
-        {/* <TouchableOpacity className="border-b-[0.5px] border-cabaret-500 mr-4 flex-row">
-          <InviteIcon fill={"#d14d72"} />
-          <Text className="font-bold text-cabaret-500 text-sm">Invite</Text>
-        </TouchableOpacity> */}
-      </View>
     </View>
   );
 };

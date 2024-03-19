@@ -1,7 +1,6 @@
 import { useMutation, UseMutationResult } from "react-query";
-import { setUserInfo, setUserInfoCredentials, setUserInfoResponse } from "@/api/auth";
-import { useAuth } from "./AuthProvider";
-import { userInfo } from "os";
+import { setUserInfo } from "@/api/auth";
+import { setUserInfoCredentials, setUserInfoResponse } from "@/api/interfaces";
 
 export function useSetUserInfo(): UseMutationResult<
   setUserInfoResponse,
@@ -9,13 +8,5 @@ export function useSetUserInfo(): UseMutationResult<
   setUserInfoCredentials,
   unknown
 > {
-  const { updateUserInfo } = useAuth();
-  return useMutation((userInfo) => setUserInfo(userInfo), {
-    onSuccess: (response) => {
-      updateUserInfo(response.data);
-    },
-    onError: (e) => {
-      console.log(e?.response?.data);
-    },
-  });
+  return useMutation((userInfo) => setUserInfo(userInfo));
 }

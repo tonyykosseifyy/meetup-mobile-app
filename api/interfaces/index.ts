@@ -1,4 +1,4 @@
-import { IUser, UserInfo } from "./users.interface";
+import { IUser, UserInfo, UpdateUserInfo } from "./users.interface";
 import {
   RegisterCredentials,
   RegisterResponse,
@@ -25,4 +25,5 @@ export {
   UserInfo,
   VerifyEmailResponse,
   VerifyEmailCredentials,
+  UpdateUserInfo,
 };
