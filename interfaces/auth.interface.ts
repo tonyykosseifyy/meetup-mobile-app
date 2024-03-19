@@ -27,15 +27,6 @@ interface IRefreshResponse {
   refreshToken: string;
 }
 
-interface IUpdateUserInfo {
-  full_name?: string;
-  date_of_birth?: string;
-  occupation?: string;
-  biography?: string;
-  interests?: number[];
-  email?: string;
-  password?: string;
-}
 
 interface ISetUserResponse {
   full_name: string;
@@ -65,7 +56,6 @@ export {
   IRegisterRequest,
   IRefreshRequest,
   IRefreshResponse,
-  IUpdateUserInfo,
   ISetUserResponse,
   IVerifyEmailRequest,
   IVerifyEmailResponse,

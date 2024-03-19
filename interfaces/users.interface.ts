@@ -10,13 +10,13 @@ interface IUser {
 }
 
 interface IUserInfo {
-  full_name: string | null;
-  date_of_birth: string | null;
-  occupation: string | null;
-  biography: string | null;
-  interests: number[] | [] | null;
-  email: string | null;
-  password: string | null;
+  full_name: string;
+  date_of_birth: string;
+  occupation: string;
+  biography: string;
+  interests: number[];
+  email: string;
+  password: string;
 }
 
 interface IUpdateUserInfo {
