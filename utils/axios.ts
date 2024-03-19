@@ -55,7 +55,7 @@ api.interceptors.response.use(
       // await AsyncStorage.setItem("refreshToken", response.data.refresh_token);
       console.log(response.data);
       error.response.config.headers["Authorization"] = "Bearer " + response.data.access;
-      return axios(error.config); // Retry request with new token
+      return axios(error.response.config); // Retry request with new token
     } catch (err: any) {
       console.log("Error refresrhing token:", err);
       router.navigate("/login");
