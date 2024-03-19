@@ -9,20 +9,9 @@ import styles from "@/constants/styles";
 import InviteIcon from "@/assets/icons/home/invite.svg";
 import { useQuery } from "react-query";
 import { lookup } from "@/api/users";
-import { IUser } from "@/api/interfaces";
+import { IUser } from "@/interfaces";
+import {}
 
-function calculateAge(birthDate: string | Date | number): number {
-  const birthday = new Date(birthDate);
-  const today = new Date();
-  let age = today.getFullYear() - birthday.getFullYear();
-  const m = today.getMonth() - birthday.getMonth();
-
-  if (m < 0 || (m === 0 && today.getDate() < birthday.getDate())) {
-    age--;
-  }
-
-  return age;
-}
 
 interface CardProps {
   item: IUser;

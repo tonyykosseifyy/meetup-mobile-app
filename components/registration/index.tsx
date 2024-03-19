@@ -9,7 +9,7 @@ import { formatDate } from "./utils";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useRouter } from "expo-router";
-import { UserInfo } from "@/api/interfaces";
+import { UserInfo } from "@/interfaces";
 import { useUpdateUserInfo } from "../auth/useUpdateUserInfo";
 import { useQuery } from "react-query";
 import { getMe } from "@/api/users";

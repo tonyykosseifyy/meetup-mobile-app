@@ -1,38 +1,39 @@
-export interface LoginResponse {
+interface LoginResponse {
   data: {
     access: string;
     refresh: string;
   };
 }
 
-export interface LoginCredentials {
+interface LoginCredentials {
   email: string;
   password: string;
 }
-export interface RegisterResponse {
+
+interface IRegisterResponse {
   data: {
     access: string;
     refresh: string;
   };
 }
 
-export interface RegisterCredentials {
+interface IRegisterRequest {
   email: string;
   password: string;
 }
 
-export interface RefreshTokenCredentials {
+interface RefreshTokenCredentials {
   refreshToken: string;
 }
 
-export interface RefreshTokenResponse {
+interface RefreshTokenResponse {
   data: {
     accessToken: string;
     refreshToken: string;
   };
 }
 
-export interface setUserInfoCredentials {
+interface setUserInfoCredentials {
   full_name?: string;
   date_of_birth?: string;
   occupation?: string;
@@ -41,7 +42,7 @@ export interface setUserInfoCredentials {
   email?: string;
   password?: string;
 }
-export interface setUserInfoResponse {
+interface setUserInfoResponse {
   data: {
     full_name: string | null;
     date_of_birth: string | null;
@@ -53,15 +54,28 @@ export interface setUserInfoResponse {
   };
 }
 
-export interface VerifyEmailCredentials {
+interface VerifyEmailCredentials {
   email: string;
   password: string;
   code: string;
 }
 
-export interface VerifyEmailResponse {
+interface VerifyEmailResponse {
   data: {
     access: string;
     refresh: string;
   };
 }
+
+export {
+  LoginResponse,
+  LoginCredentials,
+  IRegisterResponse,
+  IRegisterRequest,
+  RefreshTokenCredentials,
+  RefreshTokenResponse,
+  setUserInfoCredentials,
+  setUserInfoResponse,
+  VerifyEmailResponse,
+  VerifyEmailCredentials,
+};

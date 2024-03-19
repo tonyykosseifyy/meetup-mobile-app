@@ -1,6 +1,6 @@
 // Assuming '@/api/auth' is correctly pathed relative to this file
 import { useMutation, UseMutationResult } from "react-query";
-import { LoginCredentials, LoginResponse } from "@/api/interfaces";
+import { LoginCredentials, LoginResponse } from "@/interfaces";
 import { login } from "@/api/auth";
 import { AxiosError } from "axios";
 

@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, ReactNode } from "react";
 import { useQuery } from "react-query";
 import { getMe, lookup } from "@/api/users";
 import { clearTokens } from "@/api/tokens";
-import { UserInfo } from "@/api/interfaces";
+import { UserInfo } from "@/interfaces";
 import { router } from "expo-router";
 import { View, Text } from "react-native";
 

@@ -1,7 +1,6 @@
 import axios from "../utils/axios";
-import { Ref } from "react";
 import {
-  RegisterCredentials,
+  IRegisterRequest,
   RegisterResponse,
   setUserInfoCredentials,
   setUserInfoResponse,
@@ -11,7 +10,7 @@ import {
   RefreshTokenResponse,
   VerifyEmailCredentials,
   VerifyEmailResponse,
-} from "./interfaces";
+} from "../interfaces";
 
 export const login = ({ email, password }: LoginCredentials): Promise<LoginResponse> => {
   try {
@@ -21,7 +20,7 @@ export const login = ({ email, password }: LoginCredentials): Promise<LoginRespo
   }
 };
 
-export const register = ({ email, password }: RegisterCredentials): Promise<RegisterResponse> => {
+export const register = ({ email, password }: IRegisterRequest): Promise<RegisterResponse> => {
   try {
     return axios.post("/auth/register/", { email, password });
   } catch (e) {

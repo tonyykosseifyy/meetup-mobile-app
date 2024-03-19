@@ -1,6 +1,6 @@
 import { useMutation, UseMutationResult } from "react-query";
 import { setUserInfo } from "@/api/auth";
-import { setUserInfoCredentials, setUserInfoResponse } from "@/api/interfaces";
+import { setUserInfoCredentials, setUserInfoResponse } from "@/interfaces";
 
 export function useSetUserInfo(): UseMutationResult<
   setUserInfoResponse,

@@ -1,7 +1,7 @@
 import { IUser, UserInfo, UpdateUserInfo } from "./users.interface";
 import {
-  RegisterCredentials,
-  RegisterResponse,
+  IRegisterRequest,
+  IRegisterResponse,
   setUserInfoCredentials,
   setUserInfoResponse,
   LoginCredentials,
@@ -14,8 +14,8 @@ import {
 
 export {
   IUser,
-  RegisterCredentials,
-  RegisterResponse,
+  IRegisterRequest,
+  IRegisterResponse,
   setUserInfoCredentials,
   setUserInfoResponse,
   LoginCredentials,

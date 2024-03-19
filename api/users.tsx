@@ -1,6 +1,6 @@
 import axios from "../utils/axios";
-import { IUser } from "./interfaces";
-import { UserInfo, UpdateUserInfo } from "../api/interfaces";
+import { IUser } from "../interfaces";
+import { UserInfo, UpdateUserInfo } from "../interfaces";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface LookupResponse {
