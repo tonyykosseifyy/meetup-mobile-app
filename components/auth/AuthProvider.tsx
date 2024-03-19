@@ -25,7 +25,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
-  const { error, data } = useQuery("lookup", getMe);
+  const { error, data } = useQuery("lookup", getMe, {
+    retry: false, 
+  });
 
   // if (error) {
   //   setIsAuthenticated(false);

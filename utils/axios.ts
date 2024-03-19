@@ -29,39 +29,36 @@ api.interceptors.response.use(
   async (error) => {
     console.log("eeeeerrr");
 
-    if (error.response.status === 401 && !error.config._retry) {
-      error.config._retry = true;
+    if (error.response.status !== 401) {
+      return Promise.reject(error); // Reject usual errors
+    }
 
-      const refreshToken = await AsyncStorage.getItem("refreshToken");
-      if (!refreshToken) {
-        console.error("Refresh token not found. Redirecting to login...");
-        router.navigate("/login");
-        return Promise.reject(error);
-      }
-
-      try {
-        const url = "/auth/token/refresh/";
-        console.log("refreshToken=|||>>", refreshToken);
-        const body = {
-          refresh: refreshToken,
-        };
-        const headers = {
-          "Content-Type": "application/json",
-        };
-        const response = await axios.post(`${API_URL}${url}`, body, { headers: headers });
-
-        await AsyncStorage.setItem("accessToken", response.data.access);
-        // await AsyncStorage.setItem("refreshToken", response.data.refresh_token);
-
-        error.response.config.headers["Authorization"] = "Bearer " + response.data.access_token;
-        // Retry request with new token only once
-        // return axios(error.config);
-      } catch (err: any) {
-        console.log("Error refresrhing token:", err);
-        router.navigate("/login");
-      }
-    } else {
+    const refreshToken = await AsyncStorage.getItem("refreshToken");
+    if (!refreshToken) {
+      console.error("Refresh token not found. Redirectings tso login...");
+      // router.navigate("/login");
       return Promise.reject(error);
+    }
+
+    try {
+      const url = "/auth/token/refresh/";
+      console.log("refreshToken=|||>>", refreshToken);
+      const body = {
+        refresh: refreshToken,
+      };
+      const headers = {
+        "Content-Type": "application/json",
+      };
+      const response = await axios.post(`${API_URL}${url}`, body, { headers: headers });
+
+      await AsyncStorage.setItem("accessToken", response.data.access);
+      // await AsyncStorage.setItem("refreshToken", response.data.refresh_token);
+
+      error.response.config.headers["Authorization"] = "Bearer " + response.data.access_token;
+      return axios(error.response.config); // Retry request with new token
+    } catch (err: any) {
+      console.log("Error refresrhing token:", err);
+      router.navigate("/login");
     }
   }
 );
