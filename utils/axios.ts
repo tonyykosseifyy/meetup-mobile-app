@@ -49,13 +49,13 @@ api.interceptors.response.use(
       const headers = {
         "Content-Type": "application/json",
       };
-      const response = await axios.post(`${API_URL}${url}`, body, { headers: headers });
+      const response = await axios.post(`${API_URL}${url}`, body, { headers });
 
       await AsyncStorage.setItem("accessToken", response.data.access);
       // await AsyncStorage.setItem("refreshToken", response.data.refresh_token);
-
-      error.response.config.headers["Authorization"] = "Bearer " + response.data.access_token;
-      return axios(error.response.config); // Retry request with new token
+      console.log(response.data);
+      error.response.config.headers["Authorization"] = "Bearer " + response.data.access;
+      return axios(error.config); // Retry request with new token
     } catch (err: any) {
       console.log("Error refresrhing token:", err);
       router.navigate("/login");
