@@ -11,7 +11,7 @@ import {
 } from "@expo-google-fonts/inter";
 import React from "react";
 import { AuthProvider } from "@/components/auth/AuthProvider";
-import { DevToolsBubble } from "react-native-react-query-devtools";
+// import { DevToolsBubble } from "react-native-react-query-devtools";
 import { QueryClient, QueryClientProvider } from "react-query";
 import axios from "axios";
 
