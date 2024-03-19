@@ -1,3 +1,4 @@
+import React from "react";
 import OTPInputView from "@twotalltotems/react-native-otp-input";
 import { StyleSheet, View } from "react-native";
 

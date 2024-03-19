@@ -11,6 +11,7 @@ import styles from "@/constants/styles";
 import InviteIcon from "@/assets/icons/home/invite.svg";
 
 const renderItem = () => {
+  // request to get the users
   return (
     <View className="bg-white px-2 pt-6 pb-6 relative" style={override_styles.shadow}>
       <TouchableOpacity
