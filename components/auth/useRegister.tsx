@@ -1,9 +1,11 @@
 import { useMutation, UseMutationResult } from "react-query";
-import { register, RegisterCredentials, RegisterResponse } from "@/api/auth";
+import { RegisterCredentials, RegisterResponse } from "@/api/interfaces";
+import { AxiosError } from "axios";
+import { register } from "@/api/auth";
 
 export function useRegister(): UseMutationResult<
   RegisterResponse,
-  unknown,
+  AxiosError,
   RegisterCredentials,
   unknown
 > {

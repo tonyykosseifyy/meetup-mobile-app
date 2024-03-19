@@ -8,12 +8,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "@/constants/styles";
 import { useLogin } from "@/components/auth/useLogin";
 import { setTokens, showTokens } from "@/api/tokens";
+import { AxiosError } from "axios";
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
-  const [error, setError] = useState<unknown>();
+  const [error, setError] = useState<AxiosError>();
   const router = useRouter();
 
   const { mutate: loginUser, isLoading, isError } = useLogin();

@@ -12,9 +12,31 @@ import InviteIcon from "@/assets/icons/home/invite.svg";
 import { useQuery } from "react-query";
 import { lookup } from "@/api/users";
 import { AxiosError } from "axios";
+import { IUser } from "@/api/interfaces";
 
-const renderItem = () => {
+
+
+function calculateAge(birthDate: string | Date | number): number {
+  const birthday = new Date(birthDate);
+  const today = new Date();
+  let age = today.getFullYear() - birthday.getFullYear();
+  const m = today.getMonth() - birthday.getMonth();
+
+  if (m < 0 || (m === 0 && today.getDate() < birthday.getDate())) {
+    age--;
+  }
+
+  return age;
+}
+
+
+
+interface CardProps {
+  item: IUser;
+}
+const renderItem = ({ item }: CardProps) => {
   // request to get the users
+  console.log(item);
   return (
     <View className="bg-white px-2 pt-6 pb-6 relative" style={override_styles.shadow}>
       <TouchableOpacity
@@ -35,64 +57,33 @@ const renderItem = () => {
 
         <View className="flex flex-1">
           <Text className="font-bold text-base">
-            Michelle Saliba, <Text className="text-cabaret-500">35</Text>
+            {item.user_info?.full_name}, <Text className="text-cabaret-500">
+              {/* generate the age, dateofbirht - local date */}
+              {calculateAge(item.user_info?.date_of_birth)}
+            </Text>
           </Text>
-          <Text className="text-cabaret-500 font-bold">Lawyer</Text>
+          <Text className="text-cabaret-500 font-bold">{item.user_info?.occupation}</Text>
         </View>
       </View>
       <Text className="text-slate-500 text-[12px] mx-4 mt-4">
-        Fun and adventurous. I'm not afraid to try new things and I love to be spontaneous
+        {item.user_info?.biography}
       </Text>
 
       <ScrollView horizontal={true} className="ml-4 w-full pt-3 pb-1">
-        <Chip
-          pressableClassName="py-0 px-0"
-          textClassName="ml-1"
-          text=""
-          onPress={() => {}}
-          active={false}
-          Icon={CharityIcon}
-        />
-        <Chip
-          pressableClassName="py-0 px-0"
-          textClassName="ml-1"
-          text=""
-          onPress={() => {}}
-          active={false}
-          Icon={ReadingIcon}
-        />
-        <Chip
-          pressableClassName="py-0 px-0"
-          textClassName="ml-1"
-          text=""
-          onPress={() => {}}
-          active={false}
-          Icon={PhotographyIcon}
-        />
-        <Chip
-          pressableClassName="py-0 px-0"
-          textClassName="ml-1"
-          text=""
-          onPress={() => {}}
-          active={false}
-          Icon={CharityIcon}
-        />
-        <Chip
-          pressableClassName="py-0 px-0"
-          textClassName="ml-1"
-          text=""
-          onPress={() => {}}
-          active={false}
-          Icon={ReadingIcon}
-        />
-        <Chip
-          pressableClassName="py-0 px-0"
-          textClassName="ml-1"
-          text=""
-          onPress={() => {}}
-          active={false}
-          Icon={PhotographyIcon}
-        />
+        {/* map through the interests and display them as chips */
+        item.user_info?.interests.map((interest, index) => {
+          return (
+            <Chip
+              key={index}
+              pressableClassName="py-0 px-0"
+              textClassName="ml-1"
+              text={interest}
+              onPress={() => {}}
+              active={false}
+              Icon={CharityIcon}
+            />
+          );
+        })}
       </ScrollView>
       <View className="flex flex-row w-full justify-end ">
         {/* <TouchableOpacity className="border-b-[0.5px] border-cabaret-500 mr-4 flex-row">
@@ -105,17 +96,15 @@ const renderItem = () => {
 };
 
 export default function Home() {
-  const { isLoading, error, data: users } = useQuery("lookup", lookup);
+  const { isLoading, error, data } = useQuery("lookup", lookup);
 
   if (isLoading) return <Text>Loading users...</Text>;
-  if (error as AxiosError) {
-    console.log("error=>>>");
-    console.log(error);
-
-    return <Text>Error: </Text>;
+  if (error) {
+    console.error("Error fetching users:", error);
+    return <Text>Error fetching users.</Text>;
   }
-  if (!users) return <Text>No users found</Text>;
-  console.log(users);
+
+  if (!data) return <Text>No users found</Text>;
 
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
@@ -136,7 +125,11 @@ export default function Home() {
           </TouchableOpacity>
         </View>
 
-        <FlatList className="py-4" data={new Array(3).fill(0)} renderItem={renderItem} />
+        <FlatList
+          data={data.data} // Assuming the fetched data is an object with a 'users' array
+          renderItem={renderItem}
+          keyExtractor={(item) => item.email} // Ensure 'item.id' is a unique identifier
+        />
       </View>
     </SafeAreaView>
   );

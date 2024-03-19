@@ -37,7 +37,7 @@ export default function Registration({ data, settings }: RegistrationProps) {
   const [occupation, setOccupation] = useState<string>("");
   const [biography, setBiography] = useState<string>("");
   const [dateChanged, setDateChanged] = useState<boolean>(false);
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState<boolean>(false);
 
   const [date, setDate] = useState(() => {
     const now = new Date();
@@ -50,16 +50,18 @@ export default function Registration({ data, settings }: RegistrationProps) {
   const [error, setError] = useState<unknown>();
 
   const handleConfirm = (date: Date) => {
-    console.log(date.toString());
     setDate(date);
     setDatePickerVisibility(false);
   };
+
   const router = useRouter();
+
   const handleSubmit = () => {
     registerUser(
       { email, password },
       {
         onError: (error) => {
+          console.log(error.data);
           setError(error);
         },
         onSuccess: () => {
@@ -70,6 +72,7 @@ export default function Registration({ data, settings }: RegistrationProps) {
               full_name: fullName,
               date_of_birth: date?.toISOString().slice(0, 10),
               occupation,
+              biography,
             },
             {
               onSuccess: () => {

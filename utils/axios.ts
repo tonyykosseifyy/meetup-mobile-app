@@ -2,7 +2,7 @@ import axios, { AxiosError } from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 
-const API_URL = "http://192.168.2.194:8000";
+const API_URL = "https://5988-212-28-227-52.ngrok-free.app";
 
 const api = axios.create({
   baseURL: API_URL,
@@ -36,7 +36,7 @@ api.interceptors.response.use(
     const refreshToken = await AsyncStorage.getItem("refreshToken");
     if (!refreshToken) {
       console.error("Refresh token not found. Redirectings tso login...");
-      // router.navigate("/login");
+      router.navigate("/login");
       return Promise.reject(error);
     }
 
