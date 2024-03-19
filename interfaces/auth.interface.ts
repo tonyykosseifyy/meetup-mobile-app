@@ -1,20 +1,16 @@
-interface LoginResponse {
-  data: {
-    access: string;
-    refresh: string;
-  };
+interface ILoginResponse {
+  access: string;
+  refresh: string;
 }
 
-interface LoginCredentials {
+interface ILoginRequest {
   email: string;
   password: string;
 }
 
 interface IRegisterResponse {
-  data: {
-    access: string;
-    refresh: string;
-  };
+  access: string;
+  refresh: string;
 }
 
 interface IRegisterRequest {
@@ -22,18 +18,16 @@ interface IRegisterRequest {
   password: string;
 }
 
-interface RefreshTokenCredentials {
+interface IRefreshRequest {
   refreshToken: string;
 }
 
-interface RefreshTokenResponse {
-  data: {
-    accessToken: string;
-    refreshToken: string;
-  };
+interface IRefreshResponse {
+  accessToken: string;
+  refreshToken: string;
 }
 
-interface setUserInfoCredentials {
+interface IUpdateUserInfo {
   full_name?: string;
   date_of_birth?: string;
   occupation?: string;
@@ -42,40 +36,37 @@ interface setUserInfoCredentials {
   email?: string;
   password?: string;
 }
-interface setUserInfoResponse {
-  data: {
-    full_name: string | null;
-    date_of_birth: string | null;
-    occupation: string | null;
-    biography: string | null;
-    interests: number[] | [] | null;
-    email: string | null;
-    password: string | null;
-  };
+
+interface ISetUserResponse {
+  full_name: string;
+  date_of_birth: string;
+  occupation: string;
+  biography: string;
+  interests: number[];
+  email: string;
+  password: string;
 }
 
-interface VerifyEmailCredentials {
+interface IVerifyEmailRequest {
   email: string;
   password: string;
   code: string;
 }
 
-interface VerifyEmailResponse {
-  data: {
-    access: string;
-    refresh: string;
-  };
+interface IVerifyEmailResponse {
+  access: string;
+  refresh: string;
 }
 
 export {
-  LoginResponse,
-  LoginCredentials,
+  ILoginResponse,
+  ILoginRequest,
   IRegisterResponse,
   IRegisterRequest,
-  RefreshTokenCredentials,
-  RefreshTokenResponse,
-  setUserInfoCredentials,
-  setUserInfoResponse,
-  VerifyEmailResponse,
-  VerifyEmailCredentials,
+  IRefreshRequest,
+  IRefreshResponse,
+  IUpdateUserInfo,
+  ISetUserResponse,
+  IVerifyEmailRequest,
+  IVerifyEmailResponse,
 };
