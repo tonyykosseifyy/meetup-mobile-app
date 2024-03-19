@@ -1,21 +1,18 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-interface UserInfo {
-  full_name: string | null;
-  date_of_birth: string | null;
-  occupation: string | null;
-  biography: string | null;
-  interests: number[] | [] | null;
-  email: string | null;
-  password: string | null;
-}
+import React, { createContext, useContext, useState, ReactNode } from "react";
+import { useQuery } from "react-query";
+import { getMe, lookup } from "@/api/users";
+import { clearTokens } from "@/api/tokens";
+import { UserInfo } from "@/api/interfaces";
+import { router } from "expo-router";
+import { View, Text } from "react-native";
 
 interface AuthContextType {
-  accessToken: string | null;
-  refreshToken: string | null;
-  userInfo: UserInfo | null;
-  updateTokens: (tokens: { accessToken: string; refreshToken: string }) => Promise<void>;
-  updateUserInfo: (userInfo: UserInfo) => void;
+  userInfo: UserInfo | null | undefined;
+  updateUserInfo: (userInfo: UserInfo | null | undefined) => void;
+}
+
+interface AuthProviderProps {
+  children: ReactNode;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -26,49 +23,24 @@ export function useAuth(): AuthContextType {
   return context;
 }
 
-interface AuthProviderProps {
-  children: ReactNode;
-}
-
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [refreshToken, setRefreshToken] = useState<string | null>(null);
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const [userInfo, setUserInfo] = useState<UserInfo | undefined | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
-  useEffect(() => {
-    // Fetch tokens from AsyncStorage when the component mounts
-    const loadTokens = async () => {
-      const storedAccessToken = await AsyncStorage.getItem("accessToken");
-      const storedRefreshToken = await AsyncStorage.getItem("refreshToken");
-      setAccessToken(storedAccessToken);
-      setRefreshToken(storedRefreshToken);
-    };
+  // if (error) {
+  //   setIsAuthenticated(false);
+  //   clearTokens();
+  // }
+  // if (data) {
+  //   console.log(data.data);
+  //   // setUserInfo(data);
+  // }
 
-    loadTokens();
-  }, []);
-
-  const updateTokens = async ({
-    accessToken,
-    refreshToken,
-  }: {
-    accessToken: string;
-    refreshToken: string;
-  }) => {
-    setAccessToken(accessToken);
-    setRefreshToken(refreshToken);
-    await AsyncStorage.setItem("accessToken", accessToken);
-    await AsyncStorage.setItem("refreshToken", refreshToken);
-  };
-
-  const updateUserInfo = async (userInfo: UserInfo) => {
+  const updateUserInfo = async (userInfo: UserInfo | undefined | null) => {
     setUserInfo(userInfo);
   };
-
+  children;
   return (
-    <AuthContext.Provider
-      value={{ accessToken, refreshToken, userInfo, updateTokens, updateUserInfo }}
-    >
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={{ userInfo, updateUserInfo }}>{children}</AuthContext.Provider>
   );
 };

@@ -109,7 +109,8 @@ export default function Home() {
 
   if (isLoading) return <Text>Loading users...</Text>;
   if (error as AxiosError) {
-    console.log("error=>>>", error);
+    console.log("error=>>>");
+    console.log(error);
 
     return <Text>Error: </Text>;
   }
