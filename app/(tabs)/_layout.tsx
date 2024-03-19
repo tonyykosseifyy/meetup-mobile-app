@@ -49,7 +49,10 @@ const AnimatedTabBar = ({
   const { bottom } = useSafeAreaInsets();
 
   return (
-    <View className="bg-white py-1" style={[{ paddingBottom: bottom - 30 }, override_styles.shadow]}>
+    <View
+      className="bg-white py-1"
+      style={[{ paddingBottom: bottom - 30 }, override_styles.shadow]}
+    >
       <View className="flex flex-row place-content-evenly justify-evenly">
         {routes.map((route: any, index: any) => {
           const active = index === activeIndex;

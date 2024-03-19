@@ -8,13 +8,19 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from "react-native";
-import { Header } from "@/components";
-import { Ionicons, AntDesign, Feather, Fontisto, MaterialIcons } from "@expo/vector-icons";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
+// Assuming other imports are correctly set up as in your snippet
+
+// Import your hooks
+import { useRegister } from "../auth/useRegister";
+import { useSetUserInfo } from "../auth/useSetUserInfo";
+import { IRegistrationData } from "@/assets/data/registration_data";
+import Header from "../header";
+import { AntDesign, Feather, Fontisto, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { formatDate } from "./utils";
-import { IRegistrationData } from "../../assets/data/registration_data";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 interface RegistrationProps {
   data: IRegistrationData;
@@ -22,19 +28,55 @@ interface RegistrationProps {
 }
 
 export default function Registration({ data, settings }: RegistrationProps) {
+  // State hooks for form inputs
+  const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
-
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [fullName, setFullName] = useState<string>(""); // Assuming you have a fullName field
   const [dateChanged, setDateChanged] = useState<boolean>(false);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const [date, setDate] = useState(new Date());
-
+  const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+  // Setup the mutations
+  const { mutate: registerUser, isLoading: isRegistering } = useRegister();
+  const { mutate: setUserInfo, isLoading: isSettingUserInfo } = useSetUserInfo();
   const handleConfirm = (date: any) => {
     setDate(date);
     setDatePickerVisibility(false);
   };
+  const handleSubmit = () => {
+    registerUser(
+      { email, password },
+      {
+        onSuccess: () => {
+          setUserInfo(
+            {
+              email,
+              password,
+              full_name: fullName,
+              date_of_birth: date?.toISOString(),
+            },
+            {
+              onSuccess: () => {
+                // Handle success for setting user info
+                Alert.alert("Success", "Registration and user info set successfully.");
+              },
+              onError: (error) => {
+                // Handle error for setting user info
+                Alert.alert("Error setting user info");
+              },
+            }
+          );
+        },
+        onError: (error) => {
+          // Handle error for registration
+          Alert.alert("Registration Error");
+        },
+      }
+    );
+  };
 
+  // The UI component code remains the same as in your snippet
   return (
     <View className="flex-1 bg-white flex">
       <KeyboardAwareScrollView className="h-screen">
@@ -56,6 +98,8 @@ export default function Registration({ data, settings }: RegistrationProps) {
                 placeholder={data.name}
                 className="flex-1 h-6 ml-3"
                 placeholderTextColor={"#666666"}
+                value={fullName}
+                onChangeText={setFullName}
               />
             </View>
             {/* occupation */}
@@ -77,6 +121,8 @@ export default function Registration({ data, settings }: RegistrationProps) {
                 keyboardType="email-address"
                 className="flex-1 h-6 ml-3"
                 placeholderTextColor={"#666666"}
+                onChangeText={setEmail}
+                value={email}
               />
             </View>
             {/* password */}
@@ -143,12 +189,18 @@ export default function Registration({ data, settings }: RegistrationProps) {
 
             <View className="mt-8">
               <TouchableOpacity
+                onPress={handleSubmit}
+                disabled={isRegistering || isSettingUserInfo || !email || !password || !date}
                 style={styles.cabaret_shadow}
                 className="p-2 bg-cabaret-500 h-14 rounded-lg flex flex-row items-center justify-center"
               >
-                <Text className="text-white font-bold text-base">
-                  {settings ? "Confirm" : "Continue"}
-                </Text>
+                {isRegistering || isSettingUserInfo ? (
+                  <Text className="text-white font-bold text-base">Logging in...</Text>
+                ) : (
+                  <Text className="text-white font-bold text-base">
+                    {settings ? "Confirm" : "Continue"}
+                  </Text>
+                )}
               </TouchableOpacity>
             </View>
 
@@ -158,6 +210,13 @@ export default function Registration({ data, settings }: RegistrationProps) {
       </KeyboardAwareScrollView>
     </View>
   );
+}
+function setDate(date: any) {
+  throw new Error("Function not implemented.");
+}
+
+function setDatePickerVisibility(arg0: boolean) {
+  throw new Error("Function not implemented.");
 }
 
 const styles = StyleSheet.create({

@@ -23,7 +23,10 @@ export default function Login() {
       { email, password },
       {
         onSuccess: () => {
-          router.navigate("/signup-interests");
+          while (router.canGoBack()) {
+            router.back();
+          }
+          router.replace("/(tabs)");
         },
       }
     );
@@ -82,7 +85,7 @@ export default function Login() {
 
               <View className="mt-28">
                 <TouchableOpacity
-                  disabled={isLoading}
+                  disabled={isLoading || !email || !password}
                   onPress={handleLogin}
                   style={styles.cabaret_shadow}
                   className="p-2 bg-cabaret-500 h-14 rounded-lg flex flex-row items-center justify-center"
