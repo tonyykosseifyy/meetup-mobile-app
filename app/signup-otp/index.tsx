@@ -1,26 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Header } from "@/components";
 import { OtpInput } from "@/components";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "@/constants/styles";
+import { useAuth } from "@/components/auth/AuthProvider";
+import { useVerifyEmail } from "@/components/auth/useVerifyEmail";
 
 export default function SignUpOtp() {
+  const auth = useAuth();
+  const email = auth.userInfo!.email;
+  const password = auth.userInfo!.password;
+  const { mutate: verifyEmail, isLoading } = useVerifyEmail();
+  const [code, onChangeCode] = useState<String>("");
+  const handleSubmit = () => {
+    verifyEmail({ email, password });
+  };
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
       <View className="flex-1 bg-white flex">
-        <Header leftButton theme={"light"} />
+        <Header theme={"light"} />
         <View className="px-5">
           <View className="mt-7">
             <Text className="text-black font-medium text-2xl">Verification Code</Text>
             <Text className="text-slate-800 mt-1 leading-5">
               Please enter code we just send to{" "}
-              <Text className="color-cabaret-500 font-bold">michelle@gmail.com</Text>
+              <Text className="color-cabaret-500 font-bold">{email}</Text>
             </Text>
           </View>
 
           <View className="mt-20 w-11/12 mx-auto">
-            <OtpInput />
+            <OtpInput value={code} onChange={onChangeCode} />
             <View className="mt-32">
               <TouchableOpacity
                 style={styles.cabaret_shadow}

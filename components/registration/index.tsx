@@ -21,6 +21,7 @@ import { AntDesign, Feather, Fontisto, Ionicons, MaterialIcons } from "@expo/vec
 import { formatDate } from "./utils";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { useRouter } from "expo-router";
 
 interface RegistrationProps {
   data: IRegistrationData;
@@ -31,7 +32,9 @@ export default function Registration({ data, settings }: RegistrationProps) {
   // State hooks for form inputs
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [fullName, setFullName] = useState<string>(""); // Assuming you have a fullName field
+  const [fullName, setFullName] = useState<string>("");
+  const [occupation, setOccupation] = useState<string>("");
+  const [biography, setBiography] = useState<string>("");
   const [dateChanged, setDateChanged] = useState<boolean>(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -40,10 +43,12 @@ export default function Registration({ data, settings }: RegistrationProps) {
   // Setup the mutations
   const { mutate: registerUser, isLoading: isRegistering } = useRegister();
   const { mutate: setUserInfo, isLoading: isSettingUserInfo } = useSetUserInfo();
+  console.log(date?.toISOString().slice(0, 10));
   const handleConfirm = (date: any) => {
     setDate(date);
     setDatePickerVisibility(false);
   };
+  const router = useRouter();
   const handleSubmit = () => {
     registerUser(
       { email, password },
@@ -54,12 +59,17 @@ export default function Registration({ data, settings }: RegistrationProps) {
               email,
               password,
               full_name: fullName,
-              date_of_birth: date?.toISOString(),
+              date_of_birth: date?.toISOString().slice(0, 10),
+              occupation,
             },
             {
               onSuccess: () => {
-                // Handle success for setting user info
-                Alert.alert("Success", "Registration and user info set successfully.");
+                while (router.canGoBack()) {
+                  router.back();
+                }
+
+                console.log("here");
+                router.replace("/signup-otp/");
               },
               onError: (error) => {
                 // Handle error for setting user info
@@ -110,6 +120,8 @@ export default function Registration({ data, settings }: RegistrationProps) {
                 placeholder={data.occupation}
                 className="flex-1 h-6 ml-3"
                 placeholderTextColor={"#666666"}
+                value={occupation}
+                onChangeText={setOccupation}
               />
             </View>
 
@@ -165,8 +177,9 @@ export default function Registration({ data, settings }: RegistrationProps) {
                 mode="date"
                 onConfirm={handleConfirm}
                 onCancel={() => setDatePickerVisibility(false)}
-                maximumDate={new Date(2023, 0, 0)}
+                maximumDate={new Date()}
                 minimumDate={new Date(1900, 0, 0)}
+                date={date}
                 onChange={() => setDateChanged(true)}
               />
             </View>
@@ -184,6 +197,8 @@ export default function Registration({ data, settings }: RegistrationProps) {
                 placeholder={data.bio}
                 placeholderTextColor={"#666666"}
                 style={{ textAlignVertical: "top" }}
+                value={biography}
+                onChangeText={setBiography}
               />
             </View>
 
@@ -210,13 +225,6 @@ export default function Registration({ data, settings }: RegistrationProps) {
       </KeyboardAwareScrollView>
     </View>
   );
-}
-function setDate(date: any) {
-  throw new Error("Function not implemented.");
-}
-
-function setDatePickerVisibility(arg0: boolean) {
-  throw new Error("Function not implemented.");
 }
 
 const styles = StyleSheet.create({

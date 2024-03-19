@@ -46,14 +46,21 @@ export interface setUserInfoCredentials {
 }
 export interface setUserInfoResponse {
   data: {
-    full_name: string;
-    date_of_birth: string;
-    occupation: string;
-    biography: string;
-    interests: number[];
+    full_name: string | null;
+    date_of_birth: string | null;
+    occupation: string | null;
+    biography: string | null;
+    interests: number[] | [] | null;
+    email: string | null;
+    password: string | null;
   };
 }
 
+export interface VerifyEmailCredentials {
+  email: string;
+  password: string;
+  code: string;
+}
 export const login = ({ email, password }: LoginCredentials): Promise<LoginResponse> =>
   axios.post("/auth/login/", { email, password });
 
@@ -66,5 +73,21 @@ export const refreshToken = ({
     refresh: refreshToken,
   });
 
-export const setUserInfo = (userInfo: setUserInfoCredentials): Promise<setUserInfoResponse> =>
-  axios.post("/auth/userinfo/", userInfo);
+export const setUserInfo = async (
+  userInfo: setUserInfoCredentials
+): Promise<setUserInfoResponse> => {
+  try {
+    const resp = await axios.post("/auth/userinfo/", userInfo);
+    return resp;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const verifyEmail = async ({ email, password, code }: VerifyEmailCredentials) => {
+  try {
+    return await axios.post("/auth/verify-email/", { email, password, code });
+  } catch (e) {
+    throw e;
+  }
+};

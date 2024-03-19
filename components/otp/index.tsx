@@ -1,7 +1,13 @@
 import OTPInputView from "@twotalltotems/react-native-otp-input";
+import React from "react";
 import { StyleSheet, View } from "react-native";
 
-const OTP: React.FC = () => {
+interface OTPProps {
+  value: string;
+  onChange: React.Dispatch<React.SetStateAction<String>>;
+}
+
+const OTP = ({ value, onChange }: OTPProps) => {
   return (
     <View className="flex flex-row items-center justify-center">
       <OTPInputView
@@ -17,6 +23,8 @@ const OTP: React.FC = () => {
         onCodeFilled={(code) => {
           console.log(`Code is ${code}, you are good to go!`);
         }}
+        code={value}
+        onCodeChanged={onChange}
       />
     </View>
   );

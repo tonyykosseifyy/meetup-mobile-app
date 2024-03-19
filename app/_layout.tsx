@@ -18,7 +18,7 @@ import axios from "axios";
 SplashScreen.preventAutoHideAsync();
 const queryClient = new QueryClient();
 
-axios.defaults.baseURL = "http://192.168.2.194:8000";
+axios.defaults.baseURL = "http://172.20.10.2:8000";
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
