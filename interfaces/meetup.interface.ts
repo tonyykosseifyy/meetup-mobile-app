@@ -8,8 +8,8 @@ interface MeetupRequestResponse {
   request_from: IUser;
   request_to: IUser;
   status: string;
-  time_slots: [];
-  place_requests: [];
+  time_slots: any[];
+  place_requests: any[];
   request_to_accepting: boolean;
   request_from_accepting: boolean;
 }
