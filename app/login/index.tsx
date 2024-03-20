@@ -2,7 +2,7 @@ import { useState } from "react";
 import { View, TouchableOpacity, Text, TextInput } from "react-native";
 import { Ionicons, AntDesign, Feather } from "@expo/vector-icons";
 import { Header, Footer } from "@/components";
-import { Link as ExpoLink, useRouter } from "expo-router";
+import { router } from "expo-router";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "@/constants/styles";
@@ -16,7 +16,6 @@ export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
-  const router = useRouter();
 
   const {
     error,
