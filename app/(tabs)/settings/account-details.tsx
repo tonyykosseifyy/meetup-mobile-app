@@ -48,7 +48,7 @@ export default function AccountDetails() {
     };
   }, [isFocused, navigation]);
   if (userInfo) {
-    return <Registration settings data={data.edit} userInfo={userInfo.data} />;
+    return <Registration data={data.edit} userInfo={userInfo.data} />;
   }
-  return <Registration settings data={data.edit} />;
+  return <Registration data={data.edit} />;
 }

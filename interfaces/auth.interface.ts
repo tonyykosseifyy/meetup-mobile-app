@@ -45,6 +45,7 @@ interface ISetUserResponse {
   interests: number[];
   email: string;
   password: string;
+  id: number;
 }
 
 interface IVerifyEmailRequest {

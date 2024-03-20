@@ -13,8 +13,8 @@ import { setTokens } from "@/api/tokens";
 import axios from "axios";
 
 export default function SignUpOtp() {
-  const { userInfo } = useAuth();
-  const [email, password] = [userInfo?.email, userInfo?.password];
+  const { registeredUser } = useAuth();
+  const [email, password] = [registeredUser?.email, registeredUser?.password];
   const [code, onChangeCode] = useState<string>("");
 
   useEffect(() => {
