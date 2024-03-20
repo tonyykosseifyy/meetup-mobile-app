@@ -24,21 +24,21 @@ export default function SignUpOtp() {
     },
   });
 
-  const mutateVerifyEmail = () => {
-    console.log(email, password);
-    if (email && password)
-      verifyEmail(
-        { email, password, code },
-        {
-          onSuccess: () => {
-            while (router.canGoBack()) {
-              router.back();
-            }
-            router.replace("/(tabs)");
-          },
-        }
-      );
-  };
+  // const mutateVerifyEmail = () => {
+  //   console.log(email, password);
+  //   if (email && password)
+  //     verifyEmail(
+  //       { email, password, code },
+  //       {
+  //         onSuccess: () => {
+  //           while (router.canGoBack()) {
+  //             router.back();
+  //           }
+  //           router.replace("/(tabs)");
+  //         },
+  //       }
+  //     );
+  // };
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
       <View className="flex-1 bg-white flex">
@@ -63,11 +63,12 @@ export default function SignUpOtp() {
                     code,
                   })
                 }
+                disabled={isLoading}
                 style={styles.cabaret_shadow}
                 className="p-2 bg-cabaret-500 h-[60px] rounded-full flex flex-row items-center justify-center"
               >
                 <Text className="text-white font-bold text-base">
-                  {isLoading ? "Loading..." : "Continue"}
+                  {isLoading ? "Validating..." : "Continue"}
                 </Text>
               </TouchableOpacity>
             </View>
