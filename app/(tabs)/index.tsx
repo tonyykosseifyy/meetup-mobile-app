@@ -1,18 +1,11 @@
 import React from "react";
-import { View, Image, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from "react-native";
+import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import { LogoNavbar } from "@/components/logo";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Chip from "@/components/chip";
-import CharityIcon from "@/assets/icons/interests/charity.svg";
-import { ScrollView } from "react-native";
 import styles from "@/constants/styles";
-import InviteIcon from "@/assets/icons/home/invite.svg";
 import { useQuery } from "react-query";
 import { lookup } from "@/api/axios/users";
 import { IUser } from "@/interfaces";
-import { calculateAge } from "@/utils/common";
-import { useMutation } from "react-query";
-import { requestMeeting } from "@/api/axios/meetup";
 import { Friend } from "@/components/friend";
 
 export interface CardProps {
