@@ -3,10 +3,10 @@ import { Pressable, Text, Animated } from "react-native";
 import { ChipProps } from "./interface.chip";
 import styles from "@/constants/styles";
 
-const Chip = ({ active, Icon, text, onPress, pressableClassName, textClassName }: ChipProps) => {
+const Chip = ({ active, Icon, text, onPress, pressableClassName, textClassName, shadow }: ChipProps) => {
   return (
     <Pressable
-      // style={styles.grey_shadow}
+      style={shadow && styles.grey_shadow}
       onPress={onPress}
       className={`flex flex-row items-center justify-center rounded-full py-3 px-5 mx-1 mt-3 bg-${active ? "cabaret-500" : "white"} ${pressableClassName}`}
     >

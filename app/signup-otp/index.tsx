@@ -5,7 +5,6 @@ import { OtpInput } from "@/components";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "@/constants/styles";
 import { useAuth } from "@/api/mutations/auth/AuthProvider";
-import { useVerifyEmail } from "@/api/mutations/auth/useVerifyEmail";
 import { useMutation } from "react-query";
 import { verifyEmail } from "@/api/axios/auth";
 import { IVerifyEmailRequest } from "@/interfaces";
@@ -43,7 +42,7 @@ export default function SignUpOtp() {
       const { access, refresh } = data;
       setTokens(access, refresh);
 
-      router.replace("/(tabs)/");
+      router.replace("/signup-interests/");
     },
     onError(error) {
       if (axios.isAxiosError(error)) {

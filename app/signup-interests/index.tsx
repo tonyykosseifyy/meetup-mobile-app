@@ -5,6 +5,7 @@ import Chip from "@/components/chip";
 import styles from "@/constants/styles";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { interests, icons } from "./data";
+import { useQuery } from "react-query";
 
 
 const Skip = (): React.JSX.Element => (
@@ -14,8 +15,6 @@ const Skip = (): React.JSX.Element => (
 );
 
 export default function SignUpOtp() {
-
-
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const toggleInterest = (interest: string) => {
     if (selectedInterests.includes(interest)) {
@@ -25,6 +24,11 @@ export default function SignUpOtp() {
     }
   };
 
+  // fetch user interests
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: "/meetup/interests/",
+    queryFn: () => fetchInterests(),
+  });
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
       <View className="flex-1 bg-white flex">
@@ -46,6 +50,7 @@ export default function SignUpOtp() {
                   active={selectedInterests.includes(interest)}
                   text={interest}
                   Icon={icons[interest]}
+                  shadow
                 />
               ))}
             </View>
