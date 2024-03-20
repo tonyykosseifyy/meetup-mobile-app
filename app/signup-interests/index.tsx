@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import { Header } from "@/components";
 import Chip from "@/components/chip";
 import styles from "@/constants/styles";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { interests, icons } from "./data";
 import { useQuery } from "react-query";
-
+import { getInterests } from "@/api/axios/interests";
 
 const Skip = (): React.JSX.Element => (
   <TouchableOpacity>
@@ -15,8 +15,9 @@ const Skip = (): React.JSX.Element => (
 );
 
 export default function SignUpOtp() {
-  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
-  const toggleInterest = (interest: string) => {
+  const [selectedInterests, setSelectedInterests] = useState<number[]>([]);
+
+  const toggleInterest = (interest: number) => {
     if (selectedInterests.includes(interest)) {
       setSelectedInterests(selectedInterests.filter((i) => i !== interest));
     } else {
@@ -24,12 +25,16 @@ export default function SignUpOtp() {
     }
   };
 
-  // fetch user interests
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: "/meetup/interests/",
     retry: 2,
-    queryFn: () => fetchInterests(),
+    queryFn: () => getInterests(),
+    onSuccess: (data) => {
+      console.log(data);
+      
+    }
   });
+
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
       <View className="flex-1 bg-white flex">
@@ -44,18 +49,26 @@ export default function SignUpOtp() {
 
           <View className="mt-20 flex-1 w-full justify-between pb-28">
             <View className="flex flex-row justify-center flex-wrap h-64 w-full">
-              {interests.map((interest) => (
-                <Chip
-                  onPress={() => toggleInterest(interest)}
-                  key={interest}
-                  active={selectedInterests.includes(interest)}
-                  text={interest}
-                  Icon={icons[interest]}
-                  shadow
-                />
-              ))}
+              {data &&
+                Array.isArray(data) &&
+                data.map((interest) => (
+                  <Chip
+                    onPress={() => toggleInterest(interest)}
+                    key={interest}
+                    active={selectedInterests.includes(interest)}
+                    text={interest}
+                    Icon={icons[interest]}
+                    shadow
+                  />
+                ))}
+              {isLoading && (
+                <View className="w-full flex flex-row items-center justify-center">
+                  <ActivityIndicator size="large" color="#d14d72" />
+                </View>
+              )}
             </View>
             <TouchableOpacity
+              onPress={() => {}}
               style={styles.cabaret_shadow}
               className="p-2 bg-cabaret-500 h-[60px] rounded-full flex flex-row items-center justify-center"
             >
