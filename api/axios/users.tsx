@@ -2,10 +2,7 @@ import axios from "../../utils/axios";
 import { IUpdateUserRequest, IUser, IUserInfo } from "../../interfaces";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-interface ILookupResponse {
-  users: IUser[];
-}
-
+type ILookupResponse = IUser[];
 type IUserResponse = IUserInfo;
 
 const lookup = async (): Promise<ILookupResponse> => {

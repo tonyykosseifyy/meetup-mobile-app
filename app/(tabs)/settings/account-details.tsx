@@ -1,5 +1,4 @@
-import { Button } from "@/components";
-import React, { useEffect } from "react";
+import React from "react";
 import { View, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
@@ -7,7 +6,7 @@ import { useQuery } from "react-query";
 import { getMe } from "@/api/axios/users";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Text, TextInput } from "react-native";
-import { AntDesign, Fontisto, Feather, MaterialIcons } from "@expo/vector-icons";
+import { AntDesign, Fontisto, MaterialIcons } from "@expo/vector-icons";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { formatDate } from "@/utils/common";
 import { useState } from "react";
@@ -17,9 +16,7 @@ import { updateUser } from "@/api/axios/users";
 import axios from "axios";
 import { useQueryClient } from "react-query";
 import styles from "@/constants/styles";
-import { useCallback } from "react";
 import { Alert } from "react-native";
-import { useLayoutEffect } from "react";
 
 export default function AccountDetails() {
   const navigation = useNavigation();
@@ -87,7 +84,6 @@ export default function AccountDetails() {
     );
   }
 
-  
   return (
     <View className="flex-1 bg-white flex">
       <KeyboardAwareScrollView className="h-screen">

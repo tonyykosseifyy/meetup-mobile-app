@@ -80,9 +80,9 @@ export default function SignUpOtp() {
             </View>
             <TouchableOpacity
               onPress={() => sendInterests()}
-              disabled={isSendingLoading || isLoading}
+              disabled={isSendingLoading || isLoading || selectedInterests.length < 3}
               style={styles.cabaret_shadow}
-              className="p-2 bg-cabaret-500 h-[60px] rounded-full flex flex-row items-center justify-center"
+              className={`p-2 bg-cabaret-500 h-[60px] rounded-full flex flex-row items-center justify-center ${selectedInterests.length < 3 && "bg-cabaret-400"}`}
             >
               <Text className="text-white font-bold text-base">
                 {isSendingLoading ? "Saving..." : "Continue"}
