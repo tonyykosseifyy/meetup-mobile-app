@@ -22,7 +22,7 @@ export default function AccountDetails() {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   const queryClient = useQueryClient();
-  const [email, _setEmail] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [fullName, setFullName] = useState<string>("");
   const [occupation, setOccupation] = useState<string>("");
   const [biography, setBiography] = useState<string>("");
@@ -33,6 +33,7 @@ export default function AccountDetails() {
     const now = new Date();
     return new Date(now.setFullYear(now.getFullYear() - 50));
   });
+
   const handleConfirm = (date: Date) => {
     setDate(date);
     setDatePickerVisibility(false);
@@ -60,17 +61,22 @@ export default function AccountDetails() {
     },
   });
   // get user info and populate the form
-  const {
-    data: userInfo,
-    isLoading,
-    isError,
-  } = useQuery({
+  const { data: userInfo, isLoading } = useQuery({
     queryKey: "/auth/userinfo/",
     queryFn: () => getMe(),
     retry: 1,
+    onSuccess: (data) => {
+      const { email, full_name, date_of_birth, occupation, biography } = data;
+      console.log(data);
+      setEmail(email);
+      setFullName(full_name);
+      setOccupation(occupation);
+      setBiography(biography);
+      setDate(new Date(date_of_birth));
+      setDateChanged(true);
+    },
   });
-
-  if (isLoading) {
+  if (isLoading && !email) {
     return (
       <View className="flex-1 bg-white flex items-center justify-center">
         <ActivityIndicator size="large" color="#d14d72" />
@@ -78,40 +84,40 @@ export default function AccountDetails() {
     );
   }
 
-  useEffect(() => {
-    const parentNavigation = navigation.getParent();
+  // useEffect(() => {
+  //   const parentNavigation = navigation.getParent();
 
-    if (isFocused) {
-      // Customize the tab bar when the screen is focused
-      if (parentNavigation) {
-        parentNavigation.setOptions({
-          headerRight: () => (
-            <Button
-              addClassName="bg-transparent w-auto p-0 mr-4"
-              textColor="cabaret-500"
-              disableShadow
-              onPress={() => editUser()}
-            >
-              Confirm
-            </Button>
-          ),
-          headerLeft: () => (
-            <TouchableOpacity onPress={navigation.goBack} className="ml-4">
-              <Ionicons name="arrow-back" size={24} color="black" />
-            </TouchableOpacity>
-          ),
-        });
-      }
-    }
-    return () => {
-      if (parentNavigation) {
-        parentNavigation.setOptions({
-          headerRight: () => <View />,
-          headerLeft: () => <View />,
-        });
-      }
-    };
-  }, [isFocused, navigation]);
+  //   if (isFocused) {
+  //     // Customize the tab bar when the screen is focused
+  //     if (parentNavigation) {
+  //       parentNavigation.setOptions({
+  //         headerRight: () => (
+  //           <Button
+  //             addClassName="bg-transparent w-auto p-0 mr-4"
+  //             textColor="cabaret-500"
+  //             disableShadow
+  //             onPress={() => editUser()}
+  //           >
+  //             Confirm
+  //           </Button>
+  //         ),
+  //         headerLeft: () => (
+  //           <TouchableOpacity onPress={navigation.goBack} className="ml-4">
+  //             <Ionicons name="arrow-back" size={24} color="black" />
+  //           </TouchableOpacity>
+  //         ),
+  //       });
+  //     }
+  //   }
+  //   return () => {
+  //     if (parentNavigation) {
+  //       parentNavigation.setOptions({
+  //         headerRight: () => <View />,
+  //         headerLeft: () => <View />,
+  //       });
+  //     }
+  //   };
+  // }, [isFocused, navigation]);
 
   return (
     <View className="flex-1 bg-white flex">
@@ -147,7 +153,7 @@ export default function AccountDetails() {
             </View>
 
             {/* email */}
-            <View className="mt-7 py-2 px-5 bg-white h-14 rounded-lg flex flex-row items-center justify-between border-[1px] border-solid border-cabaret-500">
+            <View className="mt-7 py-2 px-5 h-14 rounded-lg flex flex-row items-center justify-between border-[1px] border-solid border-cabaret-500 bg-gray-100">
               <Fontisto name="email" size={19} color="black" style={{ opacity: 0.5 }} />
               <TextInput
                 placeholder="Your Email"
@@ -218,9 +224,9 @@ export default function AccountDetails() {
                 className="p-2 bg-cabaret-500 h-14 rounded-lg flex flex-row items-center justify-center"
               >
                 {isUpdating ? (
-                  <Text className="text-white font-bold text-base">Editing...</Text>
+                  <Text className="text-white font-bold text-base">Saving...</Text>
                 ) : (
-                  <Text className="text-white font-bold text-base">Continue</Text>
+                  <Text className="text-white font-bold text-base">Edit Account</Text>
                 )}
               </TouchableOpacity>
             </View>
