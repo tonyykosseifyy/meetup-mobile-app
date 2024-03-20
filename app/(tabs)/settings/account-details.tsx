@@ -87,9 +87,7 @@ export default function AccountDetails() {
     );
   }
 
-
   
-
   return (
     <View className="flex-1 bg-white flex">
       <KeyboardAwareScrollView className="h-screen">
