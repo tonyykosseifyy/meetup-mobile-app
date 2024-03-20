@@ -68,5 +68,5 @@ export {
   ISetUserResponse,
   IVerifyEmailRequest,
   IVerifyEmailResponse,
-  ISetUserRequest
+  ISetUserRequest,
 };

@@ -2,7 +2,7 @@ import axios, { AxiosError } from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 
-const API_URL = "https://593e-212-28-227-52.ngrok-free.app";
+const API_URL = "http://172.20.10.2:8000";
 const authRoutes = ["/auth/login/", "auth/token/refresh/", "/auth/login/", "/auth/verify-email/"];
 
 const api = axios.create({
@@ -12,7 +12,6 @@ const api = axios.create({
     "Content-Type": "application/json",
   },
 });
-
 
 api.interceptors.response.use(
   (response) => response.data,

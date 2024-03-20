@@ -11,6 +11,7 @@ import {
   IVerifyEmailResponse,
   ISetUserRequest,
 } from "./auth.interface";
+import { MeetupRequestRequest, MeetupRequestResponse } from "./meetup.interface";
 
 export {
   ILoginResponse,
@@ -26,4 +27,6 @@ export {
   IUser,
   IUserInfo,
   IUpdateUserRequest,
+  MeetupRequestRequest,
+  MeetupRequestResponse,
 };

@@ -6,9 +6,7 @@ interface ILookupResponse {
   users: IUser[];
 }
 
-interface IUserResponse {
-  user: IUserInfo;
-}
+type IUserResponse = IUserInfo;
 
 const lookup = async (): Promise<ILookupResponse> => {
   const token = await AsyncStorage.getItem("accessToken");
@@ -27,8 +25,4 @@ const updateUser = async (userInfo: IUpdateUserRequest): Promise<IUserResponse> 
   });
 };
 
-export {
-  lookup,
-  getMe,
-  updateUser,
-}
+export { lookup, getMe, updateUser };

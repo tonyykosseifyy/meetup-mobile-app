@@ -68,7 +68,7 @@ export default function Registration({ data }: RegistrationProps) {
         console.log(error.response?.data);
       }
     },
-    onSuccess: () => {
+    onSuccess: ({ id }) => {
       while (router.canGoBack()) {
         router.back();
       }
@@ -79,7 +79,8 @@ export default function Registration({ data }: RegistrationProps) {
         date_of_birth: date?.toISOString().slice(0, 10),
         occupation,
         biography,
-        interests: []
+        interests: [],
+        id,
       });
       router.replace("/signup-otp/");
     },
