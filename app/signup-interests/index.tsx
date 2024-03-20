@@ -27,6 +27,7 @@ export default function SignUpOtp() {
   // fetch user interests
   const { data, isLoading, isError, error } = useQuery({
     queryKey: "/meetup/interests/",
+    retry: 2,
     queryFn: () => fetchInterests(),
   });
   return (
