@@ -79,7 +79,7 @@ export default function Registration({ data }: RegistrationProps) {
         date_of_birth: date?.toISOString().slice(0, 10),
         occupation,
         biography,
-        interests: []
+        interests: [],
       });
       router.replace("/signup-otp/");
     },
@@ -245,7 +245,7 @@ export default function Registration({ data }: RegistrationProps) {
               <View className="mt-4">
                 <Text className="text-red-500">
                   {axios.isAxiosError(registeringError) && registeringError.response
-                    ? (registeringError.response.data as any as string)
+                    ? (registeringError.response.data.message as any as string)
                     : "An error occured with registration."}
                 </Text>
               </View>
