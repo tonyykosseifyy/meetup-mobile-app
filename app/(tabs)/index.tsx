@@ -10,8 +10,7 @@ import InviteIcon from "@/assets/icons/home/invite.svg";
 import { useQuery } from "react-query";
 import { lookup } from "@/api/axios/users";
 import { IUser } from "@/interfaces";
-
-
+import { calculateAge } from "@/utils/common";
 
 interface CardProps {
   item: IUser;
@@ -100,7 +99,7 @@ export default function Home() {
         </View>
 
         <FlatList
-          data={data.data} // Assuming the fetched data is an object with a 'users' array
+          data={data.users} // Assuming the fetched data is an object with a 'users' array
           renderItem={renderItem}
           keyExtractor={(item) => item.email} // Ensure 'item.id' is a unique identifier
         />

@@ -28,11 +28,11 @@ interface IRefreshResponse {
 }
 
 interface ISetUserRequest {
-  full_name: string;
-  date_of_birth: string;
-  occupation: string;
-  biography: string;
-  interests: number[];
+  full_name?: string;
+  date_of_birth?: string;
+  occupation?: string;
+  biography?: string;
+  interests?: number[];
   email: string;
   password: string;
 }

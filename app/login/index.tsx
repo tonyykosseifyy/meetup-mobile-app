@@ -35,6 +35,11 @@ export default function Login() {
       }
       router.replace("/(tabs)");
     },
+    onError: (error) => {
+      if (axios.isAxiosError(error)) {
+        console.error(error.response?.data);
+      }
+    },
     retry: false,
   });
 
@@ -93,7 +98,7 @@ export default function Login() {
                 <View className="mt-4">
                   <Text className="text-red-500">
                     {axios.isAxiosError(error) && error.response
-                      ? (error.response.data as any as string)
+                      ? (error.response.data.detail as any as string)
                       : "An error occured with registration."}
                   </Text>
                 </View>
