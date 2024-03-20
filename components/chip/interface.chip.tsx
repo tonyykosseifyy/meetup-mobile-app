@@ -8,4 +8,5 @@ export interface ChipProps {
   onPress: () => void;
   pressableClassName?: string;
   textClassName?: string;
+  shadow?: boolean;
 }
