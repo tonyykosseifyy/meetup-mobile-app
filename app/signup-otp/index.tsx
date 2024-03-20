@@ -27,7 +27,12 @@ export default function SignUpOtp() {
   console.log({ email, password, code });
   console.log(code);
 
-  const { mutate: mutateVerifyEmail, isLoading, isError, error } = useMutation({
+  const {
+    mutate: mutateVerifyEmail,
+    isLoading,
+    isError,
+    error,
+  } = useMutation({
     mutationFn: ({ email, password, code }: IVerifyEmailRequest) =>
       verifyEmail({ email, password, code }),
     onSuccess(data) {
@@ -50,7 +55,7 @@ export default function SignUpOtp() {
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
       <View className="flex-1 bg-white flex">
-        <Header leftButton theme={"light"} />
+        <Header theme={"light"} />
         <View className="px-5">
           <View className="mt-7">
             <Text className="text-black font-medium text-2xl">Verification Code</Text>
@@ -63,14 +68,14 @@ export default function SignUpOtp() {
           <View className="mt-20 w-11/12 mx-auto">
             <OtpInput value={code} onChange={onChangeCode} />
             {isError && (
-                <View className="mt-4">
-                  <Text className="text-red-500 text-center font-bold">
-                    {axios.isAxiosError(error) && error.response
-                      ? (error.response.data.error as any as string)
-                      : "An error occured with validation."}
-                  </Text>
-                </View>
-              )}
+              <View className="mt-4">
+                <Text className="text-red-500 text-center font-bold">
+                  {axios.isAxiosError(error) && error.response
+                    ? (error.response.data.error as any as string)
+                    : "An error occured with validation."}
+                </Text>
+              </View>
+            )}
             <View className="mt-32">
               <TouchableOpacity
                 onPress={() =>
