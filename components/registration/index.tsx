@@ -45,14 +45,7 @@ export default function Registration({ data }: RegistrationProps) {
     isError: isUpdatingUserInfoError,
     error: updatingUserInfoError,
   } = useMutation({
-    mutationFn: ({
-      email,
-      password,
-      full_name: fullName,
-      // date_of_birth: new Date(date?.toISOString().slice(0, 10)).toISOString(),
-      occupation,
-      biography,
-    }: ISetUserRequest) =>
+    mutationFn: () =>
       setUserInfo({
         email,
         password,
@@ -91,7 +84,7 @@ export default function Registration({ data }: RegistrationProps) {
     isError: isRegisteringError,
     error: registeringError,
   } = useMutation({
-    mutationFn: ({ email, password }: IRegisterRequest) => register({ email, password }),
+    mutationFn: () => register({ email, password }),
     mutationKey: "/auth/register/",
     retry: false,
     onError: (error) => {
@@ -100,14 +93,7 @@ export default function Registration({ data }: RegistrationProps) {
       }
     },
     onSuccess: () => {
-      setUserInfoAfterRegister({
-        email,
-        password,
-        full_name: fullName,
-        date_of_birth: date?.toISOString().slice(0, 10),
-        occupation,
-        biography,
-      });
+      setUserInfoAfterRegister();
     },
   });
 
@@ -243,7 +229,7 @@ export default function Registration({ data }: RegistrationProps) {
             </View>
             {isRegisteringError && (
               <View className="mt-4">
-                <Text className="text-red-500">
+                <Text className="text-red-500 font-bold">
                   {axios.isAxiosError(registeringError) && registeringError.response
                     ? (registeringError.response.data.message as any as string)
                     : "An error occured with registration."}
@@ -253,12 +239,7 @@ export default function Registration({ data }: RegistrationProps) {
 
             <View className="mt-8">
               <TouchableOpacity
-                onPress={() =>
-                  registerUser({
-                    email,
-                    password,
-                  })
-                }
+                onPress={() => registerUser()}
                 disabled={isDisabled()}
                 style={styles.cabaret_shadow}
                 className="p-2 bg-cabaret-500 h-14 rounded-lg flex flex-row items-center justify-center"

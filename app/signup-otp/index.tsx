@@ -27,7 +27,7 @@ export default function SignUpOtp() {
   console.log({ email, password, code });
   console.log(code);
 
-  const { mutate: mutateVerifyEmail, isLoading } = useMutation({
+  const { mutate: mutateVerifyEmail, isLoading, isError, error } = useMutation({
     mutationFn: ({ email, password, code }: IVerifyEmailRequest) =>
       verifyEmail({ email, password, code }),
     onSuccess(data) {
@@ -38,7 +38,7 @@ export default function SignUpOtp() {
       const { access, refresh } = data;
       setTokens(access, refresh);
 
-      router.replace("/(tabs)");
+      router.replace("/(tabs)/");
     },
     onError(error) {
       if (axios.isAxiosError(error)) {
@@ -50,7 +50,7 @@ export default function SignUpOtp() {
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
       <View className="flex-1 bg-white flex">
-        <Header theme={"light"} />
+        <Header leftButton theme={"light"} />
         <View className="px-5">
           <View className="mt-7">
             <Text className="text-black font-medium text-2xl">Verification Code</Text>
@@ -62,6 +62,15 @@ export default function SignUpOtp() {
 
           <View className="mt-20 w-11/12 mx-auto">
             <OtpInput value={code} onChange={onChangeCode} />
+            {isError && (
+                <View className="mt-4">
+                  <Text className="text-red-500 text-center font-bold">
+                    {axios.isAxiosError(error) && error.response
+                      ? (error.response.data.error as any as string)
+                      : "An error occured with validation."}
+                  </Text>
+                </View>
+              )}
             <View className="mt-32">
               <TouchableOpacity
                 onPress={() =>
@@ -86,10 +95,6 @@ export default function SignUpOtp() {
                 <Text className="text-cabaret-500 font-bold">Resend Code</Text>
               </TouchableOpacity>
             </View>
-            {/* handle errors */}
-            {/* <View>
-              <Text className="text-red-500">Error message</Text>
-            </View> */}
           </View>
         </View>
       </View>

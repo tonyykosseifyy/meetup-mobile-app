@@ -96,7 +96,7 @@ export default function Login() {
 
               {isError && (
                 <View className="mt-4">
-                  <Text className="text-red-500">
+                  <Text className="text-red-500 font-bold">
                     {axios.isAxiosError(error) && error.response
                       ? (error.response.data.detail as any as string)
                       : "An error occured with registration."}
