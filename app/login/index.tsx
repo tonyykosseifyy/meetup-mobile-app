@@ -10,13 +10,15 @@ import { setTokens, showTokens } from "@/api/tokens";
 import { useMutation } from "react-query";
 import { ILoginRequest } from "@/interfaces";
 import { login } from "@/api/axios/auth";
+
 import axios from "axios";
+import { useAuth } from "@/api/mutations/auth/AuthProvider";
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
-
+  const { updateContextUser } = useAuth();
   const {
     error,
     isError,
@@ -30,6 +32,7 @@ export default function Login() {
       const { access, refresh } = data;
       setTokens(access, refresh);
       showTokens();
+
       while (router.canGoBack()) {
         router.back();
       }

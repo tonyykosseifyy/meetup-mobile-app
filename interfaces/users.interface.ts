@@ -1,4 +1,5 @@
 interface IUser {
+  id?: number;
   email: string;
   user_info: {
     full_name: string;
@@ -10,6 +11,7 @@ interface IUser {
 }
 
 interface IUserInfo {
+  id?: number;
   full_name: string;
   date_of_birth: string;
   occupation: string;
