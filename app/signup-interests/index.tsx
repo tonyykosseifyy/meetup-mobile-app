@@ -16,9 +16,9 @@ const Skip = (): React.JSX.Element => (
 );
 
 export default function SignUpOtp() {
-  const [selectedInterests, setSelectedInterests] = useState<number[]>([]);
+  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
 
-  const toggleInterest = (interest: number) => {
+  const toggleInterest = (interest: string) => {
     if (selectedInterests.includes(interest)) {
       setSelectedInterests(selectedInterests.filter((i) => i !== interest));
     } else {
@@ -34,7 +34,7 @@ export default function SignUpOtp() {
       console.log(data);
     },
   });
-  const mutateIntrests = useMutation({
+  const { isLoading: isSendingLoading, mutate: sendInterests } = useMutation({
     mutationFn: () => setInterests(selectedInterests),
     mutationKey: "/auth/userinfo/",
     onSuccess: (data) => {
@@ -64,9 +64,9 @@ export default function SignUpOtp() {
                 Array.isArray(data) &&
                 data.map((interest) => (
                   <Chip
-                    onPress={() => toggleInterest(interest.id)}
+                    onPress={() => toggleInterest(interest.name)}
                     key={interest.id}
-                    active={selectedInterests.includes(interest.id)}
+                    active={selectedInterests.includes(interest.name)}
                     text={interest.name}
                     Icon={icons[interest.name]}
                     shadow
@@ -79,11 +79,14 @@ export default function SignUpOtp() {
               )}
             </View>
             <TouchableOpacity
-              onPress={() => mutateIntrests.mutate()}
+              onPress={() => sendInterests()}
+              disabled={isSendingLoading || isLoading}
               style={styles.cabaret_shadow}
               className="p-2 bg-cabaret-500 h-[60px] rounded-full flex flex-row items-center justify-center"
             >
-              <Text className="text-white font-bold text-base">Continue</Text>
+              <Text className="text-white font-bold text-base">
+                {isSendingLoading ? "Saving..." : "Continue"}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>

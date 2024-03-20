@@ -14,7 +14,8 @@ const getInterests = async (): Promise<IInterestsResponse> => {
   return await axios.get("/meetup/interests/", { headers: { Authorization: `Bearer ${token}` } });
 };
 
-const setInterests = async (interests: number[]): Promise<ISetUserResponse> => {
+const setInterests = async (interests: string[]): Promise<ISetUserResponse> => {
+  console.log("interests=>", interests);
   const token = await AsyncStorage.getItem("accessToken");
   return await axios.patch(
     "/auth/userinfo/",
