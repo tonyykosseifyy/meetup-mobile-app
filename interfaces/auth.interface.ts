@@ -27,6 +27,15 @@ interface IRefreshResponse {
   refreshToken: string;
 }
 
+interface ISetUserRequest {
+  full_name: string;
+  date_of_birth: string;
+  occupation: string;
+  biography: string;
+  interests: number[];
+  email: string;
+  password: string;
+}
 
 interface ISetUserResponse {
   full_name: string;
@@ -59,4 +68,5 @@ export {
   ISetUserResponse,
   IVerifyEmailRequest,
   IVerifyEmailResponse,
+  ISetUserRequest
 };

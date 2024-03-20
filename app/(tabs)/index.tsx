@@ -8,7 +8,7 @@ import { ScrollView } from "react-native";
 import styles from "@/constants/styles";
 import InviteIcon from "@/assets/icons/home/invite.svg";
 import { useQuery } from "react-query";
-import { lookup } from "@/api/users";
+import { lookup } from "@/api/axios/users";
 import { IUser } from "@/interfaces";
 import {}
 

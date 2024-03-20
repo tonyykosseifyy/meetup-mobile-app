@@ -4,7 +4,7 @@ import {
   RefreshTokenCredentials,
   RefreshTokenResponse,
   refreshToken as refreshApiToken,
-} from "@/api/auth"; // Adjust the import path as necessary
+} from "@/api/axios/auth"; // Adjust the import path as necessary
 import { useAuth } from "./AuthProvider";
 
 export function useRefreshToken(): UseMutationResult<

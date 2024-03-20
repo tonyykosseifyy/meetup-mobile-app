@@ -1,5 +1,5 @@
 import { useMutation, UseMutationResult } from "react-query";
-import { verifyEmail, VerifyEmailCredentials, VerifyEmailResponse } from "@/api/auth";
+import { verifyEmail, VerifyEmailCredentials, VerifyEmailResponse } from "@/api/axios/auth";
 import { useAuth } from "./AuthProvider";
 
 export function useVerifyEmail(): UseMutationResult<

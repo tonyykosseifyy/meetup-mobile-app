@@ -9,6 +9,7 @@ import {
   ISetUserResponse,
   IVerifyEmailRequest,
   IVerifyEmailResponse,
+  ISetUserRequest
 } from "./auth.interface";
 
 export {
@@ -21,4 +22,5 @@ export {
   ISetUserResponse,
   IVerifyEmailRequest,
   IVerifyEmailResponse,
+  ISetUserRequest
 };

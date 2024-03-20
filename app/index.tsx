@@ -6,7 +6,7 @@ import { Link as ExpoLink, router } from "expo-router";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useQuery } from "react-query";
-import { getMe } from "@/api/users";
+import { getMe } from "@/api/axios/users";
 import { useAuth } from "@/components/auth/AuthProvider";
 
 export default function PreLogin() {

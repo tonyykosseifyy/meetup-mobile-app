@@ -1,5 +1,5 @@
 import { useMutation, UseMutationResult } from "react-query";
-import { setUserInfo } from "@/api/auth";
+import { setUserInfo } from "@/api/axios/auth";
 import { setUserInfoCredentials, setUserInfoResponse } from "@/interfaces";
 
 export function useSetUserInfo(): UseMutationResult<

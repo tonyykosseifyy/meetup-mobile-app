@@ -6,7 +6,7 @@ import data from "@/assets/data/registration_data";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import Registration from "@/components/registration";
 import { useQuery } from "react-query";
-import { getMe } from "@/api/users";
+import { getMe } from "@/api/axios/users";
 
 export default function AccountDetails() {
   const navigation = useNavigation();

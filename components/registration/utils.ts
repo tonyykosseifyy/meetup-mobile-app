@@ -6,7 +6,7 @@ const formatDate = (date: Date): string => {
   return `${month}/${day}/${year}`;
 };
 
-function calculateAge(birthDate: string | Date | number): number {
+const calculateAge = (birthDate: string | Date | number): number => {
   const birthday = new Date(birthDate);
   const today = new Date();
   let age = today.getFullYear() - birthday.getFullYear();
@@ -17,7 +17,6 @@ function calculateAge(birthDate: string | Date | number): number {
   }
 
   return age;
-}
+};
 
 export { formatDate, calculateAge };
-

@@ -12,7 +12,7 @@ import { useRouter } from "expo-router";
 import { UserInfo } from "@/interfaces";
 import { useUpdateUserInfo } from "../auth/useUpdateUserInfo";
 import { useQuery } from "react-query";
-import { getMe } from "@/api/users";
+import { getMe } from "@/api/axios/users";
 import { useQueryClient } from "react-query";
 
 interface RegistrationProps {
