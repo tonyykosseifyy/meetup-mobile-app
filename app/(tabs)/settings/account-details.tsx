@@ -17,6 +17,9 @@ import { updateUser } from "@/api/axios/users";
 import axios from "axios";
 import { useQueryClient } from "react-query";
 import styles from "@/constants/styles";
+import { useCallback } from "react";
+import { Alert } from "react-native";
+import { useLayoutEffect } from "react";
 
 export default function AccountDetails() {
   const navigation = useNavigation();
@@ -54,10 +57,10 @@ export default function AccountDetails() {
     mutationKey: "/auth/userinfo/update",
     retry: false,
     onSuccess: (data) => {
-      alert("Your information has been updated successfully");
-      // invalidate the user info query
       queryClient.invalidateQueries("/auth/userinfo/");
-      navigation.goBack();
+      Alert.alert("Account Details", "Account details updated successfully", [
+        { text: "OK", onPress: () => navigation.goBack() },
+      ]);
     },
   });
   // get user info and populate the form
@@ -84,40 +87,8 @@ export default function AccountDetails() {
     );
   }
 
-  // useEffect(() => {
-  //   const parentNavigation = navigation.getParent();
 
-  //   if (isFocused) {
-  //     // Customize the tab bar when the screen is focused
-  //     if (parentNavigation) {
-  //       parentNavigation.setOptions({
-  //         headerRight: () => (
-  //           <Button
-  //             addClassName="bg-transparent w-auto p-0 mr-4"
-  //             textColor="cabaret-500"
-  //             disableShadow
-  //             onPress={() => editUser()}
-  //           >
-  //             Confirm
-  //           </Button>
-  //         ),
-  //         headerLeft: () => (
-  //           <TouchableOpacity onPress={navigation.goBack} className="ml-4">
-  //             <Ionicons name="arrow-back" size={24} color="black" />
-  //           </TouchableOpacity>
-  //         ),
-  //       });
-  //     }
-  //   }
-  //   return () => {
-  //     if (parentNavigation) {
-  //       parentNavigation.setOptions({
-  //         headerRight: () => <View />,
-  //         headerLeft: () => <View />,
-  //       });
-  //     }
-  //   };
-  // }, [isFocused, navigation]);
+  
 
   return (
     <View className="flex-1 bg-white flex">
