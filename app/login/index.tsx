@@ -1,43 +1,43 @@
 import { useState } from "react";
-import { View, TouchableOpacity, Text, TextInput, Alert } from "react-native";
+import { View, TouchableOpacity, Text, TextInput } from "react-native";
 import { Ionicons, AntDesign, Feather } from "@expo/vector-icons";
 import { Header, Footer } from "@/components";
 import { Link as ExpoLink, useRouter } from "expo-router";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "@/constants/styles";
-import { useLogin } from "@/api/mutations/auth/useLogin";
 import { setTokens, showTokens } from "@/api/tokens";
-import { AxiosError } from "axios";
+import { useMutation } from "react-query";
+import { ILoginRequest } from "@/interfaces";
+import { login } from "@/api/axios/auth";
+import axios from "axios";
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
-  const [error, setError] = useState<AxiosError>();
   const router = useRouter();
 
-  const { mutate: loginUser, isLoading, isError } = useLogin();
-
-  const handleLogin = () => {
-    loginUser(
-      { email, password },
-      {
-        onSuccess: (data) => {
-          const { access, refresh } = data.data;
-          setTokens(access, refresh);
-          showTokens();
-          while (router.canGoBack()) {
-            router.back();
-          }
-          router.replace("/(tabs)");
-        },
-        onError: (error) => {
-          setError(error);
-        },
+  const {
+    error,
+    isError,
+    isLoading,
+    mutate: loginUser,
+  } = useMutation({
+    mutationFn: ({ email, password }: ILoginRequest) => login({ email, password }),
+    mutationKey: "/auth/login/",
+    onSuccess: (data) => {
+      console.log(data);
+      const { access, refresh } = data;
+      setTokens(access, refresh);
+      showTokens();
+      while (router.canGoBack()) {
+        router.back();
       }
-    );
-  };
+      router.replace("/(tabs)");
+    },
+    retry: false,
+  });
 
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
@@ -90,22 +90,20 @@ export default function Login() {
                 </TouchableOpacity>
               </View>
 
-              {error ? (
+              {isError && (
                 <View className="mt-4">
                   <Text className="text-red-500">
-                    {error?.response?.data?.message ??
-                      error?.response.data.detail ??
-                      "An error occured with registration."}
+                    {axios.isAxiosError(error) && error.response
+                      ? (error.response.data as any as string)
+                      : "An error occured with registration."}
                   </Text>
                 </View>
-              ) : (
-                <></>
               )}
 
               <View className="mt-28">
                 <TouchableOpacity
                   disabled={isLoading || !email || !password}
-                  onPress={handleLogin}
+                  onPress={() => loginUser({ email, password })}
                   style={styles.cabaret_shadow}
                   className="p-2 bg-cabaret-500 h-14 rounded-lg flex flex-row items-center justify-center"
                 >

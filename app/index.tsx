@@ -2,33 +2,11 @@ import { View, Image } from "react-native";
 import { LogoNavbar } from "@/components/logo";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text, Footer, Button } from "@/components";
-import { Link as ExpoLink, router } from "expo-router";
+import { Link as ExpoLink } from "expo-router";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useQuery } from "react-query";
-import { getMe } from "@/api/axios/users";
-import { useAuth } from "@/api/mutations/auth/AuthProvider";
 
 export default function PreLogin() {
-  const { updateUserInfo } = useAuth();
-  const { error, data, isLoading } = useQuery("getMe", getMe, {
-    retry: false,
-    onSuccess: (response) => {
-      updateUserInfo(response?.data);
-
-      while (router.canGoBack()) {
-        router.back();
-      }
-      router.replace("/(tabs)");
-    },
-  });
-  if (isLoading) {
-    return (
-      <View className="flex-1 items-center justify-center">
-        <Text>Loading...</Text>
-      </View>
-    );
-  }
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
       <View className="flex-1 flex justify-between pb-10 bg-white px-5">

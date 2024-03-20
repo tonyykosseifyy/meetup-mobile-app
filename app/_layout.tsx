@@ -9,12 +9,14 @@ import {
   Inter_600SemiBold,
   Inter_700Bold,
 } from "@expo-google-fonts/inter";
-import React from "react";
+import React, { useState } from "react";
 import { AuthProvider } from "@/api/mutations/auth/AuthProvider";
 // import { DevToolsBubble } from "react-native-react-query-devtools";
 import { QueryClient, QueryClientProvider } from "react-query";
-
+import { getMe } from "@/api/axios/users";
+import { router } from "expo-router";
 SplashScreen.preventAutoHideAsync();
+
 const queryClient = new QueryClient();
 
 export default function RootLayout() {
@@ -24,18 +26,33 @@ export default function RootLayout() {
     Inter_600SemiBold,
     Inter_700Bold,
   });
+  const [loading, setLoading] = useState<boolean>(false);
+  const [userError, setUserError] = useState<boolean>(false);
+  const getAuthenticated = async () => {
+    const data = await getMe();
+    return data;
+  };
+  useEffect(() => {
+    // try {
+    //   // getAuthenticated();
+    // } catch (err) {
+    //   setUserError(true);
+    // } finally {
+    //   setLoading(false);
+    // }
+  }, []);
 
   useEffect(() => {
     if (error) throw error;
   }, [error]);
 
   useEffect(() => {
-    if (loaded) {
+    if (loaded && !loading) {
       SplashScreen.hideAsync();
     }
-  }, [loaded]);
+  }, [loaded, loading]);
 
-  if (!loaded) {
+  if (!loaded || loading) {
     return null;
   }
 

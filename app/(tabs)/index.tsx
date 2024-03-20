@@ -10,7 +10,7 @@ import InviteIcon from "@/assets/icons/home/invite.svg";
 import { useQuery } from "react-query";
 import { lookup } from "@/api/axios/users";
 import { IUser } from "@/interfaces";
-import {}
+
 
 
 interface CardProps {
