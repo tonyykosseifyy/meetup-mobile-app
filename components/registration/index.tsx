@@ -13,6 +13,9 @@ import { AntDesign, Fontisto, Feather, MaterialIcons } from "@expo/vector-icons"
 import { formatDate } from "@/utils/common";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Ionicons } from "@expo/vector-icons";
+import Header from "../header";
+import { useAuth } from "@/api/mutations/auth/AuthProvider";
+import { IUserInfo } from "@/interfaces";
 
 interface RegistrationProps {
   data: IRegistrationData;
@@ -20,6 +23,7 @@ interface RegistrationProps {
 
 export default function Registration({ data }: RegistrationProps) {
   const queryClient = useQueryClient();
+  const { updateContextUser } = useAuth();
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -68,7 +72,15 @@ export default function Registration({ data }: RegistrationProps) {
       while (router.canGoBack()) {
         router.back();
       }
-      queryClient.invalidateQueries("me");
+      updateContextUser({
+        email,
+        password,
+        full_name: fullName,
+        date_of_birth: date?.toISOString().slice(0, 10),
+        occupation,
+        biography,
+        interests: []
+      });
       router.replace("/signup-otp/");
     },
   });
@@ -119,11 +131,9 @@ export default function Registration({ data }: RegistrationProps) {
   return (
     <View className="flex-1 bg-white flex">
       <KeyboardAwareScrollView className="h-screen">
-        {/* {!settings && (
-          <View className="mb-6">
-            <Header leftButton theme="light" />
-          </View>
-        )} */}
+        <View className="mb-6">
+          <Header leftButton theme="light" />
+        </View>
         {/* <View className={`px-5 ${settings ? "mt-6" : "mt-0"}`}>*/}
         <View className="px-5">
           <View>

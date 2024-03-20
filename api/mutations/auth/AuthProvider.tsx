@@ -2,8 +2,8 @@ import React, { createContext, useContext, useState, ReactNode } from "react";
 import { IUserInfo } from "@/interfaces";
 
 interface AuthContextType {
-  userInfo: IUserInfo | null | undefined;
-  updateUserInfo: (userInfo: IUserInfo | null | undefined) => void;
+  userInfo: IUserInfo | null;
+  updateContextUser: React.Dispatch<React.SetStateAction<IUserInfo | null>>;
 }
 
 interface AuthProviderProps {
@@ -19,14 +19,12 @@ export function useAuth(): AuthContextType {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [userInfo, setUserInfo] = useState<IUserInfo | undefined | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [userInfo, setUserInfo] = useState<IUserInfo | null>(null);
 
-  const updateUserInfo = async (userInfo: IUserInfo | undefined | null) => {
-    setUserInfo(userInfo);
-  };
   children;
   return (
-    <AuthContext.Provider value={{ userInfo, updateUserInfo }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ userInfo, updateContextUser: setUserInfo }}>
+      {children}
+    </AuthContext.Provider>
   );
 };

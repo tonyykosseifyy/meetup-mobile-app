@@ -1,23 +1,30 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { Header } from "@/components";
 import { OtpInput } from "@/components";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "@/constants/styles";
 import { useAuth } from "@/api/mutations/auth/AuthProvider";
 import { useVerifyEmail } from "@/api/mutations/auth/useVerifyEmail";
-import { useRouter } from "expo-router";
+import { useMutation } from "react-query";
+import { verifyEmail } from "@/api/axios/auth";
+import { IVerifyEmailRequest } from "@/interfaces";
+import { router } from "expo-router";
 
 export default function SignUpOtp() {
-  const auth = useAuth();
-  console.log(auth.userInfo);
-  const email = auth.userInfo!.email;
-  const password = auth.userInfo!.password;
-  const { mutate: verifyEmail, isLoading } = useVerifyEmail();
+  const { userInfo } = useAuth();
+  const [email, password] = [userInfo?.email, userInfo?.password];
   const [code, onChangeCode] = useState<string>("");
-  const router = useRouter();
+  console.log({ email, password, code });
 
-  const handleSubmit = () => {
+  const { mutate: mutateVerifyEmail, isLoading } = useMutation({
+    mutationFn: ({ email, password, code }: IVerifyEmailRequest) => verifyEmail({ email, password, code }),
+    onSuccess(data, variables, context) {
+        
+    },
+  });
+
+  const mutateVerifyEmail = () => {
     console.log(email, password);
     if (email && password)
       verifyEmail(
@@ -49,7 +56,13 @@ export default function SignUpOtp() {
             <OtpInput value={code} onChange={onChangeCode} />
             <View className="mt-32">
               <TouchableOpacity
-                onPress={handleSubmit}
+                onPress={() =>
+                  mutateVerifyEmail({
+                    email,
+                    password,
+                    code,
+                  })
+                }
                 style={styles.cabaret_shadow}
                 className="p-2 bg-cabaret-500 h-[60px] rounded-full flex flex-row items-center justify-center"
               >

@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 
 const API_URL = "https://593e-212-28-227-52.ngrok-free.app";
+const authRoutes = ["/auth/login/", "auth/token/refresh/", "/auth/login/", "/auth/verify-email/"];
 
 const api = axios.create({
   baseURL: API_URL,
@@ -12,14 +13,6 @@ const api = axios.create({
   },
 });
 
-// api.interceptors.request.use(async (config) => {
-//   const token = await AsyncStorage.getItem("accessToken");
-//   if (token) {
-//     config.headers.Authorization = `Bearer ${token}`;
-//     console.log(`accessToken sent=>>${config.headers.Authorization}`);
-//   }
-//   return config;
-// });
 
 api.interceptors.response.use(
   (response) => response.data,
@@ -29,7 +22,7 @@ api.interceptors.response.use(
     if (
       error &&
       error.response &&
-      (error.response.status !== 401 || error.response.config.url === "/auth/login/")
+      (error.response.status !== 401 || authRoutes.includes(error.response.config.url || ""))
     ) {
       return Promise.reject(error);
     }
