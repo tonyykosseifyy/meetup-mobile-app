@@ -16,7 +16,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="notifications"
         options={{
-          title: "Notifications",
+          title: "My Requests",
+          headerShown: true,
           tabBarIcon: ({ color }) => {
             return <FontAwesome6 size={28} name="bell" color={color} />;
           },

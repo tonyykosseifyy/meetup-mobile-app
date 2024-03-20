@@ -13,21 +13,29 @@ export default function Tab() {
   console.log("ID", userInfo?.id);
   return (
     <SafeAreaView edges={["top"]} style={{ flex: 1 }}>
-      <Text>Test</Text>
-      <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
+      <View style={{ flex: 1, display: "flex" }}>
         <FlatList
           data={data}
+          contentContainerStyle={{}}
           renderItem={({ item }) => (
-            <View>
-              <View className="flex flex-row items-center h-full ">
-                <View className="w-14 h-14 p-[0.5px] rounded-full border-solid border-2 border-cabaret-500 mx-4">
+            <View className=" w-full flex-row justify-between p-4 ">
+              <View className="flex  flex-row   ">
+                <View className="w-14 h-14 p-[0.5px] rounded-full border-solid border-2 border-cabaret-500 ">
                   <Image
                     source={require("@/assets/avatars/adjusted_avatar_1.png")}
                     className="w-full h-full rounded-full object-contain"
                   />
-                  <Text></Text>
+                </View>
+                <View className="flex justify-evenly ml-2">
+                  <Text>
+                    {item.request_from.id == userInfo?.id
+                      ? item.request_to.user_info.full_name
+                      : item.request_from.user_info.full_name}
+                  </Text>
+                  <Text className="text-[12px]">Last request bartartine - 5:00 PM</Text>
                 </View>
               </View>
+              <Text>5:00 AM</Text>
             </View>
           )}
         />

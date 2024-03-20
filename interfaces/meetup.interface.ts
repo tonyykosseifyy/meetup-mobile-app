@@ -5,13 +5,13 @@ interface MeetupRequestRequest {
 }
 interface MeetupRequestResponse {
   id: number;
-  request_from: number;
-  request_to: number;
+  request_from: IUser;
+  request_to: IUser;
   status: string;
   time_slots: [];
   place_requests: [];
-  request_to_accepting: IUser;
-  request_from_accepting: IUser;
+  request_to_accepting: boolean;
+  request_from_accepting: boolean;
 }
 
 interface RequestMeetingsRequest {}
