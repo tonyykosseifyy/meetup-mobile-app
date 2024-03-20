@@ -6,7 +6,7 @@ import { Link as ExpoLink, useRouter } from "expo-router";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "@/constants/styles";
-import { useLogin } from "@/components/auth/useLogin";
+import { useLogin } from "@/api/mutations/auth/useLogin";
 import { setTokens, showTokens } from "@/api/tokens";
 import { AxiosError } from "axios";
 

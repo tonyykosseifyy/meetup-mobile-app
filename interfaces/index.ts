@@ -1,4 +1,4 @@
-import { IUser, IUserInfo, IUpdateUserInfo } from "./users.interface";
+import { IUser, IUserInfo, IUpdateUserRequest } from "./users.interface";
 import {
   ILoginResponse,
   ILoginRequest,
@@ -9,7 +9,7 @@ import {
   ISetUserResponse,
   IVerifyEmailRequest,
   IVerifyEmailResponse,
-  ISetUserRequest
+  ISetUserRequest,
 } from "./auth.interface";
 
 export {
@@ -22,5 +22,8 @@ export {
   ISetUserResponse,
   IVerifyEmailRequest,
   IVerifyEmailResponse,
-  ISetUserRequest
+  ISetUserRequest,
+  IUser,
+  IUserInfo,
+  IUpdateUserRequest,
 };

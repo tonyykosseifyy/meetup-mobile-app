@@ -1,13 +1,12 @@
-// Assuming '@/api/auth' is correctly pathed relative to this file
 import { useMutation, UseMutationResult } from "react-query";
-import { LoginCredentials, LoginResponse } from "@/interfaces";
-import { login } from "@/api/axios/auth";
+import { ILoginRequest, ILoginResponse } from "@/interfaces";
 import { AxiosError } from "axios";
+import { login } from "../../axios/auth";
 
 export function useLogin(): UseMutationResult<
-  LoginResponse,
+  ILoginResponse,
   AxiosError,
-  LoginCredentials,
+  ILoginRequest,
   unknown
 > {
   return useMutation(({ email, password }) => login({ email, password }));

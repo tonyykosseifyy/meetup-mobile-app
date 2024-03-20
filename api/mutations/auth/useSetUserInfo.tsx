@@ -1,11 +1,12 @@
 import { useMutation, UseMutationResult } from "react-query";
 import { setUserInfo } from "@/api/axios/auth";
-import { setUserInfoCredentials, setUserInfoResponse } from "@/interfaces";
+import { ISetUserRequest, ISetUserResponse } from "@/interfaces";
+import { AxiosError } from "axios";
 
 export function useSetUserInfo(): UseMutationResult<
-  setUserInfoResponse,
-  unknown,
-  setUserInfoCredentials,
+  ISetUserResponse,
+  AxiosError,
+  ISetUserRequest,
   unknown
 > {
   return useMutation((userInfo) => setUserInfo(userInfo));

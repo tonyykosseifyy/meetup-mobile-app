@@ -4,8 +4,8 @@ import { Header } from "@/components";
 import { OtpInput } from "@/components";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "@/constants/styles";
-import { useAuth } from "@/components/auth/AuthProvider";
-import { useVerifyEmail } from "@/components/auth/useVerifyEmail";
+import { useAuth } from "@/api/mutations/auth/AuthProvider";
+import { useVerifyEmail } from "@/api/mutations/auth/useVerifyEmail";
 import { useRouter } from "expo-router";
 
 export default function SignUpOtp() {

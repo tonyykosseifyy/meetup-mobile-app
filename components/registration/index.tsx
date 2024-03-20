@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, TextInput, TouchableOpacity, StyleSheet } from "react-native";
-import { useRegister } from "../auth/useRegister";
-import { useSetUserInfo } from "../auth/useSetUserInfo";
+import { useRegister } from "../../api/mutations/auth/useRegister";
+import { useSetUserInfo } from "../../api/mutations/auth/useSetUserInfo";
 import { IRegistrationData } from "@/assets/data/registration_data";
 import Header from "../header";
 import { AntDesign, Feather, Fontisto, Ionicons, MaterialIcons } from "@expo/vector-icons";
@@ -10,7 +10,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useRouter } from "expo-router";
 import { UserInfo } from "@/interfaces";
-import { useUpdateUserInfo } from "../auth/useUpdateUserInfo";
+import { useUpdateUserInfo } from "../../api/mutations/auth/useUpdateUserInfo";
 import { useQuery } from "react-query";
 import { getMe } from "@/api/axios/users";
 import { useQueryClient } from "react-query";

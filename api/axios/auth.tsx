@@ -9,7 +9,7 @@ import {
   ISetUserResponse,
   IVerifyEmailRequest,
   IVerifyEmailResponse,
-  ISetUserRequest
+  ISetUserRequest,
 } from "../../interfaces";
 
 const login = async ({ email, password }: ILoginRequest): Promise<ILoginResponse> => {
@@ -20,7 +20,7 @@ const register = async ({ email, password }: IRegisterRequest): Promise<IRegiste
   return await axios.post("/auth/register/", { email, password });
 };
 
-const refreshToken = async ({ refreshToken }: IRefreshRequest): Promise<IRefreshResponse> =>
+const generateAccess = async ({ refreshToken }: IRefreshRequest): Promise<IRefreshResponse> =>
   await axios.post("/auth/token/refresh/", { refresh: refreshToken });
 
 const setUserInfo = async (userInfo: ISetUserRequest): Promise<ISetUserResponse> => {
@@ -34,3 +34,5 @@ const verifyEmail = async ({
 }: IVerifyEmailRequest): Promise<IVerifyEmailResponse> => {
   return await axios.post("/auth/verify-email/", { email, password, code });
 };
+
+export { login, register, generateAccess, setUserInfo, verifyEmail };

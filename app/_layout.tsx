@@ -10,7 +10,7 @@ import {
   Inter_700Bold,
 } from "@expo-google-fonts/inter";
 import React from "react";
-import { AuthProvider } from "@/components/auth/AuthProvider";
+import { AuthProvider } from "@/api/mutations/auth/AuthProvider";
 // import { DevToolsBubble } from "react-native-react-query-devtools";
 import { QueryClient, QueryClientProvider } from "react-query";
 

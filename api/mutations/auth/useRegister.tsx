@@ -1,13 +1,13 @@
 import { useMutation, UseMutationResult } from "react-query";
-import { RegisterCredentials, RegisterResponse } from "@/interfaces";
+import { IRegisterRequest, IRegisterResponse } from "@/interfaces";
 import { AxiosError } from "axios";
 import { register } from "@/api/axios/auth";
 
 export function useRegister(): UseMutationResult<
-  RegisterResponse,
+  IRegisterResponse,
   AxiosError,
-  RegisterCredentials,
+  IRegisterRequest,
   unknown
 > {
-  return useMutation(({ email, password }) => register({ email, password }), {});
+  return useMutation(({ email, password }) => register({ email, password }));
 }

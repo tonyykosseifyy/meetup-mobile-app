@@ -19,7 +19,7 @@ interface IUserInfo {
   password: string;
 }
 
-interface IUpdateUserInfo {
+interface IUpdateUserRequest {
   full_name?: string;
   date_of_birth?: string;
   occupation?: string;
@@ -27,4 +27,4 @@ interface IUpdateUserInfo {
   interests?: number[];
 }
 
-export { IUser, IUserInfo, IUpdateUserInfo };
+export { IUser, IUserInfo, IUpdateUserRequest };
