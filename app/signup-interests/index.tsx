@@ -5,8 +5,9 @@ import Chip from "@/components/chip";
 import styles from "@/constants/styles";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { interests, icons } from "./data";
-import { useQuery } from "react-query";
-import { getInterests } from "@/api/axios/interests";
+import { useMutation, useQuery } from "react-query";
+import { getInterests, setInterests } from "@/api/axios/interests";
+import { router } from "expo-router";
 
 const Skip = (): React.JSX.Element => (
   <TouchableOpacity>
@@ -31,8 +32,18 @@ export default function SignUpOtp() {
     queryFn: () => getInterests(),
     onSuccess: (data) => {
       console.log(data);
-      
-    }
+    },
+  });
+  const mutateIntrests = useMutation({
+    mutationFn: () => setInterests(selectedInterests),
+    mutationKey: "/auth/userinfo/",
+    onSuccess: (data) => {
+      console.log(data);
+      while (router.canGoBack()) {
+        router.back();
+      }
+      router.replace("/(tabs)");
+    },
   });
 
   return (
@@ -53,11 +64,11 @@ export default function SignUpOtp() {
                 Array.isArray(data) &&
                 data.map((interest) => (
                   <Chip
-                    onPress={() => toggleInterest(interest)}
-                    key={interest}
-                    active={selectedInterests.includes(interest)}
-                    text={interest}
-                    Icon={icons[interest]}
+                    onPress={() => toggleInterest(interest.id)}
+                    key={interest.id}
+                    active={selectedInterests.includes(interest.id)}
+                    text={interest.name}
+                    Icon={icons[interest.name]}
                     shadow
                   />
                 ))}
@@ -68,7 +79,7 @@ export default function SignUpOtp() {
               )}
             </View>
             <TouchableOpacity
-              onPress={() => {}}
+              onPress={() => mutateIntrests.mutate()}
               style={styles.cabaret_shadow}
               className="p-2 bg-cabaret-500 h-[60px] rounded-full flex flex-row items-center justify-center"
             >
