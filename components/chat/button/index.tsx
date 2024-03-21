@@ -16,7 +16,7 @@ const ChatButton = ({ positive, onPress }: ChatButtonProps) => {
     >
       {positive ? <CheckIcon /> : <CloseIcon />}
       <Text className={`font-bold ml-1 ${positive ? "text-white" : ""}`}>
-        {positive ? "Agree" : "Decline"}
+        {positive ? "Agree" : "Request Place-Time"}
       </Text>
     </TouchableOpacity>
   );

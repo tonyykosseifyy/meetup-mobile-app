@@ -16,9 +16,21 @@ interface MeetupRequestResponse {
 
 interface RequestMeetingsRequest {}
 type RequestMeetingsResponse = MeetupRequestResponse[];
+
+interface RequestPlaceTimeForMeetingRequest {
+  id: number;
+  timeSlot: string;
+  place: string;
+}
+
+interface RequestPlaceTimeForMeetingResponse {
+  // later
+}
 export {
   MeetupRequestRequest,
   MeetupRequestResponse,
   RequestMeetingsRequest,
   RequestMeetingsResponse,
+  RequestPlaceTimeForMeetingRequest,
+  RequestPlaceTimeForMeetingResponse,
 };

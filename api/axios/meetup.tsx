@@ -1,14 +1,23 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "../../utils/axios";
 import { MeetupRequestRequest, MeetupRequestResponse } from "@/interfaces";
-import { RequestMeetingsRequest, RequestMeetingsResponse } from "@/interfaces/meetup.interface";
+import {
+  RequestMeetingsRequest,
+  RequestMeetingsResponse,
+  RequestPlaceTimeForMeetingRequest,
+  RequestPlaceTimeForMeetingResponse,
+} from "@/interfaces/meetup.interface";
 
 const requestMeeting = async ({ userId }: MeetupRequestRequest): Promise<MeetupRequestResponse> => {
   const token = await AsyncStorage.getItem("accessToken");
 
-  return await axios.post("/meetup/meeting-requests/create/" + userId + "/", {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  return await axios.post(
+    "/meetup/meeting-requests/create/" + userId + "/",
+    {},
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
 };
 
 const requestMeetings = async ({}: RequestMeetingsRequest): Promise<RequestMeetingsResponse> => {
@@ -19,4 +28,35 @@ const requestMeetings = async ({}: RequestMeetingsRequest): Promise<RequestMeeti
   });
 };
 
-export { requestMeeting, requestMeetings };
+const requestPlaceTimeForMeeting = async ({
+  id,
+  timeSlot,
+  place,
+}: RequestPlaceTimeForMeetingRequest): Promise<RequestPlaceTimeForMeetingResponse> => {
+  const token = await AsyncStorage.getItem("accessToken");
+
+  return await axios.post(
+    `/meetup/meeting-requests/${id}/place-time-requests/`,
+    {
+      time_slot: timeSlot,
+      place_name: place,
+    },
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+};
+
+const changeMeetingStatus = async ({ id, status }: { id: number; status: "accept" | "reject" }) => {
+  const token = await AsyncStorage.getItem("accessToken");
+
+  return await axios.post(
+    `/meetup/meeting-requests/respond/${id}/${status}/`,
+    {},
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+};
+
+export { requestMeeting, requestMeetings, requestPlaceTimeForMeeting, changeMeetingStatus };

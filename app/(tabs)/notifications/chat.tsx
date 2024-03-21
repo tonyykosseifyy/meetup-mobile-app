@@ -13,6 +13,11 @@ import LocationIcon from "@/assets/icons/settings/location.svg";
 import PlaceChip from "@/components/chat/placechip";
 import TimeIcon from "@/assets/icons/chat/time.svg";
 import { Button } from "@/components";
+import { router, useLocalSearchParams } from "expo-router";
+import { useMutation, useQuery } from "react-query";
+import { getMe } from "@/api/axios/users";
+import { MeetupRequestResponse } from "@/interfaces";
+import { changeMeetingStatus, requestPlaceTimeForMeeting } from "@/api/axios/meetup";
 enum Sender {
   Me = "me",
   Her = "her",
@@ -67,7 +72,58 @@ export default function PreLogin() {
     (props: any) => <BottomSheetBackdrop appearsOnIndex={0} disappearsOnIndex={-1} {...props} />,
     []
   );
+  const meeting = JSON.parse(useLocalSearchParams().meeting);
 
+  const { data: userInfo, isLoading: isUserLoading } = useQuery({
+    queryKey: "/auth/userinfo/",
+    retry: 2,
+    queryFn: () => getMe(),
+  });
+
+  const {
+    mutate: proposePlaceTime,
+    isLoading: isProposingPlaceTime,
+    isError: isProposingPlaceTimeError,
+    error: proposingPlaceTimeError,
+  } = useMutation<
+    unknown,
+    unknown,
+    {
+      id: number;
+      timeSlot: string;
+      place: string;
+    }
+  >({
+    mutationFn: ({ id, timeSlot, place }) => {
+      return requestPlaceTimeForMeeting({ id, timeSlot, place });
+    },
+    mutationKey: "/meetup/meeting-requests/place-time-requests/",
+    retry: false,
+    onSuccess: (data) => {
+      handleClosePress();
+      setTime("");
+      setPlace("");
+    },
+  });
+
+  const {
+    mutate: changeStatusMeeting,
+    isLoading: isChangeStatusMeeting,
+    isError: isChangeStatusMeetingError,
+    error: changeStatusMeetingError,
+  } = useMutation<unknown, unknown, { id: number; status: "accept" | "reject" }>({
+    mutationFn: ({ id, status }) => {
+      return changeMeetingStatus({ id, status });
+    },
+    mutationKey: "/meetup/meeting-requests/respond/",
+    retry: false,
+    onSuccess: (data) => {
+      handleClosePress();
+      setTime("");
+      setPlace("");
+      router.back();
+    },
+  });
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-[#F6F6F6] relative">
       <View className={`flex justify-between  bg-white flex-auto`}>
@@ -83,7 +139,12 @@ export default function PreLogin() {
               />
             </View>
             <View className="ml-3 ">
-              <Text className="text-black text-lg font-medium -mt-1">John Doe</Text>
+              <Text className="text-black text-lg font-medium -mt-1">
+                {" "}
+                {meeting.request_from.id == userInfo?.id
+                  ? meeting.request_to.user_info.full_name
+                  : meeting.request_from.user_info.full_name}
+              </Text>
               <Text className="text-cabaret-500 -mt-[0.7px] font-semibold text-xs">
                 Software Developer
               </Text>
@@ -101,18 +162,30 @@ export default function PreLogin() {
           className="flex-1 pt-6 mx-6 relative"
         >
           <DateChip date="Today" />
-          <View className="mt-6 flex items-end">
-            <Message message="Hey, bartartine @ 5:00 PM ?" date={new Date()} sender={Sender.Me} />
-            <Message message="Can’t Make it" date={new Date()} sender={Sender.Her} />
-            <Message message="Younes Tue @ 7:00 PM" date={new Date()} sender={Sender.Her} />
-            <Message message="Hey, bartartine @ 5:00 PM ?" date={new Date()} sender={Sender.Me} />
-            <Message message="Can’t Make it" date={new Date()} sender={Sender.Her} />
-            <Message message="Younes Tue @ 7:00 PM" date={new Date()} sender={Sender.Her} />
-          </View>
+
+          {meeting.place_time_requests.length >= 1 ? (
+            <View className="mt-6 flex items-end">
+              {meeting.place_time_requests.map((request) => {
+                return (
+                  <Message
+                    message={`${request.place.name} @ ${request.time.slot}`}
+                    date={new Date()}
+                    sender={request.requested_by == userInfo?.id ? Sender.Me : Sender.Her}
+                  />
+                );
+              })}
+            </View>
+          ) : (
+            <Text className="text-gray-400 text-center mt-4">No requests yet. Send one!</Text>
+          )}
+
           <View className="mt-12 h-[0.6px] bg-cabaret-500 w-full mx-auto" />
           <View className="flex flex-row justify-between items-center mt-6">
             <ChatButton onPress={() => handleOpenPress()} positive={false} />
-            <ChatButton onPress={() => {}} positive={true} />
+            <ChatButton
+              onPress={() => changeStatusMeeting({ id: meeting.id, status: "accept" })}
+              positive={true}
+            />
           </View>
           <View className="h-20" />
         </ScrollView>
@@ -184,8 +257,13 @@ export default function PreLogin() {
 
             <View className="h-[0.5px] w-full bg-gray-200 mt-2" />
           </View>
-          <Button addClassName="mt-5" onPress={() => handleClosePress()}>
-            Schedule
+          <Button
+            addClassName="mt-5"
+            onPress={() =>
+              !isProposingPlaceTime && proposePlaceTime({ id: meeting.id, timeSlot: time, place })
+            }
+          >
+            {isProposingPlaceTime ? "Loading..." : "Schedule"}
           </Button>
           <View className="h-24" />
         </ScrollView>

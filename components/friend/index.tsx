@@ -5,28 +5,42 @@ import { ScrollView, StyleSheet } from "react-native";
 import InviteIcon from "@/assets/icons/home/invite.svg";
 import { calculateAge } from "@/utils/common";
 import { CardProps } from "../../app/(tabs)";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { requestMeeting } from "@/api/axios/meetup";
 import { icons } from "@/app/signup-interests/data";
-
+import { MeetupRequestResponse, RequestMeetingsResponse } from "@/interfaces/meetup.interface";
+import { router } from "expo-router";
 
 export const Friend = ({ item }: CardProps) => {
-  const { mutate: sendRequest, isLoading } = useMutation(requestMeeting);
-  console.log('item', item);
-  const handleSubmit = ({ userId }: { userId: number }) => {
-    sendRequest(
-      { userId },
-      {
-        onSuccess: () => {
-          Alert.alert("Request sent", "Your request has been sent successfully");
-        },
-      }
-    );
-  };
+  const queryClient = useQueryClient();
+
+  const { mutate: sendRequest, isLoading } = useMutation<
+    {
+      meeting_request: MeetupRequestResponse;
+    },
+    unknown,
+    {
+      userId: number;
+    }
+  >({
+    mutationFn: ({ userId }) => {
+      return requestMeeting({ userId });
+    },
+    mutationKey: "/meetup/meeting-requests/place-time-requests/",
+    retry: false,
+    onSuccess: ({ meeting_request }) => {
+      queryClient.invalidateQueries("/meetup/me/meeting-requests/");
+      router.navigate({
+        pathname: "/(tabs)/notifications/",
+      });
+    },
+  });
+  console.log("item", item);
+
   return (
     <View className="bg-white px-2 pt-6 pb-6 relative" style={override_styles.shadow}>
       <TouchableOpacity
-        onPress={() => handleSubmit({ userId: item.id! })}
+        onPress={() => sendRequest({ userId: item.id! })}
         className="absolute z-10 top-8 right-5 w-12 h-8 flex-row justify-end"
       >
         <InviteIcon />
@@ -65,7 +79,7 @@ export const Friend = ({ item }: CardProps) => {
                 text={interest.name}
                 onPress={() => {}}
                 active={false}
-                Icon={icons[interest.name]}
+                Icon={icons[interest.name] || InviteIcon}
               />
             );
           }

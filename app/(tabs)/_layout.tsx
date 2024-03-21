@@ -17,7 +17,7 @@ export default function TabLayout() {
         name="notifications"
         options={{
           title: "My Requests",
-          headerShown: true,
+
           tabBarIcon: ({ color }) => {
             return <FontAwesome6 size={28} name="bell" color={color} />;
           },
@@ -34,7 +34,7 @@ export default function TabLayout() {
         name="settings"
         options={{
           title: "Settings",
-          headerShown: true,
+          headerShown: false,
           tabBarIcon: ({ color }) => <SettingsIcon width={25} height={25} fill={color} />,
         }}
       />

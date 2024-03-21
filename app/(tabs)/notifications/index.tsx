@@ -21,7 +21,7 @@ import { formatTimeTo12Hour } from "@/utils/common";
 // }
 
 export default function Tab() {
-  const { isLoading, data, error } = useQuery("requestMeetings", requestMeetings);
+  const { isLoading, data, error } = useQuery("/meetup/me/meeting-requests/", requestMeetings);
   const { data: userInfo, isLoading: isUserLoading } = useQuery({
     queryKey: "/auth/userinfo/",
     retry: 2,
@@ -37,7 +37,15 @@ export default function Tab() {
         contentContainerStyle={{}}
         ItemSeparatorComponent={() => <View className="bg-[#F2F2F2]  w-full h-[1px]" />}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => router.push("/(tabs)/notifications/chat")}>
+          <TouchableOpacity
+            disabled={item.status !== "waiting"}
+            onPress={() =>
+              router.push({
+                pathname: "/(tabs)/notifications/chat",
+                params: { meeting: JSON.stringify(item) },
+              })
+            }
+          >
             <View className=" w-full flex-row justify-between p-4 ">
               <View className="flex  flex-row   ">
                 <View className="w-14 h-14 p-[0.5px] rounded-full border-solid border-2 border-cabaret-500 ">
@@ -48,7 +56,7 @@ export default function Tab() {
                 </View>
                 <View className="flex justify-evenly ml-2">
                   <Text>
-                    {item.request_from.id == registeredUser?.id
+                    {item.request_from.id == userInfo?.id
                       ? item.request_to.user_info.full_name
                       : item.request_from.user_info.full_name}
                   </Text>
@@ -59,7 +67,7 @@ export default function Tab() {
                     </Text>
                   ) : item.status === "pending" ? (
                     <Text className="text-gray-400">
-                      {item.request_from.id == registeredUser?.id
+                      {item.request_from.id == userInfo?.id
                         ? "Waiting for response from " + item.request_to.user_info.full_name
                         : "You have pending request from " + item.request_from.user_info.full_name}
                     </Text>

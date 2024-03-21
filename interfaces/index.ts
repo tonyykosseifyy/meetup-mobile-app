@@ -18,7 +18,12 @@ import {
   IVerifyEmailResponse,
   ISetUserRequest,
 } from "./auth.interface";
-import { MeetupRequestRequest, MeetupRequestResponse } from "./meetup.interface";
+import {
+  MeetupRequestRequest,
+  MeetupRequestResponse,
+  RequestPlaceTimeForMeetingRequest,
+  RequestPlaceTimeForMeetingResponse,
+} from "./meetup.interface";
 
 export {
   ILoginResponse,
