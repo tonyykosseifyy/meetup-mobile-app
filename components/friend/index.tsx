@@ -61,7 +61,7 @@ export const Friend = ({ item }: CardProps) => {
                 key={index}
                 pressableClassName="py-0 px-0"
                 textClassName="ml-1"
-                text={interest}
+                text={interest.name}
                 onPress={() => {}}
                 active={false}
                 Icon={CharityIcon}

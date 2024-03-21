@@ -13,7 +13,11 @@ export interface CardProps {
 }
 
 const renderItem = ({ item }: CardProps) => {
-  return <Friend item={item} />;
+  if (item.user_info) {
+    return <Friend item={item} />;
+  } else {
+    return <></>;
+  }
 };
 
 export default function Home() {
