@@ -49,7 +49,27 @@ export default function SignUpOtp() {
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
       <View className="flex-1 bg-white flex">
-        <Header leftButton theme={"light"} rightButton={Skip()} />
+        <Header
+          leftButton
+          theme={"light"}
+          rightButton={
+            <TouchableOpacity onPress={() => console.log("2")} className-="w-full flex-1 w-42">
+              <View
+                onStartShouldSetResponder={(event) => true}
+                onTouchEnd={(e) => {
+                  e.stopPropagation();
+                }}
+              ></View>
+              <TouchableOpacity
+                onPress={() => console.log("1")}
+                className="w-full bg-red-500"
+                activeOpacity={1}
+              >
+                <Text className="text-cabaret-500 font-bold">Skip</Text>
+              </TouchableOpacity>
+            </TouchableOpacity>
+          }
+        />
         <View className="px-5 flex-1">
           <View className="mt-7">
             <Text className="text-black font-medium text-2xl">Select up to 3 interest</Text>

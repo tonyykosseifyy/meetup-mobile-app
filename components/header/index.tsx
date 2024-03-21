@@ -10,13 +10,15 @@ const Header = (props: HeaderProps) => {
 
   return (
     <View className="p-5 flex flex-row-reverse items-center justify-between">
-      <View className="flex-1  flex flex-row justify-end">{rightButton && rightButton}</View>
+      <TouchableOpacity className="flex-1 flex flex-row justify-end ">
+        {rightButton && rightButton}
+      </TouchableOpacity>
       <View className="flex-1">
         <LogoNavbar />
       </View>
       <View className="flex-1">
         {leftButton && (
-          <TouchableOpacity onPress={() => router.back()}>
+          <TouchableOpacity className="" onPress={() => router.back()}>
             <FontAwesome6
               name="arrow-left"
               size={22}

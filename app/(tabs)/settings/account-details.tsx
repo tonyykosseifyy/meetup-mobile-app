@@ -105,7 +105,6 @@ export default function AccountDetails() {
               />
             </View>
             {/* occupation */}
-
             <View className="mt-7 py-2 px-5 bg-white h-14 rounded-lg flex flex-row items-center justify-between border-[1px] border-solid border-cabaret-500">
               <AntDesign name="profile" size={19} color="black" style={{ opacity: 0.5 }} />
               <TextInput
