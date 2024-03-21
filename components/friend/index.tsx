@@ -9,9 +9,21 @@ import { CardProps } from "../../app/(tabs)";
 import { useMutation } from "react-query";
 import { requestMeeting } from "@/api/axios/meetup";
 
+// interface IUser {
+//   id?: number;
+//   email: string;
+//   user_info: {
+//     full_name: string;
+//     date_of_birth: string;
+//     occupation: string;
+//     biography: string;
+//     interests: string[];
+//   };
+// }
+
 export const Friend = ({ item }: CardProps) => {
   const { mutate: sendRequest, isLoading } = useMutation(requestMeeting);
-
+  console.log('item', item);
   const handleSubmit = ({ userId }: { userId: number }) => {
     sendRequest(
       { userId },
