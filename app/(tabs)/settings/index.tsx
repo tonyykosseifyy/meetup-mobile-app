@@ -8,10 +8,32 @@ import AccountDetailsIcon from "@/assets/icons/settings/account-details.svg";
 import LogoutIcon from "@/assets/icons/settings/logout.svg";
 import PrivacyIcon from "@/assets/icons/settings/privacy.svg";
 import AboutUsIcon from "@/assets/icons/settings/aboutus.svg";
+import { Alert } from "react-native";
+import { clearTokens } from "@/api/tokens";
+import { router } from "expo-router";
+
+const logoutPrompt = () => {
+  Alert.alert("Logout", "Are you sure you want to logout?", [
+    {
+      text: "Cancel",
+      onPress: () => console.log("Cancel Pressed"),
+      style: "cancel",
+    },
+    {
+      style: "destructive",
+      text: "Yes",
+      onPress: () => {
+        clearTokens();
+        router.push("/");
+      },
+    },
+  ]);
+};
 
 export default function Settings() {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+
   return (
     <ScrollView className="flex-1 bg-white">
       <Image
@@ -65,7 +87,10 @@ export default function Settings() {
           </TouchableOpacity>
         </ExpoLink>
 
-        <TouchableOpacity className="mb-4 flex p-4 flex-row items-center justify-between bg-[#F2F2F2] rounded-lg">
+        <TouchableOpacity
+          onPress={() => logoutPrompt()}
+          className="mb-4 flex p-4 flex-row items-center justify-between bg-[#F2F2F2] rounded-lg"
+        >
           <View className="flex flex-row items-center">
             <LogoutIcon width={19} />
             <Text className="ml-3">Logout</Text>

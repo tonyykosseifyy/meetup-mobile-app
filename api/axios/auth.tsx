@@ -27,6 +27,7 @@ const setUserInfo = async (userInfo: ISetUserRequest): Promise<ISetUserResponse>
   return await axios.post("/auth/userinfo/", userInfo);
 };
 
+
 const verifyEmail = async ({
   email,
   password,

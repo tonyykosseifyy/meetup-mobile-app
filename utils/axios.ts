@@ -2,8 +2,8 @@ import axios, { AxiosError } from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 
-const API_URL = "http://172.20.10.2:8000";
-const authRoutes = ["/auth/login/", "auth/token/refresh/", "/auth/login/", "/auth/verify-email/"];
+const API_URL = "https://5807-212-28-227-50.ngrok-free.app";
+const authRoutes = ["/auth/login/", "auth/token/refresh/", "/auth/verify-email/"];
 
 const api = axios.create({
   baseURL: API_URL,
@@ -25,6 +25,7 @@ api.interceptors.response.use(
     ) {
       return Promise.reject(error);
     }
+    console.log("error.response=>", error);
 
     const refreshToken = await AsyncStorage.getItem("refreshToken");
     if (!refreshToken) {

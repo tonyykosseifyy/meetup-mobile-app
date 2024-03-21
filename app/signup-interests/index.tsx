@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import { Header } from "@/components";
 import Chip from "@/components/chip";
 import styles from "@/constants/styles";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { interests, icons } from "./data";
-import { useQuery } from "react-query";
-
+import { useMutation, useQuery } from "react-query";
+import { getInterests, setInterests } from "@/api/axios/interests";
+import { router } from "expo-router";
 
 const Skip = (): React.JSX.Element => (
   <TouchableOpacity>
@@ -16,6 +17,7 @@ const Skip = (): React.JSX.Element => (
 
 export default function SignUpOtp() {
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+
   const toggleInterest = (interest: string) => {
     if (selectedInterests.includes(interest)) {
       setSelectedInterests(selectedInterests.filter((i) => i !== interest));
@@ -24,16 +26,50 @@ export default function SignUpOtp() {
     }
   };
 
-  // fetch user interests
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: "/meetup/interests/",
     retry: 2,
-    queryFn: () => fetchInterests(),
+    queryFn: () => getInterests(),
+    onSuccess: (data) => {
+      console.log(data);
+    },
   });
+  const { isLoading: isSendingLoading, mutate: sendInterests } = useMutation({
+    mutationFn: () => setInterests(selectedInterests),
+    mutationKey: "/auth/userinfo/",
+    onSuccess: (data) => {
+      console.log(data);
+      while (router.canGoBack()) {
+        router.back();
+      }
+      router.replace("/(tabs)");
+    },
+  });
+
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
       <View className="flex-1 bg-white flex">
-        <Header leftButton theme={"light"} rightButton={Skip()} />
+        <Header
+          leftButton
+          theme={"light"}
+          rightButton={
+            <TouchableOpacity onPress={() => console.log("2")} className-="w-full flex-1 w-42">
+              <View
+                onStartShouldSetResponder={(event) => true}
+                onTouchEnd={(e) => {
+                  e.stopPropagation();
+                }}
+              ></View>
+              <TouchableOpacity
+                onPress={() => console.log("1")}
+                className="w-full bg-red-500"
+                activeOpacity={1}
+              >
+                <Text className="text-cabaret-500 font-bold">Skip</Text>
+              </TouchableOpacity>
+            </TouchableOpacity>
+          }
+        />
         <View className="px-5 flex-1">
           <View className="mt-7">
             <Text className="text-black font-medium text-2xl">Select up to 3 interest</Text>
@@ -44,22 +80,33 @@ export default function SignUpOtp() {
 
           <View className="mt-20 flex-1 w-full justify-between pb-28">
             <View className="flex flex-row justify-center flex-wrap h-64 w-full">
-              {interests.map((interest) => (
-                <Chip
-                  onPress={() => toggleInterest(interest)}
-                  key={interest}
-                  active={selectedInterests.includes(interest)}
-                  text={interest}
-                  Icon={icons[interest]}
-                  shadow
-                />
-              ))}
+              {data &&
+                Array.isArray(data) &&
+                data.map((interest) => (
+                  <Chip
+                    onPress={() => toggleInterest(interest.name)}
+                    key={interest.id}
+                    active={selectedInterests.includes(interest.name)}
+                    text={interest.name}
+                    Icon={icons[interest.name]}
+                    shadow
+                  />
+                ))}
+              {isLoading && (
+                <View className="w-full flex flex-row items-center justify-center">
+                  <ActivityIndicator size="large" color="#d14d72" />
+                </View>
+              )}
             </View>
             <TouchableOpacity
+              onPress={() => sendInterests()}
+              disabled={isSendingLoading || isLoading || selectedInterests.length < 3}
               style={styles.cabaret_shadow}
-              className="p-2 bg-cabaret-500 h-[60px] rounded-full flex flex-row items-center justify-center"
+              className={`p-2 bg-cabaret-500 h-[60px] rounded-full flex flex-row items-center justify-center ${selectedInterests.length < 3 && "bg-cabaret-400"}`}
             >
-              <Text className="text-white font-bold text-base">Continue</Text>
+              <Text className="text-white font-bold text-base">
+                {isSendingLoading ? "Saving..." : "Continue"}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>

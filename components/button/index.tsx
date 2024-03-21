@@ -4,11 +4,12 @@ import { ButtonProps } from "./interface.button";
 import styles from "@/constants/styles";
 
 const Button = React.forwardRef<TouchableOpacity, ButtonProps>((props, ref) => {
-  const { rounded, children, icon, addClassName, textColor, disableShadow, view } = props;
+  const { rounded, children, icon, addClassName, textColor, disableShadow, view, onPress } = props;
 
   return (
     <TouchableOpacity
       ref={ref}
+      onPress={onPress}
       className={` bg-cabaret-500 flex flex-row justify-center p-4 relative ${!disableShadow ? "shadow-lg" : ""} ${
         rounded ? "rounded-full" : "rounded-lg"
       } ${addClassName}`}

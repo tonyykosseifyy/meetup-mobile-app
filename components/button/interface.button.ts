@@ -6,4 +6,5 @@ export interface ButtonProps {
   textColor?: String;
   disableShadow?: boolean;
   view?: boolean;
+  onPress? : () => void;
 }
