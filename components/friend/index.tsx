@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Image, Text, TouchableOpacity, Alert } from "react-native";
 import Chip from "@/components/chip";
-import CharityIcon from "@/assets/icons/interests/charity.svg";
 import { ScrollView, StyleSheet } from "react-native";
 import InviteIcon from "@/assets/icons/home/invite.svg";
 import { calculateAge } from "@/utils/common";
@@ -10,17 +9,6 @@ import { useMutation } from "react-query";
 import { requestMeeting } from "@/api/axios/meetup";
 import { icons } from "@/app/signup-interests/data";
 
-// interface IUser {
-//   id?: number;
-//   email: string;
-//   user_info: {
-//     full_name: string;
-//     date_of_birth: string;
-//     occupation: string;
-//     biography: string;
-//     interests: string[];
-//   };
-// }
 
 export const Friend = ({ item }: CardProps) => {
   const { mutate: sendRequest, isLoading } = useMutation(requestMeeting);
