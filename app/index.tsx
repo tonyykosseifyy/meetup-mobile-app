@@ -8,26 +8,32 @@ import DateChip from "@/components/chat/datechip";
 import Message from "@/components/chat/message";
 import ChatButton from "@/components/chat/button";
 import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
+import LocationIcon from "@/assets/icons/settings/location.svg";
+import styles from "@/constants/styles";
+import PlaceChip from "@/components/chat/placechip";
 
 enum Sender {
   Me = "me",
   Her = "her",
 }
+const places = ["bartartine", "younes"];
 
 export default function PreLogin() {
-  const [open, setOpen] = useState<boolean>(false);
   const bottomSheetRef = useRef<BottomSheet>(null);
+  const [place, setPlace] = useState<string>("");
+  const [time, setTime] = useState<string>("");
 
   const snapPoints = useMemo(() => ["50%", "70%"], []);
 
   const handleClosePress = () => {
-    setOpen(false);
     bottomSheetRef.current?.close();
     handleCollapsePress();
   };
   const handleOpenPress = () => {
-    setOpen(true);
     bottomSheetRef.current?.snapToIndex(0);
+  };
+  const handlePlaceChange = (newPlace: string) => {
+    place === newPlace ? setPlace("") : setPlace(newPlace);
   };
   const handleCollapsePress = () => bottomSheetRef.current?.collapse();
   const snapeToIndex = (index: number) => bottomSheetRef.current?.snapToIndex(index);
@@ -35,13 +41,10 @@ export default function PreLogin() {
     (props: any) => <BottomSheetBackdrop appearsOnIndex={0} disappearsOnIndex={-1} {...props} />,
     []
   );
-  console.log(open);
 
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-[#F6F6F6] relative">
-      <View
-        className={`flex justify-between  bg-white flex-auto flex- ${open ? "flex-auto h-32" : "flex-1"}`}
-      >
+      <View className={`flex justify-between  bg-white flex-auto`}>
         <View className="bg-[#F6F6F6] flex flex-row items-center justify-between px-6 h-20">
           <View className="flex flex-row items-center">
             <TouchableOpacity>
@@ -96,8 +99,38 @@ export default function PreLogin() {
         ref={bottomSheetRef}
         index={-1}
       >
-        <View className="flex-1 items-center justify-center bg-white">
-          <Button title="Close" onPress={handleClosePress} />
+        <View className="flex-1 bg-white mx-6">
+          {/* text for the meeting scheduling */}
+          <View className="flex items-center">
+            <Text className="text-2xl font-semibold mt-4">Schedule a Meeting</Text>
+            <Text className="text-sm mt-1">Pick a place and time for the meeting</Text>
+          </View>
+
+          {/* location input */}
+
+          <View className="flex mt-10">
+            <View className="flex flex-row items-center">
+              <LocationIcon width={20} />
+              <Text className="text-base font-light ml-2">Place</Text>
+            </View>
+
+            <View className="h-[0.5px] w-full bg-gray-200 mb-2" />
+
+            <ScrollView
+              horizontal={true}
+              contentContainerStyle={{ width: "100%", display: "flex", alignItems: "center" }}
+            >
+              {places.map((placeItem) => (
+                <PlaceChip
+                  onPress={() => handlePlaceChange(placeItem)}
+                  active={placeItem === place}
+                  title={placeItem}
+                />
+              ))}
+            </ScrollView>
+            <View className="h-[0.5px] w-full bg-gray-200 mt-2" />
+          </View>
+          {/* <Button title="Close" onPress={handleClosePress} /> */}
         </View>
       </BottomSheet>
     </SafeAreaView>
