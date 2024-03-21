@@ -9,7 +9,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Text } from "react-native";
 import DateChip from "@/components/chat/datechip";
 import Message from "@/components/chat/message";
-
+import ChatButton from "@/components/chat/button";
 enum Sender {
   Me = "me",
   Her = "her",
@@ -42,13 +42,26 @@ export default function PreLogin() {
             <MaterialCommunityIcons name="dots-vertical" size={27} color="black" />
           </TouchableOpacity>
         </View>
-        <View className="flex-1 pt-6">
+        <ScrollView
+          stickyHeaderIndices={[0]}
+          showsVerticalScrollIndicator={false}
+          className="flex-1 pt-6 mx-6 relative"
+        >
           <DateChip date="Today" />
           <View className="mt-6 flex items-end">
             <Message message="Hey, bartartine @ 5:00 PM ?" date={new Date()} sender={Sender.Me} />
             <Message message="Can’t Make it" date={new Date()} sender={Sender.Her} />
+            <Message message="Younes Tue @ 7:00 PM" date={new Date()} sender={Sender.Her} />
+            <Message message="Hey, bartartine @ 5:00 PM ?" date={new Date()} sender={Sender.Me} />
+            <Message message="Can’t Make it" date={new Date()} sender={Sender.Her} />
+            <Message message="Younes Tue @ 7:00 PM" date={new Date()} sender={Sender.Her} />
           </View>
-        </View>
+          <View className="mt-12 h-[0.6px] bg-cabaret-500 w-full mx-auto" />
+          <View className="flex flex-row justify-between items-center mt-6">
+            <ChatButton positive={false} />
+            <ChatButton positive={true} />
+          </View>
+        </ScrollView>
       </View>
     </SafeAreaView>
   );

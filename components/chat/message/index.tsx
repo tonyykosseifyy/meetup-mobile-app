@@ -17,7 +17,7 @@ const Message = ({ message, sender, date }: MessageProps) => {
   return (
     <View
       style={sender === Sender.Me ? styles.me_shadow : styles.her_shadow}
-      className={`min-w-[45%] mx-6 my-2 pt-3 pb-2 pl-4 ${sender === Sender.Me ? "bg-cabaret-500 rounded-l-xl rounded-br-xl" : "bg-[#F5F3F3] rounded-r-xl rounded-bl-xl self-start"}`}
+      className={`min-w-[45%] my-2 pt-3 pb-2 pl-4 ${sender === Sender.Me ? "bg-cabaret-500 rounded-l-xl rounded-br-xl" : "bg-[#F5F3F3] rounded-r-xl rounded-bl-xl self-start"}`}
     >
       <Text className={`pr-7 ${sender === Sender.Me ? "text-white" : ""}`}>{message}</Text>
       <Text className={`ml-auto mr-2 text-[10px] mt-1 ${sender === Sender.Me ? "text-white" : ""}`}>
