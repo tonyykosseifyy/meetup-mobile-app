@@ -1,4 +1,4 @@
-import { View, Image, Touchable, TouchableOpacity, ScrollView, Button } from "react-native";
+import { View, Image, Touchable, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useRef, useCallback, useMemo, useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -9,21 +9,47 @@ import Message from "@/components/chat/message";
 import ChatButton from "@/components/chat/button";
 import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import LocationIcon from "@/assets/icons/settings/location.svg";
-import styles from "@/constants/styles";
+// import styles from "@/constants/styles";
 import PlaceChip from "@/components/chat/placechip";
-
+import TimeIcon from "@/assets/icons/chat/time.svg";
+import { Button } from "@/components";
 enum Sender {
   Me = "me",
   Her = "her",
 }
 const places = ["bartartine", "younes"];
+const times = [
+  "8:00",
+  "8:30",
+  "9:00",
+  "9:30",
+  "10:00",
+  "10:30",
+  "11:00",
+  "11:30",
+  "12:00",
+  "12:30",
+  "13:00",
+  "13:30",
+  "14:00",
+  "14:30",
+  "15:00",
+  "15:30",
+  "16:00",
+  "16:30",
+  "17:00",
+  "17:30",
+  "18:00",
+];
+
+console.log(times);
 
 export default function PreLogin() {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const [place, setPlace] = useState<string>("");
   const [time, setTime] = useState<string>("");
 
-  const snapPoints = useMemo(() => ["50%", "70%"], []);
+  const snapPoints = useMemo(() => ["50%", "85%"], []);
 
   const handleClosePress = () => {
     bottomSheetRef.current?.close();
@@ -99,7 +125,7 @@ export default function PreLogin() {
         ref={bottomSheetRef}
         index={-1}
       >
-        <View className="flex-1 bg-white mx-6">
+        <ScrollView className="flex-1 bg-white mx-6" showsVerticalScrollIndicator={false}>
           {/* text for the meeting scheduling */}
           <View className="flex items-center">
             <Text className="text-2xl font-semibold mt-4">Schedule a Meeting</Text>
@@ -122,16 +148,47 @@ export default function PreLogin() {
             >
               {places.map((placeItem) => (
                 <PlaceChip
+                  key={placeItem}
                   onPress={() => handlePlaceChange(placeItem)}
                   active={placeItem === place}
                   title={placeItem}
                 />
               ))}
             </ScrollView>
+
+            <View className="h-[0.5px] w-full bg-gray-200 mt-2" />
+
+            {/* time input */}
+            <View className="flex flex-row items-center mt-6">
+              <TimeIcon width={23} />
+              <Text className="text-base font-light ml-2">Time</Text>
+            </View>
+
+            <View className="h-[0.5px] w-full bg-gray-200 mb-2" />
+            {/* time chips */}
+
+            <View className="flex flex-row flex-wrap justify-between">
+              {times.map((timeItem) => (
+                <PlaceChip
+                  key={timeItem}
+                  // style={[styles.gridItem, timeItem === time && styles.active]}
+                  active={timeItem === time}
+                  onPress={() => {
+                    time === timeItem ? setTime("") : setTime(timeItem);
+                  }}
+                  addClassName="w-[30%] my-2 justify-center flex-3 mr-0"
+                  title={timeItem}
+                />
+              ))}
+            </View>
+
             <View className="h-[0.5px] w-full bg-gray-200 mt-2" />
           </View>
-          {/* <Button title="Close" onPress={handleClosePress} /> */}
-        </View>
+          <Button addClassName="mt-5" onPress={() => handleClosePress()}>
+            Schedule
+          </Button>
+          <View className="h-24" />
+        </ScrollView>
       </BottomSheet>
     </SafeAreaView>
   );

@@ -39,5 +39,4 @@ const Button = React.forwardRef<TouchableOpacity, ButtonProps>((props, ref) => {
   );
 });
 
-
 export { Button };
