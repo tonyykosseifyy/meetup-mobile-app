@@ -1,4 +1,4 @@
-import { View, Image, Touchable, TouchableOpacity } from "react-native";
+import { View, Image, Touchable, TouchableOpacity, ScrollView } from "react-native";
 import { LogoNavbar } from "@/components/logo";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Footer, Button } from "@/components";
@@ -7,6 +7,8 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Text } from "react-native";
+import DateChip from "@/components/chat/datechip";
+
 
 export default function PreLogin() {
   return (
@@ -33,6 +35,10 @@ export default function PreLogin() {
             <MaterialCommunityIcons name="dots-vertical" size={27} color="black" />
           </TouchableOpacity>
         </View>
+        <View className="flex-1 pt-6">
+          <DateChip date="Today" />
+        </View>
+
       </View>
     </SafeAreaView>
   );
