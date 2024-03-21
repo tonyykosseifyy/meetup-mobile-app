@@ -5,11 +5,13 @@ import CheckIcon from "@/assets/icons/chat/check.svg";
 
 interface ChatButtonProps {
   positive: boolean;
+  onPress: () => void;
 }
 
-const ChatButton = ({ positive }: ChatButtonProps) => {
+const ChatButton = ({ positive, onPress }: ChatButtonProps) => {
   return (
     <TouchableOpacity
+      onPress={onPress}
       className={`flex flex-row items-center py-2 pl-4 pr-6 ${positive ? "bg-cabaret-500 rounded-l-xl rounded-br-xl" : "bg-[#F5F3F3] rounded-r-xl rounded-bl-xl"}`}
     >
       {positive ? <CheckIcon /> : <CloseIcon />}

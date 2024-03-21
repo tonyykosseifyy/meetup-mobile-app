@@ -14,7 +14,8 @@ import { AuthProvider } from "@/api/mutations/auth/AuthProvider";
 // import { DevToolsBubble } from "react-native-react-query-devtools";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { getMe } from "@/api/axios/users";
-import { router } from "expo-router";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+
 SplashScreen.preventAutoHideAsync();
 
 const queryClient = new QueryClient();
@@ -62,10 +63,12 @@ export default function RootLayout() {
 function RootLayoutNav() {
   return (
     <QueryClientProvider client={queryClient}>
-      <StatusBar style="dark" hidden={false} />
-      <AuthProvider>
-        <Stack screenOptions={{ headerShown: false }} />
-      </AuthProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <StatusBar style="dark" hidden={false} />
+        <AuthProvider>
+          <Stack screenOptions={{ headerShown: false }} />
+        </AuthProvider>
+      </GestureHandlerRootView>
       {/* <DevToolsBubble /> */}
     </QueryClientProvider>
   );
