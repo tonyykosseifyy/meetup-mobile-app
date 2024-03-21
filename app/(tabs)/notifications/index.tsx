@@ -6,6 +6,7 @@ import { useMutation, useQuery } from "react-query";
 import { Image } from "react-native";
 import { useAuth } from "@/api/mutations/auth/AuthProvider";
 import { router } from "expo-router";
+import { getMe } from "@/api/axios/users";
 
 function formatTimeTo12Hour(datetimeStr: string): string {
   const date = new Date(datetimeStr);
@@ -30,9 +31,14 @@ function formatTimeTo12Hour(datetimeStr: string): string {
   return formattedTime;
 }
 
+
 export default function Tab() {
   const { isLoading, data, error } = useQuery("requestMeetings", requestMeetings);
-  const { userInfo } = useAuth();
+  const { data: userInfo, isLoading: isUserLoading } = useQuery({
+    queryKey: "/auth/userinfo/",
+    retry: 2,
+    queryFn: () => getMe(),
+  });
   if (isLoading) return <Text>Loading meetings...</Text>;
 
   return (

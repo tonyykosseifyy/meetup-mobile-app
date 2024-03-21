@@ -29,4 +29,12 @@ interface IUpdateUserRequest {
   interests?: number[];
 }
 
-export { IUser, IUserInfo, IUpdateUserRequest };
+interface IInterest {
+  id: number;
+  name: string;
+}
+
+type IInterestsResponse = IInterest[];
+type IInterestsRequest = IInterest[];
+
+export { IUser, IUserInfo, IUpdateUserRequest, IInterestsResponse, IInterestsRequest, IInterest};
