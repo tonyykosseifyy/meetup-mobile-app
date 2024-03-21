@@ -19,4 +19,18 @@ const calculateAge = (birthDate: string | Date | number): number => {
   return age;
 };
 
-export { formatDate, calculateAge };
+const formatTime = (date: Date): string => {
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  const ampm = hours >= 12 ? "PM" : "AM";
+
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+
+  // Formatting is applied during the return statement, not by altering the type of `minutes`
+  const formattedMinutes = minutes < 10 ? "0" + minutes : minutes.toString();
+
+  return `${hours}:${formattedMinutes} ${ampm}`;
+};
+
+export { formatDate, calculateAge, formatTime };

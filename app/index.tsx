@@ -8,7 +8,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Text } from "react-native";
 import DateChip from "@/components/chat/datechip";
+import Message from "@/components/chat/message";
 
+enum Sender {
+  Me = "me",
+  Her = "her",
+}
 
 export default function PreLogin() {
   return (
@@ -27,7 +32,9 @@ export default function PreLogin() {
             </View>
             <View className="ml-3 ">
               <Text className="text-black text-lg font-medium -mt-1">John Doe</Text>
-              <Text className="text-cabaret-500 -mt-[0.7px] font-semibold text-xs">Software Developer</Text>
+              <Text className="text-cabaret-500 -mt-[0.7px] font-semibold text-xs">
+                Software Developer
+              </Text>
             </View>
           </View>
 
@@ -37,8 +44,11 @@ export default function PreLogin() {
         </View>
         <View className="flex-1 pt-6">
           <DateChip date="Today" />
+          <View className="mt-6 flex items-end">
+            <Message message="Hey, bartartine @ 5:00 PM ?" date={new Date()} sender={Sender.Me} />
+            <Message message="Can’t Make it" date={new Date()} sender={Sender.Her} />
+          </View>
         </View>
-
       </View>
     </SafeAreaView>
   );
