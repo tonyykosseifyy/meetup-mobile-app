@@ -8,6 +8,7 @@ import { calculateAge } from "@/utils/common";
 import { CardProps } from "../../app/(tabs)";
 import { useMutation } from "react-query";
 import { requestMeeting } from "@/api/axios/meetup";
+import { icons } from "@/app/signup-interests/data";
 
 // interface IUser {
 //   id?: number;
@@ -71,12 +72,12 @@ export const Friend = ({ item }: CardProps) => {
             return (
               <Chip
                 key={index}
-                pressableClassName="py-0 px-0"
+                pressableClassName="py-0 px-0 mr-2"
                 textClassName="ml-1"
                 text={interest.name}
                 onPress={() => {}}
                 active={false}
-                Icon={CharityIcon}
+                Icon={icons[interest.name]}
               />
             );
           }
