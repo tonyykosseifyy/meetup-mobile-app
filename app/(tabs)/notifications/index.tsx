@@ -32,7 +32,7 @@ function formatTimeTo12Hour(datetimeStr: string): string {
 
 export default function Tab() {
   const { isLoading, data, error } = useQuery("requestMeetings", requestMeetings);
-  const { userInfo } = useAuth();
+  const { registeredUser } = useAuth();
   if (isLoading) return <Text>Loading meetings...</Text>;
 
   return (
@@ -53,29 +53,32 @@ export default function Tab() {
                 </View>
                 <View className="flex justify-evenly ml-2">
                   <Text>
-                    {item.request_from.id == userInfo?.id
+                    {item.request_from.id == registeredUser?.id
                       ? item.request_to.user_info.full_name
                       : item.request_from.user_info.full_name}
                   </Text>
-                  {item.status === "waiting" ? (
-                    (item.place_requests.length >= 1 || item.time_slots.length >= 1) && (
-                      <Text className="text-gray-400">
-                        Last request{" "}
-                        {item.place_requests.length >= 1 && item.place_requests[0].place.name}{" "}
-                        {item.place_requests.length >= 1 && item.time_slots.length >= 1 && "-"}{" "}
-                        {item.time_slots.length >= 1 && item.time_slots[0].slot}
-                      </Text>
-                    )
+                  {item.status === "waiting" && item.place_time_requests.length >= 1 ? (
+                    <Text className="text-gray-400">
+                      Last request {item.place_time_requests[0].place.name} -{" "}
+                      {item.place_time_requests[0].time.slot}
+                    </Text>
                   ) : item.status === "pending" ? (
                     <Text className="text-gray-400">
-                      {item.request_from.id == userInfo?.id
+                      {item.request_from.id == registeredUser?.id
                         ? "Waiting for response from " + item.request_to.user_info.full_name
                         : "You have pending request from " + item.request_from.user_info.full_name}
+                    </Text>
+                  ) : item.status === "waiting" ? (
+                    <Text className="text-gray-400">Waiting for place and time</Text>
+                  ) : item.status === "accepted" ? (
+                    <Text className="text-cabaret-500">
+                      Accepted meeting at {item.place_time_requests[0].place.name} -{" "}
+                      {item.place_time_requests[0].time.slot}
                     </Text>
                   ) : null}
                 </View>
               </View>
-              {(item.place_requests.length >= 1 || item.time_slots.length >= 1) &&
+              {/* {(item.place_requests.length >= 1 || item.time_slots.length >= 1) &&
                 (new Date(item.place_requests[0].requested_at) >
                 new Date(item.time_slots[0].requested_at) ? (
                   <Text className="text-gray-400">
@@ -85,7 +88,7 @@ export default function Tab() {
                   <Text className="text-gray-400">
                     {formatTimeTo12Hour(item.time_slots[0].requested_at)}
                   </Text>
-                ))}
+                ))} */}
             </View>
           </TouchableOpacity>
         )}
