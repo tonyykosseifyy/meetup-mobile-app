@@ -1,4 +1,11 @@
-import { IUser, IUserInfo, IUpdateUserRequest } from "./users.interface";
+import {
+  IUser,
+  IUserInfo,
+  IUpdateUserRequest,
+  IInterestsResponse,
+  IInterestsRequest,
+  IInterest,
+} from "./users.interface";
 import {
   ILoginResponse,
   ILoginRequest,
@@ -29,4 +36,7 @@ export {
   IUpdateUserRequest,
   MeetupRequestRequest,
   MeetupRequestResponse,
+  IInterestsResponse,
+  IInterestsRequest,
+  IInterest,
 };

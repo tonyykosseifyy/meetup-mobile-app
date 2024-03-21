@@ -1,17 +1,18 @@
 import React from "react";
 import { View, Image, Text, TouchableOpacity, Alert } from "react-native";
 import Chip from "@/components/chip";
-import CharityIcon from "@/assets/icons/interests/charity.svg";
 import { ScrollView, StyleSheet } from "react-native";
 import InviteIcon from "@/assets/icons/home/invite.svg";
 import { calculateAge } from "@/utils/common";
 import { CardProps } from "../../app/(tabs)";
 import { useMutation } from "react-query";
 import { requestMeeting } from "@/api/axios/meetup";
+import { icons } from "@/app/signup-interests/data";
+
 
 export const Friend = ({ item }: CardProps) => {
   const { mutate: sendRequest, isLoading } = useMutation(requestMeeting);
-
+  console.log('item', item);
   const handleSubmit = ({ userId }: { userId: number }) => {
     sendRequest(
       { userId },
@@ -59,12 +60,12 @@ export const Friend = ({ item }: CardProps) => {
             return (
               <Chip
                 key={index}
-                pressableClassName="py-0 px-0"
+                pressableClassName="py-0 px-0 mr-2"
                 textClassName="ml-1"
                 text={interest.name}
                 onPress={() => {}}
                 active={false}
-                Icon={CharityIcon}
+                Icon={icons[interest.name]}
               />
             );
           }

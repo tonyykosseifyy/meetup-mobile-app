@@ -6,33 +6,28 @@ import { useMutation, useQuery } from "react-query";
 import { Image } from "react-native";
 import { useAuth } from "@/api/mutations/auth/AuthProvider";
 import { router } from "expo-router";
+import { getMe } from "@/api/axios/users";
+import { formatTimeTo12Hour } from "@/utils/common";
 
-function formatTimeTo12Hour(datetimeStr: string): string {
-  const date = new Date(datetimeStr);
-
-  // Extract hours and minutes
-  let hours = date.getUTCHours(); // Use getUTCHours() to get the time in UTC
-  const minutes = date.getUTCMinutes(); // Use getUTCMinutes() for minutes in UTC
-
-  // Determine AM or PM suffix
-  const ampm = hours >= 12 ? "PM" : "AM";
-
-  // Convert 24-hour time to 12-hour format
-  hours = hours % 12;
-  hours = hours ? hours : 12; // The hour '0' should be '12'
-
-  // Format minutes to be always two digits
-  const formattedMinutes = minutes.toString().padStart(2, "0");
-
-  // Construct formatted time string
-  const formattedTime = `${hours}:${formattedMinutes} ${ampm}`;
-
-  return formattedTime;
-}
+// interface MeetupRequestResponse {
+//   id: number;
+//   request_from: IUser;
+//   request_to: IUser;
+//   status: string;
+//   time_slots: any[];
+//   place_requests: any[];
+//   request_to_accepting: boolean;
+//   request_from_accepting: boolean;
+// }
 
 export default function Tab() {
   const { isLoading, data, error } = useQuery("requestMeetings", requestMeetings);
-  const { registeredUser } = useAuth();
+  const { data: userInfo, isLoading: isUserLoading } = useQuery({
+    queryKey: "/auth/userinfo/",
+    retry: 2,
+    queryFn: () => getMe(),
+  });
+  console.log("data", data);
   if (isLoading) return <Text>Loading meetings...</Text>;
 
   return (

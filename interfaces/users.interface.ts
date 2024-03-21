@@ -1,3 +1,11 @@
+interface IInterest {
+  id: number;
+  name: string;
+}
+
+type IInterestsResponse = IInterest[];
+type IInterestsRequest = IInterest[];
+
 interface IUser {
   id?: number;
   email: string;
@@ -6,7 +14,7 @@ interface IUser {
     date_of_birth: string;
     occupation: string;
     biography: string;
-    interests: string[];
+    interests: IInterest[];
   };
 }
 
@@ -29,4 +37,6 @@ interface IUpdateUserRequest {
   interests?: number[];
 }
 
-export { IUser, IUserInfo, IUpdateUserRequest };
+
+
+export { IUser, IUserInfo, IUpdateUserRequest, IInterestsResponse, IInterestsRequest, IInterest};

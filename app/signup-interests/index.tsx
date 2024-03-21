@@ -8,17 +8,18 @@ import { interests, icons } from "./data";
 import { useMutation, useQuery } from "react-query";
 import { getInterests, setInterests } from "@/api/axios/interests";
 import { router } from "expo-router";
+import { IInterest } from "@/interfaces";
 
-const Skip = (): React.JSX.Element => (
-  <TouchableOpacity>
-    <Text className="text-cabaret-500 font-bold">Skip</Text>
-  </TouchableOpacity>
-);
+// const Skip = (): React.JSX.Element => (
+//   <TouchableOpacity>
+//     <Text className="text-cabaret-500 font-bold">Skip</Text>
+//   </TouchableOpacity>
+// );
 
 export default function SignUpOtp() {
-  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+  const [selectedInterests, setSelectedInterests] = useState<IInterest[]>([]);
 
-  const toggleInterest = (interest: string) => {
+  const toggleInterest = (interest: IInterest) => {
     if (selectedInterests.includes(interest)) {
       setSelectedInterests(selectedInterests.filter((i) => i !== interest));
     } else {
@@ -50,25 +51,8 @@ export default function SignUpOtp() {
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
       <View className="flex-1 bg-white flex">
         <Header
-          leftButton
+          // leftButton
           theme={"light"}
-          rightButton={
-            <TouchableOpacity onPress={() => console.log("2")} className-="w-full flex-1 w-42">
-              <View
-                onStartShouldSetResponder={(event) => true}
-                onTouchEnd={(e) => {
-                  e.stopPropagation();
-                }}
-              ></View>
-              <TouchableOpacity
-                onPress={() => console.log("1")}
-                className="w-full bg-red-500"
-                activeOpacity={1}
-              >
-                <Text className="text-cabaret-500 font-bold">Skip</Text>
-              </TouchableOpacity>
-            </TouchableOpacity>
-          }
         />
         <View className="px-5 flex-1">
           <View className="mt-7">
@@ -84,9 +68,9 @@ export default function SignUpOtp() {
                 Array.isArray(data) &&
                 data.map((interest) => (
                   <Chip
-                    onPress={() => toggleInterest(interest.name)}
+                    onPress={() => toggleInterest(interest)}
                     key={interest.id}
-                    active={selectedInterests.includes(interest.name)}
+                    active={selectedInterests.includes(interest)}
                     text={interest.name}
                     Icon={icons[interest.name]}
                     shadow
