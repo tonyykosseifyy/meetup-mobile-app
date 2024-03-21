@@ -1,8 +1,5 @@
 import { View, Image, Touchable, TouchableOpacity, ScrollView, Button } from "react-native";
-import { LogoNavbar } from "@/components/logo";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Footer } from "@/components";
-import { Link as ExpoLink } from "expo-router";
 import React, { useRef, useCallback, useMemo, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -11,7 +8,6 @@ import DateChip from "@/components/chat/datechip";
 import Message from "@/components/chat/message";
 import ChatButton from "@/components/chat/button";
 import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
-import { StyleSheet } from "react-native";
 
 enum Sender {
   Me = "me",
@@ -25,7 +21,7 @@ export default function PreLogin() {
   }, []);
   const [open, setOpen] = useState<boolean>(false);
 
-  const snapPoints = useMemo(() => ["50%", "50%", "80%"], []);
+  const snapPoints = useMemo(() => ["40%","0", "60%", "70%"], []);
 
   const bottomSheetRef = useRef<BottomSheet>(null);
 
@@ -49,7 +45,7 @@ export default function PreLogin() {
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-[#F6F6F6] relative">
       <View
-        className={`flex justify-between pb-10 bg-white flex-auto flex- ${open ? "flex-auto h-32" : "flex-1"}`}
+        className={`flex justify-between  bg-white flex-auto flex- ${open ? "flex-auto h-32" : "flex-1"}`}
       >
         <View className="bg-[#F6F6F6] flex flex-row items-center justify-between px-6 h-20">
           <View className="flex flex-row items-center">
@@ -103,50 +99,13 @@ export default function PreLogin() {
         snapPoints={snapPoints}
         enablePanDownToClose={true}
         ref={bottomSheetRef}
-      ></BottomSheet>
-
-      {/* <BottomSheet
-        ref={bottomSheetRef}
-        index={0}
-        snapPoints={snapPoints}
-        onChange={handleSheetChanges}
-        style={{ backgroundColor: "white", height: 500 }}
-        enablePanDownToClose={true}
-        handleIndicatorStyle={{ backgroundColor: "black" }}
-        backgroundStyle={{ backgroundColor: "white" }}
-        backdropComponent={renderBackdrop}
       >
-        <View className="flex-1 items-center justify-center">
-          <Text style={styles.containerHeadline}>Awesome Bottom Sheet 🎉</Text>
+        <View className="flex-1 items-center justify-center bg-white">
+          
           <Button title="Close" onPress={handleClosePress} />
         </View>
-      </BottomSheet> */}
+      </BottomSheet>
     </SafeAreaView>
   );
 }
 
-{
-  /* <Button title="Open" onPress={handleOpenPress} />
-        <Button title="Close" onPress={handleClosePress} />
-        <Button title="Collapse" onPress={handleCollapsePress} />
-        <Button title="Snap To 0" onPress={() => snapeToIndex(0)} />
-        <Button title="Snap To 1" onPress={() => snapeToIndex(1)} />
-        <Button title="Snap To 2" onPress={() => snapeToIndex(2)} /> */
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  contentContainer: {
-    flex: 1,
-    alignItems: "center",
-  },
-  containerHeadline: {
-    fontSize: 24,
-    fontWeight: "600",
-    padding: 20,
-  },
-});
