@@ -1,12 +1,46 @@
-import { View, Image } from "react-native";
+import { View, Image, ActivityIndicator } from "react-native";
 import { LogoNavbar } from "@/components/logo";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Text, Footer, Button } from "@/components";
-import { Link as ExpoLink } from "expo-router";
+import { Text, Footer, Button, Header } from "@/components";
+import { Link as ExpoLink, router } from "expo-router";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useQuery } from "react-query";
+import { theme } from "@/tailwind.config";
+import { getMe } from "@/api/axios/users";
+
+import { LogBox } from "react-native";
+LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 
 export default function PreLogin() {
+  // const { data: userInfo, isLoading: isUserLoading } = useQuery({
+  //   queryKey: "/auth/userinfo/",
+  //   retry: 2,
+  //   queryFn: () => getMe(),
+  //   onSuccess: () => {
+  //     while (router.canGoBack()) {
+  //       router.back();
+  //     }
+  //     router.replace("/(tabs)/");
+  //   },
+  // });
+
+  if (false) {
+    return (
+      <>
+        <SafeAreaView edges={["top"]} className="flex-1 bg-white">
+          <Header />
+          <View className="flex-1 justify-center items-center">
+            <Text>
+              <ActivityIndicator size="large" color={theme!.extend!.colors!.cabaret[500]} />
+            </Text>
+          </View>
+        </SafeAreaView>
+      </>
+    );
+  }
+
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
       <View className="flex-1 flex justify-between pb-10 bg-white px-5">

@@ -66,7 +66,7 @@ function RootLayoutNav() {
       <GestureHandlerRootView style={{ flex: 1 }}>
         <StatusBar style="dark" hidden={false} />
         <AuthProvider>
-          <Stack screenOptions={{ headerShown: false }} />
+          <Stack screenOptions={{ headerShown: false }}></Stack>
         </AuthProvider>
       </GestureHandlerRootView>
       {/* <DevToolsBubble /> */}

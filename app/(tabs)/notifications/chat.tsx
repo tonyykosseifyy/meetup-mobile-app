@@ -1,4 +1,12 @@
-import { View, Image, Touchable, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
+import {
+  View,
+  Image,
+  Touchable,
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
+  Alert,
+} from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useRef, useCallback, useMemo, useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -14,10 +22,15 @@ import PlaceChip from "@/components/chat/placechip";
 import TimeIcon from "@/assets/icons/chat/time.svg";
 import { Button } from "@/components";
 import { router, useLocalSearchParams } from "expo-router";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { getMe } from "@/api/axios/users";
 import { MeetupRequestResponse } from "@/interfaces";
-import { changeMeetingStatus, requestPlaceTimeForMeeting } from "@/api/axios/meetup";
+import {
+  changeMeetingStatus,
+  requestMeetings,
+  requestPlaceTimeForMeeting,
+  retrieveMeeting,
+} from "@/api/axios/meetup";
 enum Sender {
   Me = "me",
   Her = "her",
@@ -58,7 +71,8 @@ export default function PreLogin() {
 
   const handleClosePress = () => {
     bottomSheetRef.current?.close();
-    handleCollapsePress();
+    // bottomSheetRef.current?.forceClose();
+    // handleCollapsePress();
   };
   const handleOpenPress = () => {
     bottomSheetRef.current?.snapToIndex(0);
@@ -72,7 +86,19 @@ export default function PreLogin() {
     (props: any) => <BottomSheetBackdrop appearsOnIndex={0} disappearsOnIndex={-1} {...props} />,
     []
   );
-  const meeting = JSON.parse(useLocalSearchParams().meeting);
+
+  const id = useLocalSearchParams().meetingId;
+
+  const { data: meeting, isLoading: isLoadingMeeting } = useQuery(
+    "/meetup/me/meeting-requests/" + id + "/",
+    {
+      queryFn: () => retrieveMeeting({ id }),
+      retry: 2,
+      onSuccess: (data) => {},
+    }
+  );
+
+  const queryClient = useQueryClient();
 
   const { data: userInfo, isLoading: isUserLoading } = useQuery({
     queryKey: "/auth/userinfo/",
@@ -103,6 +129,7 @@ export default function PreLogin() {
       handleClosePress();
       setTime("");
       setPlace("");
+      queryClient.invalidateQueries("/meetup/me/meeting-requests/" + id + "/");
     },
   });
 
@@ -118,18 +145,31 @@ export default function PreLogin() {
     mutationKey: "/meetup/meeting-requests/respond/",
     retry: false,
     onSuccess: (data) => {
+      console.log("MEETING" + data);
       handleClosePress();
       setTime("");
       setPlace("");
-      router.back();
+      queryClient.invalidateQueries("/meetup/me/meeting-requests/" + id + "/");
+      queryClient.invalidateQueries("/meetup/me/meeting-requests/");
     },
   });
+
+  if (isLoadingMeeting || isUserLoading) {
+    return (
+      <SafeAreaView edges={["top"]} className="flex-1 bg-[#F6F6F6] relative">
+        <View className="flex-1 items-center justify-center">
+          <Text>Loading...</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-[#F6F6F6] relative">
       <View className={`flex justify-between  bg-white flex-auto`}>
         <View className="bg-[#F6F6F6] flex flex-row items-center justify-between px-6 h-20">
           <View className="flex flex-row items-center">
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => router.back()}>
               <MaterialIcons name="arrow-back-ios-new" size={25} color="black" />
             </TouchableOpacity>
             <View className="w-12 h-12 p-[0.5px] rounded-full border-solid border-[2px] border-cabaret-500 ml-5">
@@ -140,13 +180,14 @@ export default function PreLogin() {
             </View>
             <View className="ml-3 ">
               <Text className="text-black text-lg font-medium -mt-1">
-                {" "}
                 {meeting.request_from.id == userInfo?.id
                   ? meeting.request_to.user_info.full_name
                   : meeting.request_from.user_info.full_name}
               </Text>
               <Text className="text-cabaret-500 -mt-[0.7px] font-semibold text-xs">
-                Software Developer
+                {meeting.request_from.id == userInfo?.id
+                  ? meeting.request_to.user_info.occupation
+                  : meeting.request_from.user_info.occupation}
               </Text>
             </View>
           </View>
@@ -163,30 +204,70 @@ export default function PreLogin() {
         >
           <DateChip date="Today" />
 
-          {meeting.place_time_requests.length >= 1 ? (
+          {meeting.status === "pending" && meeting.request_to.id === userInfo?.id ? (
+            <>
+              <Text className="text-gray-400 text-center mt-6">
+                Pending request from{" "}
+                {meeting.request_from.id == userInfo?.id
+                  ? meeting.request_to.user_info.full_name
+                  : meeting.request_from.user_info.full_name}
+                .
+              </Text>
+              <Text className="text-gray-400 text-center mt-2">Accept or Decline.</Text>
+            </>
+          ) : meeting.place_time_requests.length >= 1 ? (
             <View className="mt-6 flex items-end">
-              {meeting.place_time_requests.map((request) => {
+              {meeting.place_time_requests.map((request, i) => {
                 return (
-                  <Message
-                    message={`${request.place.name} @ ${request.time.slot}`}
-                    date={new Date()}
-                    sender={request.requested_by == userInfo?.id ? Sender.Me : Sender.Her}
-                  />
+                  <>
+                    {i >= 1 && (
+                      <Message
+                        message={`Can't make it`}
+                        date={new Date(request.requested_at)}
+                        sender={request.requested_by == userInfo?.id ? Sender.Me : Sender.Her}
+                      />
+                    )}
+                    <Message
+                      message={`${request.place.name} @ ${request.time.slot}`}
+                      date={new Date(request.requested_at)}
+                      sender={request.requested_by == userInfo?.id ? Sender.Me : Sender.Her}
+                    />
+                  </>
                 );
               })}
             </View>
           ) : (
-            <Text className="text-gray-400 text-center mt-4">No requests yet. Send one!</Text>
+            <Text className="text-gray-400 text-center mt-6">No requests yet. Send one!</Text>
+          )}
+          <View className="mt-12 h-[0.6px] bg-cabaret-500 w-full mx-auto" />
+          {meeting?.status == "accepted" ? (
+            <Text className="mt-2 text-center">Meeting Set! 🎉</Text>
+          ) : (
+            <View className="flex flex-row justify-between items-center mt-6">
+              <ChatButton
+                onPress={
+                  meeting.status === "pending" && meeting.request_to.id === userInfo?.id
+                    ? () =>
+                        changeStatusMeeting(
+                          { id: meeting.id, status: "reject" },
+                          { onSuccess: () => router.back() }
+                        )
+                    : () => handleOpenPress()
+                }
+                positive={false}
+                decline={meeting.status === "pending" && meeting.request_to.id === userInfo?.id}
+              />
+              <ChatButton
+                onPress={
+                  meeting.status === "pending" || meeting.place_time_requests.length >= 1
+                    ? () => changeStatusMeeting({ id: meeting.id, status: "accept" })
+                    : () => Alert.alert("Error", "Please schedule a meeting first")
+                }
+                positive={true}
+              />
+            </View>
           )}
 
-          <View className="mt-12 h-[0.6px] bg-cabaret-500 w-full mx-auto" />
-          <View className="flex flex-row justify-between items-center mt-6">
-            <ChatButton onPress={() => handleOpenPress()} positive={false} />
-            <ChatButton
-              onPress={() => changeStatusMeeting({ id: meeting.id, status: "accept" })}
-              positive={true}
-            />
-          </View>
           <View className="h-20" />
         </ScrollView>
       </View>

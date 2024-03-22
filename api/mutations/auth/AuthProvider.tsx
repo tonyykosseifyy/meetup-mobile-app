@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import { IUserInfo } from "@/interfaces";
 
-
 interface AuthContextType {
   registeredUser: IUserInfo | null | undefined;
   updateContextUser: React.Dispatch<React.SetStateAction<IUserInfo | null>>;

@@ -24,8 +24,11 @@ export default function Home() {
   const { isLoading, error, data } = useQuery({
     queryKey: "/meetup/users/",
     queryFn: lookup,
-    retry: 2,
+    onSuccess: (data) => {
+      console.log("REFETCH USERSSSSS", data);
+    },
   });
+  console.log("EL DATA EL DATA", data);
 
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
@@ -50,14 +53,14 @@ export default function Home() {
             <ActivityIndicator size="large" color="#d14d72" />
           </View>
         )}
-        {data && (
+        {data?.length >= 1 && (
           <FlatList
             data={data} // Assuming the fetched data is an object with a 'users' array
             renderItem={renderItem}
             keyExtractor={(item) => item.email} // Ensure 'item.id' is a unique identifier
           />
         )}
-        {!data && !isLoading && (
+        {data?.length == 0 && !isLoading && (
           <View className="flex-1 justify-center items-center">
             <Text className="text-black font-bold">No users found</Text>
             <Text className="text-black">Please try again later</Text>

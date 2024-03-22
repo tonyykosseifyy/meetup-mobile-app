@@ -28,14 +28,18 @@ export const Friend = ({ item }: CardProps) => {
     },
     mutationKey: "/meetup/meeting-requests/place-time-requests/",
     retry: false,
-    onSuccess: ({ meeting_request }) => {
-      queryClient.invalidateQueries("/meetup/me/meeting-requests/");
-      router.navigate({
-        pathname: "/(tabs)/notifications/",
+    onSuccess: async ({ meeting_request }) => {
+      // test
+
+      await queryClient.invalidateQueries("/meetup/users/", {
+        refetchInactive: true,
       });
+      await queryClient.invalidateQueries("/meetup/me/meeting-requests/", {
+        refetchInactive: true,
+      });
+      Alert.alert("Success", "Request sent successfully");
     },
   });
-  console.log("item", item);
 
   return (
     <View className="bg-white px-2 pt-6 pb-6 relative" style={override_styles.shadow}>

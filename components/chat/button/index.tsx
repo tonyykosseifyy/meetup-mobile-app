@@ -5,10 +5,11 @@ import CheckIcon from "@/assets/icons/chat/check.svg";
 
 interface ChatButtonProps {
   positive: boolean;
+  decline?: boolean;
   onPress: () => void;
 }
 
-const ChatButton = ({ positive, onPress }: ChatButtonProps) => {
+const ChatButton = ({ positive, onPress, decline }: ChatButtonProps) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -16,7 +17,7 @@ const ChatButton = ({ positive, onPress }: ChatButtonProps) => {
     >
       {positive ? <CheckIcon /> : <CloseIcon />}
       <Text className={`font-bold ml-1 ${positive ? "text-white" : ""}`}>
-        {positive ? "Agree" : "Request Place-Time"}
+        {positive ? "Agree" : decline ? "Decline" : "Request Place-Time"}
       </Text>
     </TouchableOpacity>
   );
