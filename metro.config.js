@@ -16,6 +16,8 @@ module.exports = (async () => {
       babelTransformerPath: require.resolve("react-native-svg-transformer"),
       // Enable the experimental require.context feature
       unstable_allowRequireContext: true,
+
+      assetPlugins: ["expo-asset/tools/hashAssetFiles"],
     },
     resolver: {
       // Exclude 'svg' from asset extensions

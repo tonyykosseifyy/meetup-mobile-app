@@ -2,7 +2,7 @@ import axios, { AxiosError } from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 
-const API_URL = "http://192.168.2.194:8000";
+const API_URL = "https://selimellieh.pythonanywhere.com";
 const authRoutes = ["/auth/login/", "auth/token/refresh/", "/auth/verify-email/"];
 
 const api = axios.create({
