@@ -49,7 +49,7 @@ export default function Settings() {
       ) : (
         <>
           <Image
-            source={require("@/assets/images/sample_avatar.png")}
+            source={require("@/assets/images/sample_avatar.jpeg")}
             className="w-32 h-32 mt-8 mb-2 self-center rounded-full border-solid border-2 border-cabaret-500 mx-4"
           />
           <Text className="text-center font-bold text-lg">{userInfo?.full_name}</Text>
