@@ -1,3 +1,5 @@
+import { IInterest } from "../interface";
+
 interface ILoginResponse {
   access: string;
   refresh: string;
@@ -28,24 +30,21 @@ interface IRefreshResponse {
 }
 
 interface ISetUserRequest {
-  full_name?: string;
-  date_of_birth?: string;
-  occupation?: string;
-  biography?: string;
-  interests?: number[];
-  email: string;
-  password: string;
-}
-
-interface ISetUserResponse {
   full_name: string;
   date_of_birth: string;
   occupation: string;
   biography: string;
-  interests: number[];
   email: string;
-  password: string;
+}
+
+interface ISetUserResponse {
   id: number;
+  email: string;
+  full_name: string;
+  date_of_birth: string;
+  occupation: string;
+  biography: string;
+  interests: IInterest[];
 }
 
 interface IVerifyEmailRequest {
