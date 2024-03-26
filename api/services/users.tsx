@@ -10,10 +10,5 @@ const lookup = async (): Promise<ILookupResponse> => {
   return await axios.get("/auth/lookup/", { headers: { Authorization: `Bearer ${token}` } });
 };
 
-const getMe = async (): Promise<IUserResponse> => {
-  const token = await AsyncStorage.getItem("accessToken");
-  return await axios.get("/auth/userinfo/", { headers: { Authorization: `Bearer ${token}` } });
-};
 
-
-export { lookup, getMe };
+export { lookup };

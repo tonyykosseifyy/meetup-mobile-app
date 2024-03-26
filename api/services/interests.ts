@@ -8,13 +8,5 @@ const getInterests = async (): Promise<IInterestsResponse> => {
   return await axios.get("/meetup/interests/", { headers: { Authorization: `Bearer ${token}` } });
 };
 
-const setInterests = async (interests: IInterestsRequest): Promise<ISetUserResponse> => {
-  const token = await AsyncStorage.getItem("accessToken");
-  return await axios.patch(
-    "/auth/userinfo/",
-    { interests_data: interests },
-    { headers: { Authorization: `Bearer ${token}` } }
-  );
-};
 
-export { getInterests, setInterests };
+export { getInterests };
