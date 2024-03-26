@@ -9,7 +9,7 @@ import styles from "@/constants/styles";
 import { setTokens, showTokens } from "@/api/tokens";
 import { useMutation } from "react-query";
 import { ILoginRequest } from "@/interfaces";
-import { login } from "@/api/axios/auth";
+import { login } from "@/api/services/auth";
 
 import axios from "axios";
 import { useAuth } from "@/api/mutations/auth/AuthProvider";

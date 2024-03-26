@@ -7,7 +7,7 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useQuery } from "react-query";
 import { theme } from "@/tailwind.config";
-import { getMe } from "@/api/axios/users";
+import { getMe } from "@/api/services/users";
 
 import { LogBox } from "react-native";
 LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message

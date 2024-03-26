@@ -6,7 +6,7 @@ import styles from "@/constants/styles";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { interests, icons } from "./data";
 import { useMutation, useQuery } from "react-query";
-import { getInterests, setInterests } from "@/api/axios/interests";
+import { getInterests, setInterests } from "@/api/services/interests";
 import { router } from "expo-router";
 import { IInterest } from "@/interfaces";
 

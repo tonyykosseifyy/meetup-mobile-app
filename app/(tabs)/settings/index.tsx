@@ -11,7 +11,7 @@ import AboutUsIcon from "@/assets/icons/settings/aboutus.svg";
 import { Alert } from "react-native";
 import { clearTokens } from "@/api/tokens";
 import { router } from "expo-router";
-import { getMe } from "@/api/axios/users";
+import { getMe } from "@/api/services/users";
 import { useQuery } from "react-query";
 
 const logoutPrompt = () => {

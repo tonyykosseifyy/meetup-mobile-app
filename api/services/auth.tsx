@@ -1,4 +1,4 @@
-import axios from "../../utils/axios";
+import axios from "../axios/axios";
 import {
   IRegisterRequest,
   ILoginRequest,
@@ -26,7 +26,6 @@ const generateAccess = async ({ refreshToken }: IRefreshRequest): Promise<IRefre
 const setUserInfo = async (userInfo: ISetUserRequest): Promise<ISetUserResponse> => {
   return await axios.post("/auth/userinfo/", userInfo);
 };
-
 
 const verifyEmail = async ({
   email,

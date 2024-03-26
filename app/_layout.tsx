@@ -13,7 +13,7 @@ import React, { useState } from "react";
 import { AuthProvider } from "@/api/mutations/auth/AuthProvider";
 // import { DevToolsBubble } from "react-native-react-query-devtools";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { getMe } from "@/api/axios/users";
+import { getMe } from "@/api/services/users";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 SplashScreen.preventAutoHideAsync();

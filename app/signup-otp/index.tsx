@@ -6,7 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "@/constants/styles";
 import { useAuth } from "@/api/mutations/auth/AuthProvider";
 import { useMutation } from "react-query";
-import { verifyEmail } from "@/api/axios/auth";
+import { verifyEmail } from "@/api/services/auth";
 import { IVerifyEmailRequest } from "@/interfaces";
 import { router } from "expo-router";
 import { setTokens } from "@/api/tokens";

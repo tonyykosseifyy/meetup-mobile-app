@@ -5,7 +5,7 @@ import { useMutation, useQuery } from "react-query";
 import { useQueryClient } from "react-query";
 import { router } from "expo-router";
 import { IRegisterRequest, ISetUserRequest } from "@/interfaces";
-import { register, setUserInfo } from "@/api/axios/auth";
+import { register, setUserInfo } from "@/api/services/auth";
 import axios from "axios";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { View, TextInput, TouchableOpacity } from "react-native";

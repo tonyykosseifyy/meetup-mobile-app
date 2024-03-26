@@ -23,14 +23,14 @@ import TimeIcon from "@/assets/icons/chat/time.svg";
 import { Button } from "@/components";
 import { router, useLocalSearchParams } from "expo-router";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { getMe } from "@/api/axios/users";
+import { getMe } from "@/api/services/users";
 import { MeetupRequestResponse } from "@/interfaces";
 import {
   changeMeetingStatus,
   requestMeetings,
   requestPlaceTimeForMeeting,
   retrieveMeeting,
-} from "@/api/axios/meetup";
+} from "@/api/services/meetup";
 enum Sender {
   Me = "me",
   Her = "her",

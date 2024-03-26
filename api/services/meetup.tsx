@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "../../utils/axios";
+import axios from "../axios/axios";
 import { MeetupRequestRequest, MeetupRequestResponse } from "@/interfaces";
 import {
   RequestMeetingsRequest,

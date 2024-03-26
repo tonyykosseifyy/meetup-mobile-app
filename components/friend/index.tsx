@@ -6,7 +6,7 @@ import InviteIcon from "@/assets/icons/home/invite.svg";
 import { calculateAge } from "@/utils/common";
 import { CardProps } from "../../app/(tabs)";
 import { useMutation, useQueryClient } from "react-query";
-import { requestMeeting } from "@/api/axios/meetup";
+import { requestMeeting } from "@/api/services/meetup";
 import { icons } from "@/app/signup-interests/data";
 import { MeetupRequestResponse, RequestMeetingsResponse } from "@/interfaces/meetup.interface";
 import { router } from "expo-router";
