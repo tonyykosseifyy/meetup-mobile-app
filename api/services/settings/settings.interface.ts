@@ -19,6 +19,6 @@ interface IUpdateUserResponse {
   interests: number[];
   email: string;
 }
+type IGetMeResponse = IUpdateUserResponse;
 
-
-export { IUpdateUserRequest, IUpdateUserResponse };
+export { IUpdateUserRequest, IUpdateUserResponse, IGetMeResponse };

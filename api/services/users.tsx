@@ -15,11 +15,5 @@ const getMe = async (): Promise<IUserResponse> => {
   return await axios.get("/auth/userinfo/", { headers: { Authorization: `Bearer ${token}` } });
 };
 
-const updateUser = async (userInfo: IUpdateUserRequest): Promise<IUserResponse> => {
-  const token = await AsyncStorage.getItem("accessToken");
-  return await axios.patch("/auth/userinfo/", userInfo, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-};
 
-export { lookup, getMe, updateUser };
+export { lookup, getMe };
