@@ -1,4 +1,4 @@
-import axios from "../axios";
+import axios from "../../axios";
 import {
   IRegisterRequest,
   ILoginRequest,
@@ -10,7 +10,7 @@ import {
   IVerifyEmailRequest,
   IVerifyEmailResponse,
   ISetUserRequest,
-} from "../../interfaces";
+} from "./auth.interface";
 
 const authApi = {
   login: async ({ email, password }: ILoginRequest): Promise<ILoginResponse> =>
