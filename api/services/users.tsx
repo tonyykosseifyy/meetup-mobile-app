@@ -1,4 +1,4 @@
-import axios from "../axios/axios";
+import axios from "../axios";
 import { IUpdateUserRequest, IUser, IUserInfo } from "../../interfaces";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 

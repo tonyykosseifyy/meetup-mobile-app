@@ -1,5 +1,5 @@
 import { ISetUserResponse } from "@/interfaces";
-import axios from "../axios/axios";
+import axios from "../axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { IInterestsRequest, IInterestsResponse } from "@/interfaces";
 
