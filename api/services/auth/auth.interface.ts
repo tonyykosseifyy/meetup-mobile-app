@@ -35,6 +35,7 @@ interface ISetUserRequest {
   occupation: string;
   biography: string;
   email: string;
+  password: string;
 }
 
 interface ISetUserResponse {
