@@ -34,10 +34,7 @@ export default function Registration({ data }: RegistrationProps) {
   const [isDatePickerVisible, setDatePickerVisibility] = useState<boolean>(false);
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
 
-  const [date, setDate] = useState(() => {
-    const now = new Date();
-    return new Date(now.setFullYear(now.getFullYear() - 50));
-  });
+  const [date, setDate] = useState(null);
   // useMutation((userInfo) => setUserInfo(userInfo))
   const {
     mutate: setUserInfoAfterRegister,
@@ -65,6 +62,16 @@ export default function Registration({ data }: RegistrationProps) {
       while (router.canGoBack()) {
         router.back();
       }
+      console.log({
+        email,
+        password,
+        full_name: fullName,
+        date_of_birth: date?.toISOString().slice(0, 10),
+        occupation,
+        biography,
+        interests: [],
+        id,
+      });
       updateContextUser({
         email,
         password,
@@ -99,8 +106,10 @@ export default function Registration({ data }: RegistrationProps) {
   });
 
   const handleConfirm = (date: Date) => {
-    setDate(date);
     setDatePickerVisibility(false);
+    setTimeout(() => {
+      setDate(date);
+    }, 0);
   };
 
   const isDisabled = () => {
@@ -159,6 +168,7 @@ export default function Registration({ data }: RegistrationProps) {
                 placeholder={data.email}
                 keyboardType="email-address"
                 className="flex-1 h-6 ml-3"
+                autoCapitalize={"none"}
                 placeholderTextColor={"#666666"}
                 onChangeText={setEmail}
                 value={email}
@@ -175,6 +185,7 @@ export default function Registration({ data }: RegistrationProps) {
                 placeholderTextColor={"#666666"}
                 onChangeText={setPassword}
                 value={password}
+                autoCapitalize="none"
               />
               <TouchableOpacity onPress={() => setPasswordVisible(!passwordVisible)}>
                 <Feather
@@ -194,7 +205,7 @@ export default function Registration({ data }: RegistrationProps) {
               >
                 <Fontisto name="date" size={19} color="black" style={{ opacity: 0.5 }} />
                 <Text className={`ml-3 ${dateChanged ? "text-black" : "text-[#666666]"}`}>
-                  {dateChanged ? formatDate(date) : data.dateOfBirth}
+                  {date ? formatDate(date) : data.dateOfBirth}
                 </Text>
               </TouchableOpacity>
 
@@ -206,8 +217,13 @@ export default function Registration({ data }: RegistrationProps) {
                 onCancel={() => setDatePickerVisibility(false)}
                 maximumDate={new Date()}
                 minimumDate={new Date(1900, 0, 0)}
-                date={date}
-                onChange={() => setDateChanged(true)}
+                date={
+                  date ??
+                  (() => {
+                    const now = new Date();
+                    return new Date(now.setFullYear(now.getFullYear() - 50));
+                  })()
+                }
               />
             </View>
 
