@@ -7,7 +7,7 @@ import { Image } from "react-native";
 import { useAuth } from "@/contexts/auth";
 import { router } from "expo-router";
 import { getMe } from "@/api/services/users";
-import { formatTimeTo12Hour } from "@/utils/common";
+import { formatTimeTo12Hour } from "@/utils/time";
 
 // interface MeetupRequestResponse {
 //   id: number;

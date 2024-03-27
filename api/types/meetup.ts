@@ -1,4 +1,4 @@
-import { IUser } from "../interfaces";
+import { IUser } from "./common";
 
 interface MeetupRequestRequest {
   userId: number;

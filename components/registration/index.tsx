@@ -10,7 +10,7 @@ import axios from "axios";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { View, TextInput, TouchableOpacity } from "react-native";
 import { AntDesign, Fontisto, Feather, MaterialIcons } from "@expo/vector-icons";
-import { formatDate } from "@/utils/common";
+import { formatDate } from "@/utils/time";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Ionicons } from "@expo/vector-icons";
 import Header from "../header";

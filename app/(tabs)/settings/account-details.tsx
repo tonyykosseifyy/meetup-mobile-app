@@ -8,7 +8,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { Text, TextInput } from "react-native";
 import { AntDesign, Fontisto, MaterialIcons } from "@expo/vector-icons";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { formatDate } from "@/utils/common";
+import { formatDate } from "@/utils/time";
 import { useState } from "react";
 import { ActivityIndicator } from "react-native";
 import { useMutation } from "react-query";

@@ -8,7 +8,7 @@ import {
   RequestPlaceTimeForMeetingResponse,
   MeetupRequestRequest,
   MeetupRequestResponse,
-} from "./meetup.interface";
+} from "../../types/meetup";
 
 const meetupApi = {
   requestMeeting: async ({ userId }: MeetupRequestRequest): Promise<MeetupRequestResponse> => {

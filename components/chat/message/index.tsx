@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { formatTime } from "@/utils/common";
+import { formatTime } from "@/utils/time";
 
 enum Sender {
   Me = "me",

@@ -3,7 +3,7 @@ import { View, Image, Text, TouchableOpacity, Alert } from "react-native";
 import Chip from "@/components/chip";
 import { ScrollView, StyleSheet } from "react-native";
 import InviteIcon from "@/assets/icons/home/invite.svg";
-import { calculateAge } from "@/utils/common";
+import { calculateAge } from "@/utils/time";
 import { CardProps } from "../../app/(tabs)";
 import { useMutation, useQueryClient } from "react-query";
 import { requestMeeting } from "@/api/services/meetup";

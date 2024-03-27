@@ -10,7 +10,7 @@ import {
   IVerifyEmailRequest,
   IVerifyEmailResponse,
   ISetUserRequest,
-} from "./auth.interface";
+} from "../../types/auth";
 
 const authApi = {
   login: async ({ email, password }: ILoginRequest): Promise<ILoginResponse> =>

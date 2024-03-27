@@ -1,4 +1,4 @@
-import { IInterest, IUser } from "../interfaces";
+import { IInterest, IUser } from "./common";
 
 type IInterestsResponse = IInterest[];
 type ILookupResponse = IUser[];
