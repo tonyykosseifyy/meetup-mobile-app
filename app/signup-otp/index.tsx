@@ -4,7 +4,7 @@ import { Header } from "@/components";
 import { OtpInput } from "@/components";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "@/constants/styles";
-import { useAuth } from "@/api/mutations/auth/AuthProvider";
+import { useAuth } from "@/contexts/auth";
 import { useMutation } from "react-query";
 import { verifyEmail } from "@/api/services/auth";
 import { IVerifyEmailRequest } from "@/interfaces";

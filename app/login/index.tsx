@@ -12,7 +12,7 @@ import { ILoginRequest } from "@/interfaces";
 import { login } from "@/api/services/auth";
 
 import axios from "axios";
-import { useAuth } from "@/api/mutations/auth/AuthProvider";
+import { useAuth } from "@/contexts/auth";
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");

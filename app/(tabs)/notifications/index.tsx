@@ -4,7 +4,7 @@ import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useMutation, useQuery } from "react-query";
 import { Image } from "react-native";
-import { useAuth } from "@/api/mutations/auth/AuthProvider";
+import { useAuth } from "@/contexts/auth";
 import { router } from "expo-router";
 import { getMe } from "@/api/services/users";
 import { formatTimeTo12Hour } from "@/utils/common";

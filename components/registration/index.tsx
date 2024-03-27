@@ -14,7 +14,7 @@ import { formatDate } from "@/utils/common";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Ionicons } from "@expo/vector-icons";
 import Header from "../header";
-import { useAuth } from "@/api/mutations/auth/AuthProvider";
+import { useAuth } from "@/contexts/auth";
 import { IUserInfo } from "@/interfaces";
 
 interface RegistrationProps {
