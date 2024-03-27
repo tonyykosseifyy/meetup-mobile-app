@@ -9,7 +9,7 @@ import LogoutIcon from "@/assets/icons/settings/logout.svg";
 import PrivacyIcon from "@/assets/icons/settings/privacy.svg";
 import AboutUsIcon from "@/assets/icons/settings/aboutus.svg";
 import { Alert } from "react-native";
-import { clearTokens } from "@/api/tokens";
+import { clearTokens } from "@/utils/tokens";
 import { router } from "expo-router";
 import { getMe } from "@/api/services/users";
 import { useQuery } from "react-query";

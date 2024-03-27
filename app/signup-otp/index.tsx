@@ -9,7 +9,7 @@ import { useMutation } from "react-query";
 import { verifyEmail } from "@/api/services/auth";
 import { IVerifyEmailRequest } from "@/interfaces";
 import { router } from "expo-router";
-import { setTokens } from "@/api/tokens";
+import { setTokens } from "@/utils/tokens";
 import axios from "axios";
 
 export default function SignUpOtp() {
