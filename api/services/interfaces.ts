@@ -14,5 +14,14 @@ interface IUser {
     interests: IInterest[];
   };
 }
+interface IUserInfo {
+  id?: number;
+  email: string;
+  full_name: string;
+  date_of_birth: string;
+  occupation: string;
+  biography: string;
+  interests: IInterest[];
+}
 
-export { IInterest, IUser };
+export { IInterest, IUser, IUserInfo };

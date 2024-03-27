@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import { IUserInfo } from "@/interfaces";
+import { IUserInfo } from "../../services/interfaces";
 
 interface AuthContextType {
   registeredUser: IUserInfo | null | undefined;

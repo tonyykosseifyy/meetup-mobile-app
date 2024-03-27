@@ -1,10 +1,6 @@
-import { IInterest, IUser } from '../interface';
+import { IInterest, IUser } from "../interfaces";
 
 type IInterestsResponse = IInterest[];
 type ILookupResponse = IUser[];
 
-
-export {
-  IInterestsResponse,
-  ILookupResponse
-}
+export { IInterestsResponse, ILookupResponse };

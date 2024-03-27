@@ -1,4 +1,4 @@
-import { IInterest } from "../interface";
+import { IInterest } from "../interfaces";
 
 interface IOptionalInterest {
   id?: number;
