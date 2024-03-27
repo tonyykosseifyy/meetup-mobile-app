@@ -4,8 +4,6 @@ import {
   ILoginRequest,
   ILoginResponse,
   IRegisterResponse,
-  IRefreshRequest,
-  IRefreshResponse,
   ISetUserResponse,
   IVerifyEmailRequest,
   IVerifyEmailResponse,

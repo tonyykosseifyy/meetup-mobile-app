@@ -20,15 +20,6 @@ interface IRegisterRequest {
   password: string;
 }
 
-interface IRefreshRequest {
-  refreshToken: string;
-}
-
-interface IRefreshResponse {
-  accessToken: string;
-  refreshToken: string;
-}
-
 interface ISetUserRequest {
   full_name: string;
   date_of_birth: string;
@@ -64,8 +55,6 @@ export {
   ILoginRequest,
   IRegisterResponse,
   IRegisterRequest,
-  IRefreshRequest,
-  IRefreshResponse,
   ISetUserResponse,
   IVerifyEmailRequest,
   IVerifyEmailResponse,
