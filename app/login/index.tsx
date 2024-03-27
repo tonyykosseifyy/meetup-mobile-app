@@ -50,10 +50,10 @@ export default function Login() {
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
       <View className="flex-1 bg-white flex">
-        <KeyboardAwareScrollView className="h-screen">
+        <KeyboardAwareScrollView className="h-screen " contentContainerStyle={{ flexGrow: 1 }}>
           <Header leftButton theme={"light"} />
 
-          <View className="flex-1 mt-8 flex justify-between pb-10 px-5">
+          <View className="flex-1   mt-8 flex justify-between  pb-10 px-5">
             <View className="flex-1">
               <View className="mt-7">
                 <Text className="text-black font-medium text-2xl">Welcome Back</Text>
@@ -131,9 +131,8 @@ export default function Login() {
                   </TouchableOpacity>
                 </View>
               </View>
+              <Footer />
             </View>
-
-            <Footer />
           </View>
         </KeyboardAwareScrollView>
       </View>

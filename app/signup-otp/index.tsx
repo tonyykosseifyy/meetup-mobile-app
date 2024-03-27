@@ -70,7 +70,7 @@ export default function SignUpOtp() {
               <View className="mt-4">
                 <Text className="text-red-500 text-center font-bold">
                   {axios.isAxiosError(error) && error.response
-                    ? (error.response.data.error as any as string)
+                    ? (error.response.data.details as any as string)
                     : "An error occured with validation."}
                 </Text>
               </View>
