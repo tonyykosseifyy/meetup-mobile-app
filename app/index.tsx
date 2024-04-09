@@ -16,7 +16,7 @@ LogBox.ignoreAllLogs(); //Ignore all log notifications
 export default function PreLogin() {
   const { data: userInfo, isLoading: isUserLoading } = useQuery({
     queryKey: "/auth/userinfo/",
-    retry: 2,
+    retry: false,
     queryFn: () => getMe(),
     onSuccess: () => {
       while (router.canGoBack()) {

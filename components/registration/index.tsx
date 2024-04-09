@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { Text, StyleSheet } from "react-native";
+import { Text, StyleSheet, Pressable } from "react-native";
 import { IRegistrationData } from "@/assets/data/registration_data";
 import { useMutation, useQuery } from "react-query";
 import { useQueryClient } from "react-query";
@@ -14,10 +14,14 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Ionicons } from "@expo/vector-icons";
 import Header from "../header";
 import { useAuth } from "@/api/mutations/auth/AuthProvider";
+// import { CheckBox } from "react-native";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
+import RadioGroup from "react-native-radio-buttons-group";
 
 interface RegistrationProps {
   data: IRegistrationData;
 }
+// are you creating this account on behalf of yourself or on behalf of your mom/grandmother
 
 export default function Registration({ data }: RegistrationProps) {
   const queryClient = useQueryClient();
@@ -122,6 +126,9 @@ export default function Registration({ data }: RegistrationProps) {
     );
   };
 
+  const [yourSelf, setYourSelf] = useState(true);
+  const [mother, setMother] = useState(false);
+
   return (
     <View className="flex-1 bg-white flex">
       <KeyboardAwareScrollView className="h-screen">
@@ -216,9 +223,7 @@ export default function Registration({ data }: RegistrationProps) {
                 maximumDate={new Date()}
                 // max age is 91
                 minimumDate={new Date(new Date().setFullYear(new Date().getFullYear() - 91))}
-                date={
-                  date ?? new Date('1970-01-01')
-                }
+                date={date ?? new Date("1970-01-01")}
               />
             </View>
 
@@ -238,6 +243,33 @@ export default function Registration({ data }: RegistrationProps) {
                 value={biography}
                 onChangeText={setBiography}
               />
+            </View>
+
+            <View className="px-5 mt-6 flex">
+              <Text className="text-sm text-slate-800 -ml-5 mb-3">
+                On whose behalf are you creating this account?
+              </Text>
+              <View className="-ml-5 flex flex-col justify-between">
+                <Pressable onPress={() => {
+                  setYourSelf(true);
+                  setMother(false);
+                }} className="mt-3 flex flex-row items-center">
+                  <View className="rounded-full border-[1.5px] border-solid border-cabaret-500 w-4 h-4 flex items-center justify-center">
+                    {yourSelf && <View className="bg-cabaret-500 w-2 h-2 rounded-full" />}
+                  </View>
+                  <Text className="ml-2 text-xs text-slate-700">Yourself</Text>
+                </Pressable>
+
+                <Pressable onPress={() => {
+                  setMother(true);
+                  setYourSelf(false);
+                }} className="mt-3 flex flex-row items-center">
+                  <View className="rounded-full border-[1.5px] border-solid border-cabaret-500 w-4 h-4 flex items-center justify-center">
+                    {mother && <View className="bg-cabaret-500 w-2 h-2 rounded-full" />}
+                  </View>
+                  <Text className="ml-2 text-xs text-slate-700">Your Mother/Grandmother</Text>
+                </Pressable>
+              </View>
             </View>
             {isRegisteringError && (
               <View className="mt-4">

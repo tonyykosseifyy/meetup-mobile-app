@@ -33,15 +33,6 @@ export default function RootLayout() {
     const data = await getMe();
     return data;
   };
-  useEffect(() => {
-    // try {
-    //   // getAuthenticated();
-    // } catch (err) {
-    //   setUserError(true);
-    // } finally {
-    //   setLoading(false);
-    // }
-  }, []);
 
   useEffect(() => {
     if (error) throw error;
