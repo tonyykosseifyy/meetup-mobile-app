@@ -246,7 +246,7 @@ export default function Registration({ data }: RegistrationProps) {
             </View>
 
             <View className="px-5 mt-6 flex">
-              <Text className="text-sm text-slate-800 -ml-5 mb-3">
+              <Text className="text-sm text-slate-800 -ml-5 mb-2">
                 On whose behalf are you creating this account?
               </Text>
               <View className="-ml-5 flex flex-col justify-between">
