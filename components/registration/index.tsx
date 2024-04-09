@@ -4,7 +4,6 @@ import { IRegistrationData } from "@/assets/data/registration_data";
 import { useMutation, useQuery } from "react-query";
 import { useQueryClient } from "react-query";
 import { router } from "expo-router";
-import { IRegisterRequest, ISetUserRequest } from "@/interfaces";
 import { register, setUserInfo } from "@/api/axios/auth";
 import axios from "axios";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -15,7 +14,6 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Ionicons } from "@expo/vector-icons";
 import Header from "../header";
 import { useAuth } from "@/api/mutations/auth/AuthProvider";
-import { IUserInfo } from "@/interfaces";
 
 interface RegistrationProps {
   data: IRegistrationData;
@@ -216,13 +214,10 @@ export default function Registration({ data }: RegistrationProps) {
                 onConfirm={handleConfirm}
                 onCancel={() => setDatePickerVisibility(false)}
                 maximumDate={new Date()}
-                minimumDate={new Date(1900, 0, 0)}
+                // max age is 91
+                minimumDate={new Date(new Date().setFullYear(new Date().getFullYear() - 91))}
                 date={
-                  date ??
-                  (() => {
-                    const now = new Date();
-                    return new Date(now.setFullYear(now.getFullYear() - 50));
-                  })()
+                  date ?? new Date('1970-01-01')
                 }
               />
             </View>
