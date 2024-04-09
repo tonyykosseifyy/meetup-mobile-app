@@ -6,11 +6,9 @@ import { LinkProps } from "./interface.link";
 const CustomLink = ({ href, theme, children }: LinkProps) => {
   return (
     <Link href={href as any} asChild>
-      <TouchableOpacity
-        className={`border-b-[0.5px] ${theme !== "light" ? "border-cabaret-500" : "border-gray-700"}`}
-      >
+      <TouchableOpacity>
         <Text
-          className={`font-sans text-sm ${theme !== "light" ? "text-cabaret-500" : "text-gray-700"}`}
+          className={`text-xs font-bold  ${theme !== "light" ? "text-cabaret-500" : "text-gray-700"}`}
         >
           {children}
         </Text>
