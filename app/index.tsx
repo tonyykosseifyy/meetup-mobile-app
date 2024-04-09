@@ -14,19 +14,19 @@ LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 
 export default function PreLogin() {
-  // const { data: userInfo, isLoading: isUserLoading } = useQuery({
-  //   queryKey: "/auth/userinfo/",
-  //   retry: 2,
-  //   queryFn: () => getMe(),
-  //   onSuccess: () => {
-  //     while (router.canGoBack()) {
-  //       router.back();
-  //     }
-  //     router.replace("/(tabs)/");
-  //   },
-  // });
+  const { data: userInfo, isLoading: isUserLoading } = useQuery({
+    queryKey: "/auth/userinfo/",
+    retry: 2,
+    queryFn: () => getMe(),
+    onSuccess: () => {
+      while (router.canGoBack()) {
+        router.back();
+      }
+      router.replace("/(tabs)/");
+    },
+  });
 
-  if (false) {
+  if (isUserLoading) {
     return (
       <>
         <SafeAreaView edges={["top"]} className="flex-1 bg-white">

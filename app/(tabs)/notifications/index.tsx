@@ -32,7 +32,7 @@ export default function Tab() {
     <View style={{ flex: 1, display: "flex", backgroundColor: "white" }}>
       {isLoading ? (
         <View className="flex-1 justify-center items-center">
-          <Text className="text-center text-gray-400">No meetings request yet.</Text>
+          <Text className="text-center text-gray-400">Loading...</Text>
         </View>
       ) : data?.length == 0 && !isLoading ? (
         <View className="flex-1 justify-center items-center">

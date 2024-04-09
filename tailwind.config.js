@@ -5,6 +5,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        white: "#FFFFFF",
         beige: {
           500: "#FEF2F4",
         },

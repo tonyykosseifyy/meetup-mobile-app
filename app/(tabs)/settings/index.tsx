@@ -12,9 +12,9 @@ import { Alert } from "react-native";
 import { clearTokens } from "@/api/tokens";
 import { router } from "expo-router";
 import { getMe } from "@/api/axios/users";
-import { useQuery } from "react-query";
+import { QueryClient, useQuery, useQueryClient } from "react-query";
 
-const logoutPrompt = () => {
+const logoutPrompt = (queryClient: QueryClient) => {
   Alert.alert("Logout", "Are you sure you want to logout?", [
     {
       text: "Cancel",
@@ -26,7 +26,11 @@ const logoutPrompt = () => {
       text: "Yes",
       onPress: () => {
         clearTokens();
-        router.push("/");
+        queryClient.resetQueries();
+        while (router.canGoBack()) {
+          router.back();
+        }
+        router.replace("/");
       },
     },
   ]);
@@ -40,6 +44,7 @@ export default function Settings() {
     queryFn: () => getMe(),
     retry: 1,
   });
+  const queryClient = useQueryClient();
   return (
     <ScrollView className="flex-1 bg-white">
       {isLoading ? (
@@ -100,7 +105,7 @@ export default function Settings() {
             </ExpoLink>
 
             <TouchableOpacity
-              onPress={() => logoutPrompt()}
+              onPress={() => logoutPrompt(queryClient)}
               className="mb-4 flex p-4 flex-row items-center justify-between bg-[#F2F2F2] rounded-lg"
             >
               <View className="flex flex-row items-center">

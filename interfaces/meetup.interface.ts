@@ -1,18 +1,19 @@
 import { IUser } from "./users.interface";
 
-interface MeetupRequestRequest {
-  userId: number;
-}
-interface MeetupRequestResponse {
+interface MeetupRequest {
   id: number;
   request_from: IUser;
   request_to: IUser;
   status: string;
-
   place_time_requests: any[];
   request_to_accepting: boolean;
   request_from_accepting: boolean;
 }
+
+interface MeetupRequestRequest {
+  userId: number;
+}
+type MeetupRequestResponse = MeetupRequest;
 
 interface RequestMeetingsRequest {}
 type RequestMeetingsResponse = MeetupRequestResponse[];
@@ -26,6 +27,8 @@ interface RequestPlaceTimeForMeetingRequest {
 interface RequestPlaceTimeForMeetingResponse {
   // later
 }
+
+type RetrieveMeetingResponse = MeetupRequest;
 export {
   MeetupRequestRequest,
   MeetupRequestResponse,
@@ -33,4 +36,5 @@ export {
   RequestMeetingsResponse,
   RequestPlaceTimeForMeetingRequest,
   RequestPlaceTimeForMeetingResponse,
+  RetrieveMeetingResponse,
 };

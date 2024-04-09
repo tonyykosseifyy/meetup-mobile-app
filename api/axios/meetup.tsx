@@ -6,6 +6,7 @@ import {
   RequestMeetingsResponse,
   RequestPlaceTimeForMeetingRequest,
   RequestPlaceTimeForMeetingResponse,
+  RetrieveMeetingResponse,
 } from "@/interfaces/meetup.interface";
 
 const requestMeeting = async ({ userId }: MeetupRequestRequest): Promise<MeetupRequestResponse> => {
@@ -47,7 +48,7 @@ const requestPlaceTimeForMeeting = async ({
   );
 };
 
-const retrieveMeeting = async ({ id }: { id: number }) => {
+const retrieveMeeting = async ({ id }: { id: string }): Promise<RetrieveMeetingResponse> => {
   const token = await AsyncStorage.getItem("accessToken");
 
   return await axios.get(`/meetup/meeting-requests/${id}/`, {
