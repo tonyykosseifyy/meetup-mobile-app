@@ -7,7 +7,7 @@ import { calculateAge } from "@/utils/common";
 import { CardProps } from "../../app/(tabs)";
 import { useMutation, useQueryClient } from "react-query";
 import { requestMeeting } from "@/api/axios/meetup";
-import { icons } from "@/app/signup-interests/data";
+import { icons } from "@/app/(auth)/signup-interests/data";
 import { MeetupRequestResponse, RequestMeetingsResponse } from "@/interfaces/meetup.interface";
 import { router } from "expo-router";
 

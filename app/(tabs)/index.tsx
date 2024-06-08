@@ -53,7 +53,7 @@ export default function Home() {
             <ActivityIndicator size="large" color="#d14d72" />
           </View>
         )}
-        {data?.length >= 1 && (
+        {data && data?.length >= 1 && (
           <FlatList
             data={data} // Assuming the fetched data is an object with a 'users' array
             renderItem={renderItem}
