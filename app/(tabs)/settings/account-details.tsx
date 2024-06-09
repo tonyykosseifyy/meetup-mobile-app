@@ -174,9 +174,11 @@ export default function AccountDetails() {
             {isUpdatingError && (
               <View className="mt-4">
                 <Text className="text-red-500 font-bold">
+                  Whoops!{" "}
                   {axios.isAxiosError(updatingError) && updatingError.response
                     ? (updatingError.response.data.message as any as string)
-                    : "An error occured with registration."}
+                    : "An error occured with registration."}{" "}
+                  Please try again.
                 </Text>
               </View>
             )}

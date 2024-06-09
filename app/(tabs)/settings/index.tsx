@@ -13,6 +13,7 @@ import { clearTokens } from "@/api/tokens";
 import { router } from "expo-router";
 import { getMe } from "@/api/axios/users";
 import { QueryClient, useQuery, useQueryClient } from "react-query";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 const logoutPrompt = (queryClient: QueryClient) => {
   Alert.alert("Logout", "Are you sure you want to logout?", [
@@ -61,7 +62,7 @@ export default function Settings() {
           <View className="mx-4 mt-6">
             <Text className="text-lg mb-4">General</Text>
 
-            <TouchableOpacity className="mb-4 flex p-4 flex-row items-center justify-between bg-[#F2F2F2] rounded-lg">
+            <TouchableOpacity className="mb-4 flex p-4 h-16 flex-row items-center justify-between bg-[#F2F2F2] rounded-lg">
               <View className="flex flex-row items-center">
                 <NotificationsIcon width={19} />
                 <Text className="ml-3">Notifications</Text>
@@ -71,7 +72,7 @@ export default function Settings() {
               </View>
             </TouchableOpacity>
 
-            <View className="mb-4 flex p-4 flex-row items-center justify-between bg-[#F2F2F2] rounded-lg">
+            <View className="mb-4 flex p-4 h-16 flex-row items-center justify-between bg-[#F2F2F2] rounded-lg">
               <View className="flex flex-row items-center">
                 <LocationIcon width={19} />
                 <Text className="ml-3">Location</Text>
@@ -93,7 +94,7 @@ export default function Settings() {
             <Text className="text-lg mb-4 mt-2">Account Information</Text>
 
             <ExpoLink href="/(tabs)/settings/account-details" asChild>
-              <TouchableOpacity className="mb-4 flex p-4 flex-row items-center justify-between bg-[#F2F2F2] rounded-lg">
+              <TouchableOpacity className="mb-4 flex p-4 h-16 flex-row items-center justify-between bg-[#F2F2F2] rounded-lg">
                 <View className="flex flex-row items-center">
                   <AccountDetailsIcon width={19} />
                   <Text className="ml-3">Account Details</Text>
@@ -104,9 +105,27 @@ export default function Settings() {
               </TouchableOpacity>
             </ExpoLink>
 
+            {/* Your interests */}
+            <ExpoLink href="/(tabs)/settings/interests" asChild>
+              <TouchableOpacity className="mb-4 flex p-4 h-16 flex-row items-center justify-between bg-[#F2F2F2] rounded-lg">
+                <View className="flex flex-row items-center">
+                  <MaterialIcons
+                    name="favorite-border"
+                    style={{ opacity: 0.6 }}
+                    size={20}
+                    color="#222222"
+                  />
+                  <Text className="ml-3">My Interests</Text>
+                </View>
+                <View>
+                  <ArrowIcon width={19} />
+                </View>
+              </TouchableOpacity>
+            </ExpoLink>
+
             <TouchableOpacity
               onPress={() => logoutPrompt(queryClient)}
-              className="mb-4 flex p-4 flex-row items-center justify-between bg-[#F2F2F2] rounded-lg"
+              className="mb-4 flex p-4 h-16 flex-row items-center justify-between bg-[#F2F2F2] rounded-lg"
             >
               <View className="flex flex-row items-center">
                 <LogoutIcon width={19} />
@@ -121,7 +140,7 @@ export default function Settings() {
 
             <Text className="text-lg mb-4 mt-2">Other</Text>
 
-            <TouchableOpacity className="mb-4 flex p-4 flex-row items-center justify-between bg-[#F2F2F2] rounded-lg">
+            <TouchableOpacity className="mb-4 flex p-4 h-16 flex-row items-center justify-between bg-[#F2F2F2] rounded-lg">
               <View className="flex flex-row items-center">
                 <PrivacyIcon width={19} />
                 <Text className="ml-3">Privacy Policy</Text>
@@ -131,7 +150,7 @@ export default function Settings() {
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity className="mb-4 flex p-4 flex-row items-center justify-between bg-[#F2F2F2] rounded-lg">
+            <TouchableOpacity className="mb-4 flex p-4 h-16 flex-row items-center justify-between bg-[#F2F2F2] rounded-lg">
               <View className="flex flex-row items-center">
                 <AboutUsIcon width={19} />
                 <Text className="ml-3">About Us</Text>
