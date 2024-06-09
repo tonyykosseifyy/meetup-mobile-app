@@ -107,8 +107,8 @@ export default function Login() {
                 </View>
 
                 {isError && (
-                  <View className="mt-4 flex flex-row items-center space-x-2">
-                    <MaterialIcons name="error-outline" size={24} color="rgb(239 68 68)" />
+                  <View className="mt-8 bg-red-50 p-4 border border-red-500 rounded-lg flex flex-row items-center space-x-2">
+                    <MaterialIcons name="error-outline" size={20} color="rgb(239 68 68)" />
                     <Text className="text-red-500 text-sm leading-[18px]">
                       Whoops!{" "}
                       {axios.isAxiosError(error) && error.response
