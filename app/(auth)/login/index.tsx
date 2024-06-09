@@ -14,14 +14,12 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import axios from "axios";
 import { useAuth } from "@/api/mutations/auth/AuthProvider";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { theme } from "@/tailwind.config";
 
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
-  const { updateContextUser } = useAuth();
   const {
     error,
     isError,
