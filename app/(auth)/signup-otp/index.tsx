@@ -59,7 +59,7 @@ export default function SignUpOtp() {
           <View className="mt-7">
             <Text className="text-black font-medium text-2xl">Verification Code</Text>
             <Text className="text-slate-800 mt-1 leading-5">
-              Please enter code we just send to{" "}
+              Please enter code we just sent to{" "}
               <Text className="color-cabaret-500 font-bold">{email}</Text>
             </Text>
           </View>

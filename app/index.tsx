@@ -22,7 +22,6 @@ export default function PreLogin() {
       while (router.canGoBack()) {
         router.back();
       }
-      router.replace("/(tabs)/");
     },
   });
 

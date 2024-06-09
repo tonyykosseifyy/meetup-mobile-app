@@ -1,7 +1,7 @@
 import React from "react";
 import { View, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation, useIsFocused } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { useQuery } from "react-query";
 import { getMe } from "@/api/axios/users";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -20,7 +20,6 @@ import { Alert } from "react-native";
 
 export default function AccountDetails() {
   const navigation = useNavigation();
-  const isFocused = useIsFocused();
   const queryClient = useQueryClient();
   const [email, setEmail] = useState<string>("");
   const [fullName, setFullName] = useState<string>("");
@@ -76,7 +75,8 @@ export default function AccountDetails() {
       setDateChanged(true);
     },
   });
-  if (isLoading && !email) {
+  // changed this line remove && !email
+  if (isLoading) {
     return (
       <View className="flex-1 bg-white flex items-center justify-center">
         <ActivityIndicator size="large" color="#d14d72" />

@@ -10,10 +10,12 @@ import { setTokens, showTokens } from "@/api/tokens";
 import { useMutation } from "react-query";
 import { ILoginRequest } from "@/interfaces";
 import { login } from "@/api/axios/auth";
-
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import axios from "axios";
 import { useAuth } from "@/api/mutations/auth/AuthProvider";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { theme } from "@/tailwind.config";
+
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
@@ -107,11 +109,14 @@ export default function Login() {
                 </View>
 
                 {isError && (
-                  <View className="mt-4">
-                    <Text className="text-red-500 font-bold">
+                  <View className="mt-4 flex flex-row items-center space-x-2">
+                    <MaterialIcons name="error-outline" size={24} color="rgb(239 68 68)" />
+                    <Text className="text-red-500 text-sm leading-[18px]">
+                      Whoops!{" "}
                       {axios.isAxiosError(error) && error.response
-                        ? (error.response.data.detail as any as string)
+                        ? (error.response.data.message as any as string)
                         : "An error occured with registration."}
+                        {" "}Please check your information and try again.
                     </Text>
                   </View>
                 )}
