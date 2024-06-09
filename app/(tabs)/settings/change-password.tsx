@@ -29,7 +29,6 @@ export default function SettingsChangePassword() {
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const [passwordConfirmationVisible, setPasswordConfirmationVisible] = useState<boolean>(false);
 
-  // get me
   const { isLoading: isUserLoading } = useQuery({
     queryKey: "/auth/userinfo/",
     queryFn: () => getMe(),

@@ -11,6 +11,7 @@ import { IVerifyEmailRequest } from "@/interfaces";
 import { router } from "expo-router";
 import { setTokens } from "@/api/tokens";
 import axios from "axios";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function SignUpOtp() {
   const { registeredUser } = useAuth();
@@ -36,7 +37,7 @@ export default function SignUpOtp() {
       verifyEmail({ email, password, code }),
     onSuccess(data) {
       while (router.canGoBack()) {
-        router.back();
+        router.back(); 
       }
       console.log(data);
       const { access, refresh } = data;
@@ -67,11 +68,14 @@ export default function SignUpOtp() {
           <View className="mt-20 w-11/12 mx-auto">
             <OtpInput value={code} onChange={onChangeCode} />
             {isError && (
-              <View className="mt-4">
-                <Text className="text-red-500 text-center font-bold">
+              <View className="mt-8 bg-red-50 p-4 border border-red-500 rounded-lg flex flex-row items-center space-x-2">
+                <MaterialIcons name="error-outline" size={20} color="rgb(239 68 68)" />
+                <Text className="text-red-500 text-sm leading-[18px]">
+                  Whoops!{" "}
                   {axios.isAxiosError(error) && error.response
-                    ? (error.response.data.details as any as string)
-                    : "An error occured with validation."}
+                    ? (error.response.data.message as any as string)
+                    : "An error occured with validation."}{" "}
+                  Please check your information and try again.
                 </Text>
               </View>
             )}
