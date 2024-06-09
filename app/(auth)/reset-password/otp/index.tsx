@@ -1,56 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { Header } from "@/components";
 import { OtpInput } from "@/components";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "@/constants/styles";
 import { useAuth } from "@/api/mutations/auth/AuthProvider";
-import { useMutation } from "react-query";
-import { verifyEmail } from "@/api/axios/auth";
-import { IVerifyEmailRequest } from "@/interfaces";
-import { router } from "expo-router";
-import { setTokens } from "@/api/tokens";
-import axios from "axios";
-import { MaterialIcons } from "@expo/vector-icons";
 
-export default function SignUpOtp() {
-  const { registeredUser } = useAuth();
-  const [email, password] = [registeredUser?.email, registeredUser?.password];
+export default function ResetPasswordOTP() {
+  const { resetPasswordInfo, setResetPasswordInfo } = useAuth();
+  const email = resetPasswordInfo ? resetPasswordInfo.email : "";
   const [code, onChangeCode] = useState<string>("");
-
-  useEffect(() => {
-    if (!email || !password) {
-      router.replace("/");
-    }
-  }, [email, password]);
-
-  console.log({ email, password, code });
-  console.log(code);
-
-  const {
-    mutate: mutateVerifyEmail,
-    isLoading,
-    isError,
-    error,
-  } = useMutation({
-    mutationFn: ({ email, password, code }: IVerifyEmailRequest) =>
-      verifyEmail({ email, password, code }),
-    onSuccess(data) {
-      while (router.canGoBack()) {
-        router.back(); 
-      }
-      console.log(data);
-      const { access, refresh } = data;
-      setTokens(access, refresh);
-
-      router.replace("/signup-interests/");
-    },
-    onError(error) {
-      if (axios.isAxiosError(error)) {
-        console.error(error.response?.data);
-      }
-    },
-  });
 
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
@@ -67,34 +26,19 @@ export default function SignUpOtp() {
 
           <View className="mt-20 w-11/12 mx-auto">
             <OtpInput value={code} onChange={onChangeCode} />
-            {isError && (
-              <View className="mt-8 bg-red-50 p-4 border border-red-500 rounded-lg flex flex-row items-center space-x-2">
-                <MaterialIcons name="error-outline" size={20} color="rgb(239 68 68)" />
-                <Text className="text-red-500 text-sm leading-[18px]">
-                  Whoops!{" "}
-                  {axios.isAxiosError(error) && error.response
-                    ? (error.response.data.message as any as string)
-                    : "An error occured with validation."}{" "}
-                  Please check your information and try again.
-                </Text>
-              </View>
-            )}
             <View className="mt-32">
               <TouchableOpacity
                 onPress={() =>
-                  mutateVerifyEmail({
-                    email: email || "",
-                    password: password || "",
+                  setResetPasswordInfo({
+                    email,
                     code,
                   })
                 }
-                disabled={isLoading}
+                disabled={!code || code.length != 4}
                 style={styles.cabaret_shadow}
                 className="p-2 bg-cabaret-500 h-[60px] rounded-full flex flex-row items-center justify-center"
               >
-                <Text className="text-white font-bold text-base">
-                  {isLoading ? "Validating..." : "Continue"}
-                </Text>
+                <Text className="text-white font-bold text-base">Continue</Text>
               </TouchableOpacity>
             </View>
             <View className="flex flex-row items-baseline justify-center mt-4">
