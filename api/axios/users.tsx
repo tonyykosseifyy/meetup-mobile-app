@@ -1,5 +1,5 @@
 import axios from "../../utils/axios";
-import { IUpdateUserRequest, IUser, IUserInfo } from "../../interfaces";
+import { IUpdateUserRequest, IUser, IUserInfo, IChangePasswordRequest } from "../../interfaces";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type ILookupResponse = IUser[];
@@ -22,4 +22,15 @@ const updateUser = async (userInfo: IUpdateUserRequest): Promise<IUserResponse> 
   });
 };
 
-export { lookup, getMe, updateUser };
+const changePassword = async (changePasswordRequest: IChangePasswordRequest): Promise<void> => {
+  const token = await AsyncStorage.getItem("accessToken");
+  return await axios.post(
+    "/auth/change-password/",
+    changePasswordRequest,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+}
+
+export { lookup, getMe, updateUser, changePassword };

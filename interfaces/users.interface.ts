@@ -24,7 +24,7 @@ interface IUserInfo {
   date_of_birth: string;
   occupation: string;
   biography: string;
-  interests: number[];
+  interests: IInterest[];
   email: string;
   password: string;
 }
@@ -37,6 +37,18 @@ interface IUpdateUserRequest {
   interests?: number[];
 }
 
+interface IChangePasswordRequest {
+  name: string;
+  email: string;
+  password: string;
+}
 
-
-export { IUser, IUserInfo, IUpdateUserRequest, IInterestsResponse, IInterestsRequest, IInterest};
+export {
+  IUser,
+  IUserInfo,
+  IUpdateUserRequest,
+  IInterestsResponse,
+  IInterestsRequest,
+  IInterest,
+  IChangePasswordRequest,
+};
