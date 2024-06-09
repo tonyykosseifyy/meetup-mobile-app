@@ -1,5 +1,11 @@
 import axios from "../../utils/axios";
-import { IUpdateUserRequest, IUser, IUserInfo, IChangePasswordRequest } from "../../interfaces";
+import {
+  IUpdateUserRequest,
+  IUser,
+  IUserInfo,
+  IChangePasswordRequest,
+  IResetPasswordRequest,
+} from "../../interfaces";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type ILookupResponse = IUser[];
@@ -33,4 +39,9 @@ const changePassword = async (changePasswordRequest: IChangePasswordRequest): Pr
   );
 }
 
-export { lookup, getMe, updateUser, changePassword };
+const resetPassword = async (resetPasswordRequest: IResetPasswordRequest): Promise<void> => {
+  return await axios.post("/auth/reset-password/", resetPasswordRequest);
+}
+
+
+export { lookup, getMe, updateUser, changePassword, resetPassword };

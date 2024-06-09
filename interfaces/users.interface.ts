@@ -42,7 +42,11 @@ interface IChangePasswordRequest {
   email: string;
   password: string;
 }
-
+interface IResetPasswordRequest {
+  email: string;
+  code: string;
+  password: string;
+}
 export {
   IUser,
   IUserInfo,
@@ -51,4 +55,5 @@ export {
   IInterestsRequest,
   IInterest,
   IChangePasswordRequest,
+  IResetPasswordRequest,
 };

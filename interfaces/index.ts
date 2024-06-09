@@ -5,7 +5,8 @@ import {
   IInterestsResponse,
   IInterestsRequest,
   IInterest,
-  IChangePasswordRequest
+  IChangePasswordRequest,
+  IResetPasswordRequest,
 } from "./users.interface";
 
 import {
@@ -47,4 +48,5 @@ export {
   IInterestsRequest,
   IInterest,
   IChangePasswordRequest,
+  IResetPasswordRequest,
 };
