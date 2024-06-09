@@ -250,20 +250,26 @@ export default function Registration({ data }: RegistrationProps) {
                 On whose behalf are you creating this account?
               </Text>
               <View className="-ml-5 flex flex-col justify-between">
-                <Pressable onPress={() => {
-                  setYourSelf(true);
-                  setMother(false);
-                }} className="mt-3 flex flex-row items-center">
+                <Pressable
+                  onPress={() => {
+                    setYourSelf(true);
+                    setMother(false);
+                  }}
+                  className="mt-3 flex flex-row items-center"
+                >
                   <View className="rounded-full border-[1.5px] border-solid border-cabaret-500 w-4 h-4 flex items-center justify-center">
                     {yourSelf && <View className="bg-cabaret-500 w-2 h-2 rounded-full" />}
                   </View>
                   <Text className="ml-2 text-xs text-slate-700">Yourself</Text>
                 </Pressable>
 
-                <Pressable onPress={() => {
-                  setMother(true);
-                  setYourSelf(false);
-                }} className="mt-3 flex flex-row items-center">
+                <Pressable
+                  onPress={() => {
+                    setMother(true);
+                    setYourSelf(false);
+                  }}
+                  className="mt-3 flex flex-row items-center"
+                >
                   <View className="rounded-full border-[1.5px] border-solid border-cabaret-500 w-4 h-4 flex items-center justify-center">
                     {mother && <View className="bg-cabaret-500 w-2 h-2 rounded-full" />}
                   </View>
@@ -271,12 +277,16 @@ export default function Registration({ data }: RegistrationProps) {
                 </Pressable>
               </View>
             </View>
+
             {isRegisteringError && (
-              <View className="mt-4">
-                <Text className="text-red-500 font-bold">
+              <View className="mt-8 bg-red-50 p-4 border border-red-500 rounded-lg flex flex-row items-center space-x-2">
+                <MaterialIcons name="error-outline" size={20} color="rgb(239 68 68)" />
+                <Text className="text-red-500 text-sm leading-[18px]">
+                  Whoops!{" "}
                   {axios.isAxiosError(registeringError) && registeringError.response
                     ? (registeringError.response.data.message as any as string)
-                    : "An error occured with registration."}
+                    : "An error occured with registration."}{" "}
+                  Please check your information and try again.
                 </Text>
               </View>
             )}
