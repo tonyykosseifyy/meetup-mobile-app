@@ -11,6 +11,7 @@ import { IVerifyEmailRequest } from "@/interfaces";
 import { router } from "expo-router";
 import { setTokens } from "@/api/tokens";
 import axios from "axios";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 export default function SignUpOtp() {
   const { registeredUser } = useAuth();
@@ -66,15 +67,20 @@ export default function SignUpOtp() {
 
           <View className="mt-20 w-11/12 mx-auto">
             <OtpInput value={code} onChange={onChangeCode} />
-            {isError && (
-              <View className="mt-4">
-                <Text className="text-red-500 text-center font-bold">
-                  {axios.isAxiosError(error) && error.response
-                    ? (error.response.data.details as any as string)
-                    : "An error occured with validation."}
-                </Text>
-              </View>
-            )}
+
+            {/* Error Message */}
+            <View
+              className={`mt-12 bg-red-50 p-4 border border-red-500 rounded-lg flex flex-row items-center space-x-2 ${isError ? "opacity-1" : "opacity-0"}`}
+            >
+              <MaterialIcons name="error-outline" size={20} color="rgb(239 68 68)" />
+              <Text className="text-red-500 text-sm leading-[18px]">
+                Whoops!{" "}
+                {axios.isAxiosError(error) && error.response
+                  ? (error.response.data.message as any as string)
+                  : "An error occured with registration."}{" "}
+                Please check your information and try again.
+              </Text>
+            </View>
             <View className="mt-32">
               <TouchableOpacity
                 onPress={() =>
