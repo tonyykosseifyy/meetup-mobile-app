@@ -60,7 +60,7 @@ export default function AccountDetails() {
     },
   });
   // get user info and populate the form
-  const { data: userInfo, isLoading } = useQuery({
+  const { data: userInfo, isFetching } = useQuery({
     queryKey: "/auth/userinfo/",
     queryFn: () => getMe(),
     retry: 1,
@@ -76,7 +76,7 @@ export default function AccountDetails() {
     },
   });
   // changed this line remove && !email
-  if (isLoading) {
+  if (isFetching) {
     return (
       <View className="flex-1 bg-white flex items-center justify-center">
         <ActivityIndicator size="large" color="#d14d72" />
