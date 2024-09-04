@@ -28,14 +28,12 @@ export default function RootLayout() {
     Inter_700Bold,
   });
   const [loading, setLoading] = useState<boolean>(false);
-  const [userError, setUserError] = useState<boolean>(false);
-  const getAuthenticated = async () => {
-    const data = await getMe();
-    return data;
-  };
 
   useEffect(() => {
-    if (error) throw error;
+    if (error) {
+      console.error(error);
+      setLoading(false);
+    }
   }, [error]);
 
   useEffect(() => {

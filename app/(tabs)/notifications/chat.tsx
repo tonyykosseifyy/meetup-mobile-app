@@ -60,8 +60,6 @@ const times = [
   "18:00",
 ];
 
-console.log(times);
-
 export default function PreLogin() {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const [place, setPlace] = useState<string>("");

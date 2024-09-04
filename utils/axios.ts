@@ -1,8 +1,9 @@
 import axios, { AxiosError } from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
+import { clearTokens } from "@/api/tokens";
 
-const API_URL = "https://selimellieh.pythonanywhere.com";
+const API_URL = "http://localhost:8000";
 const authRoutes = ["/auth/login/", "auth/token/refresh/", "/auth/verify-email/"];
 
 const api = axios.create({
@@ -55,6 +56,7 @@ api.interceptors.response.use(
       }
     } catch (err: any) {
       console.log("Error refresrhing token:", err);
+      clearTokens();
       router.navigate("/login");
     }
   }

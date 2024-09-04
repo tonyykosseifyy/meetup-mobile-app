@@ -17,6 +17,7 @@ const login = async ({ email, password }: ILoginRequest): Promise<ILoginResponse
 };
 
 const register = async ({ email, password }: IRegisterRequest): Promise<IRegisterResponse> => {
+  console.log("registration function ", email, password);
   return await axios.post("/auth/register/", { email, password });
 };
 
@@ -26,7 +27,6 @@ const generateAccess = async ({ refreshToken }: IRefreshRequest): Promise<IRefre
 const setUserInfo = async (userInfo: ISetUserRequest): Promise<ISetUserResponse> => {
   return await axios.post("/auth/userinfo/", userInfo);
 };
-
 
 const verifyEmail = async ({
   email,

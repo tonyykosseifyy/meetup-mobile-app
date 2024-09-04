@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { Text, StyleSheet, Pressable } from "react-native";
 import { IRegistrationData } from "@/assets/data/registration_data";
 import { useMutation, useQuery } from "react-query";
@@ -14,17 +14,11 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Ionicons } from "@expo/vector-icons";
 import Header from "../header";
 import { useAuth } from "@/api/mutations/auth/AuthProvider";
-// import { CheckBox } from "react-native";
-import BouncyCheckbox from "react-native-bouncy-checkbox";
-import RadioGroup from "react-native-radio-buttons-group";
 
 interface RegistrationProps {
   data: IRegistrationData;
 }
-// are you creating this account on behalf of yourself or on behalf of your mom/grandmother
-
 export default function Registration({ data }: RegistrationProps) {
-  const queryClient = useQueryClient();
   const { updateContextUser } = useAuth();
 
   const [email, setEmail] = useState<string>("");
@@ -35,8 +29,10 @@ export default function Registration({ data }: RegistrationProps) {
   const [dateChanged, setDateChanged] = useState<boolean>(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState<boolean>(false);
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
-
+  const [yourSelf, setYourSelf] = useState(true);
+  const [mother, setMother] = useState(false);
   const [date, setDate] = useState(null);
+  
   // useMutation((userInfo) => setUserInfo(userInfo))
   const {
     mutate: setUserInfoAfterRegister,
@@ -99,7 +95,7 @@ export default function Registration({ data }: RegistrationProps) {
     retry: false,
     onError: (error) => {
       if (axios.isAxiosError(error)) {
-        console.log(error.response?.data);
+        console.log("signup page error ", error.response?.data);
       }
     },
     onSuccess: () => {
@@ -125,9 +121,6 @@ export default function Registration({ data }: RegistrationProps) {
       !occupation
     );
   };
-
-  const [yourSelf, setYourSelf] = useState(true);
-  const [mother, setMother] = useState(false);
 
   return (
     <View className="flex-1 bg-white flex">
