@@ -19,17 +19,22 @@ export default function Login() {
   const [email, setEmail] = useState<string>("");
   const { setResetPasswordInfo } = useAuth();
 
+  const resetPasswordFunc = () => {
+    setResetPasswordInfo({ email, code: "" });
+    router.replace("/(auth)/reset-password/otp");
+  };
+
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
       <View className="flex-1 bg-white flex">
         <KeyboardAwareScrollView className="h-screen " contentContainerStyle={{ flexGrow: 1 }}>
           <Header leftButton theme={"light"} />
 
-          <View className="flex-1   mt-8 flex justify-between  pb-10 px-5">
+          <View className="flex-1 mt-8 flex justify-between  pb-10 px-5">
             <View className="flex-1">
               <View className="mt-7">
-                <Text className="text-black font-medium text-2xl">Forgot Password</Text>
-                <Text className="text-slate-800 mt-1">
+                <Text className="text-black font-medium text-2xl">Reset Password</Text>
+                <Text className="text-slate-700 mt-1 leading-5">
                   Please enter your registered email address. We will send you a code to verify your
                   identity.
                 </Text>
@@ -57,7 +62,7 @@ export default function Login() {
                 <View className="mt-28">
                   <TouchableOpacity
                     disabled={!email}
-                    onPress={() => setResetPasswordInfo({ email, code: "" })}
+                    onPress={() => resetPasswordFunc()}
                     style={styles.cabaret_shadow}
                     className="p-2 bg-cabaret-500 h-14 rounded-lg flex flex-row items-center justify-center"
                   >
@@ -65,7 +70,6 @@ export default function Login() {
                   </TouchableOpacity>
                 </View>
               </View>
-              <Footer />
             </View>
           </View>
         </KeyboardAwareScrollView>

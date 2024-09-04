@@ -10,10 +10,10 @@ import { setTokens, showTokens } from "@/api/tokens";
 import { useMutation } from "react-query";
 import { ILoginRequest } from "@/interfaces";
 import { login } from "@/api/axios/auth";
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import axios from "axios";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-
+import { Link } from "expo-router";
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
@@ -56,7 +56,7 @@ export default function Login() {
             <View className="flex-1">
               <View className="mt-7">
                 <Text className="text-black font-medium text-2xl">Welcome Back</Text>
-                <Text className="text-slate-800 mt-1">Please login to access your account</Text>
+                <Text className="text-slate-700 mt-1">Please login to access your account</Text>
               </View>
 
               <View className="mt-14">
@@ -100,7 +100,7 @@ export default function Login() {
                 </View>
 
                 <View className="flex flex-row w-full mt-3 justify-end">
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={() => router.push("/reset-password/email")}>
                     <Text className="text-gray-700 font-normal text-xs">Forgot Password?</Text>
                   </TouchableOpacity>
                 </View>
@@ -112,8 +112,8 @@ export default function Login() {
                       Whoops!{" "}
                       {axios.isAxiosError(error) && error.response
                         ? (error.response.data.message as any as string)
-                        : "An error occured with registration."}
-                        {" "}Please check your information and try again.
+                        : "An error occured with registration."}{" "}
+                      Please check your information and try again.
                     </Text>
                   </View>
                 )}

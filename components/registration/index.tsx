@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Text, StyleSheet, Pressable } from "react-native";
 import { IRegistrationData } from "@/assets/data/registration_data";
-import { useMutation, useQuery } from "react-query";
-import { useQueryClient } from "react-query";
+import { useMutation } from "react-query";
 import { router } from "expo-router";
 import { register, setUserInfo } from "@/api/axios/auth";
 import axios from "axios";
@@ -132,7 +131,7 @@ export default function Registration({ data }: RegistrationProps) {
         <View className="px-5">
           <View>
             <Text className="font-medium text-2xl">{data.title}</Text>
-            <Text className="mt-1 text-slate-800">{data.subtitle}</Text>
+            <Text className="mt-1 text-slate-700">{data.subtitle}</Text>
           </View>
           <View className="mt-10">
             {/* name */}
@@ -239,7 +238,7 @@ export default function Registration({ data }: RegistrationProps) {
             </View>
 
             <View className="px-5 mt-6 flex">
-              <Text className="text-sm text-slate-800 -ml-5 mb-2">
+              <Text className="text-sm text-slate-700 -ml-5 mb-2">
                 On whose behalf are you creating this account?
               </Text>
               <View className="-ml-5 flex flex-col justify-between">

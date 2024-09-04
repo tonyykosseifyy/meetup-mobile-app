@@ -90,7 +90,7 @@ export default function AccountDetails() {
         <View className="px-5 mt-6">
           <View>
             <Text className="font-medium text-2xl">Account Details</Text>
-            <Text className="mt-1 text-slate-800">All your information can be edited here.</Text>
+            <Text className="mt-1 text-slate-700">All your information can be edited here.</Text>
           </View>
           <View className="mt-10">
             {/* name */}

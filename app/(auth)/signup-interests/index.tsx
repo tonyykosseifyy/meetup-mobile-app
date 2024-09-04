@@ -57,7 +57,7 @@ export default function SignUpOtp() {
         <View className="px-5 flex-1">
           <View className="mt-7">
             <Text className="text-black font-medium text-2xl">Select up to 3 interest</Text>
-            <Text className="text-slate-800 mt-1 leading-5">
+            <Text className="text-slate-700 mt-1 leading-5">
               Tell us about your interests and what excite you
             </Text>
           </View>

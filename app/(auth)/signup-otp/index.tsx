@@ -59,7 +59,7 @@ export default function SignUpOtp() {
         <View className="px-5">
           <View className="mt-7">
             <Text className="text-black font-medium text-2xl">Verification Code</Text>
-            <Text className="text-slate-800 mt-1 leading-5">
+            <Text className="text-slate-700 mt-1 leading-5">
               Please enter code we just sent to{" "}
               <Text className="color-cabaret-500 font-bold">{email}</Text>
             </Text>
@@ -100,7 +100,7 @@ export default function SignUpOtp() {
               </TouchableOpacity>
             </View>
             <View className="flex flex-row items-baseline justify-center mt-4">
-              <Text className="text-slate-800">Didn't receive the code?</Text>
+              <Text className="text-slate-700">Didn't receive the code?</Text>
               <TouchableOpacity className="border-b-[0.5px] border-cabaret-500 ml-1">
                 <Text className="text-cabaret-500 font-bold">Resend Code</Text>
               </TouchableOpacity>

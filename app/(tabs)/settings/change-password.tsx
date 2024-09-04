@@ -61,7 +61,7 @@ export default function SettingsChangePassword() {
         <View className="px-5 mt-6">
           <View>
             <Text className="font-medium text-2xl">Change Your Password</Text>
-            <Text className="mt-1 text-slate-800">
+            <Text className="mt-1 text-slate-700">
               Please enter your current password and then choose a new password.
             </Text>
           </View>

@@ -60,7 +60,7 @@ export default function PreLogin() {
           <View className="w-10/12 flex flex-col items-start justify-start">
             <View>
               <Text className="font-bold text-2xl">Ahla w Sahla bi Le2ine!</Text>
-              <Text className="w-72 mt-1 text-slate-800 leading-5">
+              <Text className="w-72 mt-1 text-slate-700 leading-5">
                 Yalla, join us at Le2ine! Find friends who love what you love.
               </Text>
             </View>

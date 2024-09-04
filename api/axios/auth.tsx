@@ -12,6 +12,7 @@ import {
   ISetUserRequest,
 } from "../../interfaces";
 
+
 const login = async ({ email, password }: ILoginRequest): Promise<ILoginResponse> => {
   return await axios.post("/auth/login/", { email: email.toLowerCase(), password });
 };
