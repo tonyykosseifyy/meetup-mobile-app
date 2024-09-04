@@ -12,9 +12,8 @@ import { ILoginRequest } from "@/interfaces";
 import { login } from "@/api/axios/auth";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import axios from "axios";
-import { useAuth } from "@/api/mutations/auth/AuthProvider";
+import { useAuth } from "@/providers/auth.provider";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");

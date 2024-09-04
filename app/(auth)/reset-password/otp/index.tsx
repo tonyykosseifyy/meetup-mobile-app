@@ -4,7 +4,7 @@ import { Header } from "@/components";
 import { OtpInput } from "@/components";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "@/constants/styles";
-import { useAuth } from "@/api/mutations/auth/AuthProvider";
+import { useAuth } from "@/providers/auth.provider";
 
 export default function ResetPasswordOTP() {
   const { resetPasswordInfo, setResetPasswordInfo } = useAuth();

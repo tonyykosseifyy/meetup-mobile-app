@@ -8,7 +8,7 @@ import { useMutation } from "react-query";
 import axios from "axios";
 import styles from "@/constants/styles";
 import { Alert } from "react-native";
-import { useAuth } from "@/api/mutations/auth/AuthProvider";
+import { useAuth } from "@/providers/auth.provider";
 import { router } from "expo-router";
 import { resetPassword } from "@/api/axios/users";
 
@@ -17,7 +17,7 @@ export default function SettingsChangePassword() {
 
   const [password, setPassword] = useState<string>("");
   const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
-  
+
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const [passwordConfirmationVisible, setPasswordConfirmationVisible] = useState<boolean>(false);
 

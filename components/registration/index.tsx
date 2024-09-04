@@ -13,7 +13,7 @@ import { formatDate } from "@/utils/common";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Ionicons } from "@expo/vector-icons";
 import Header from "../header";
-import { useAuth } from "@/api/mutations/auth/AuthProvider";
+import { useAuth } from "@/providers/auth.provider";
 
 interface RegistrationProps {
   data: IRegistrationData;
@@ -32,7 +32,7 @@ export default function Registration({ data }: RegistrationProps) {
   const [yourSelf, setYourSelf] = useState(true);
   const [mother, setMother] = useState(false);
   const [date, setDate] = useState(null);
-  
+
   // useMutation((userInfo) => setUserInfo(userInfo))
   const {
     mutate: setUserInfoAfterRegister,
