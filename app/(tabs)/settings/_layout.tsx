@@ -17,7 +17,7 @@ export default function Layout() {
       <Stack.Screen
         name="account-details"
         options={{
-          title: "Account Settings",
+          title: "Your Account",
           headerShown: true,
           headerLeft: (props) => (
             <TouchableOpacity onPress={router.back}>

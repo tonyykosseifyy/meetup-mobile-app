@@ -35,7 +35,7 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response.data,
   async (error: AxiosError) => {
-    console.log("eeeeerrr");
+    console.log("eeeeerrr", error);
 
     if (
       error &&

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { View, Text, TouchableOpacity, ActivityIndicator, Alert } from "react-native";
 import { Header } from "@/components";
 import Chip from "@/components/chip";
@@ -37,35 +37,51 @@ export default function SettingsInterests() {
     mutationFn: () => setInterests(updatedInterests),
     mutationKey: "/auth/userinfo/update",
     onSuccess: (data) => {
-      queryClient.invalidateQueries("/auth/userinfo/");
       Alert.alert("Your Interests", "Your Interests are updated successfully", [
-        { text: "OK", onPress: () => navigation.goBack() },
+        {
+          text: "OK",
+          onPress: () => {
+            queryClient.invalidateQueries("/auth/userinfo/");
+            navigation.goBack();
+          },
+        },
       ]);
     },
   });
   // fetching user info
-  const { data: userInfo, isLoading: isUserLoading } = useQuery({
+  const {
+    data: userInfo,
+    isLoading: isUserLoading,
+    isFetching,
+  } = useQuery({
     queryKey: "/auth/userinfo/",
+    refetchOnMount: true,
     queryFn: () => getMe(),
-    retry: 1,
-    onSuccess: (data) => {
-      console.log("userInfo data", data);
-      setUpdatedInterests(data.interests);
-    },
   });
 
+  useEffect(() => {
+    if (userInfo && userInfo.interests) {
+      setUpdatedInterests(userInfo.interests);
+    }
+  }, [userInfo]);
+
+  const loadingUserInterests = useMemo(
+    () => isUserLoading || isLoadingAllInterests || isFetching,
+    [isUserLoading, isLoadingAllInterests, isFetching]
+  );
+
   return (
-    <SafeAreaView edges={["top"]} className="flex-1 bg-white">
+    <View className="flex-1 bg-white flex">
       <View className="flex-1 bg-white flex">
-        <View className="px-5 flex-1">
-          <View className="mt-7">
+        <View className="px-5 flex-1 mt-6">
+          <View>
             <Text className="text-black font-medium text-2xl">Update Your Interests</Text>
             <Text className="text-slate-700 mt-1 leading-5">
               Tell us about your interests and what excite you
             </Text>
           </View>
 
-          {interests && Array.isArray(interests) && !isUserLoading && !isLoadingAllInterests && (
+          {!loadingUserInterests && interests && Array.isArray(interests) && (
             <View className="mt-20 flex-1 w-full justify-between pb-28 ">
               <View className="flex  flex-row justify-center flex-wrap  w-full">
                 {interests.map((interest) => (
@@ -84,12 +100,12 @@ export default function SettingsInterests() {
               </View>
             </View>
           )}
-          {(isLoadingAllInterests || isUserLoading) && (
+          {loadingUserInterests && (
             <View className="w-full flex-1 h-full flex flex-row items-center justify-center">
               <ActivityIndicator size="large" color="#d14d72" />
             </View>
           )}
-          {!isLoadingAllInterests && (
+          {!loadingUserInterests && (
             <TouchableOpacity
               onPress={() => sendInterests()}
               disabled={isSendingLoading || updatedInterests.length < 3}
@@ -103,6 +119,6 @@ export default function SettingsInterests() {
           )}
         </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
