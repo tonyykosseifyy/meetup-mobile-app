@@ -17,7 +17,19 @@ export default function Layout() {
       <Stack.Screen
         name="account-details"
         options={{
-          title: "Settings",
+          title: "Account Settings",
+          headerShown: true,
+          headerLeft: (props) => (
+            <TouchableOpacity onPress={router.back}>
+              <MaterialIcons name="arrow-back-ios-new" size={25} color="black" />
+            </TouchableOpacity>
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="interests"
+        options={{
+          title: "Your Interests",
           headerShown: true,
           headerLeft: (props) => (
             <TouchableOpacity onPress={router.back}>

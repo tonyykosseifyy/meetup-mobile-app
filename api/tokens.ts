@@ -13,8 +13,8 @@ const setTokens = async (token: string, refreshToken: string) => {
 const showTokens = async () => {
   const accessToken = await AsyncStorage.getItem("accessToken");
   const refreshToken = await AsyncStorage.getItem("refreshToken");
-  console.log("accessToken=>>", accessToken);
-  console.log("refreshToken=>>", refreshToken);
+  console.log("accessToken in storage: ", accessToken);
+  console.log("refreshToken in storage: ", refreshToken);
 };
 
 export { clearTokens, setTokens, showTokens };

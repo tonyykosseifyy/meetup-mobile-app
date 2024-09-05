@@ -13,35 +13,28 @@ import { getMe } from "@/api/axios/users";
 import { useQueryClient } from "react-query";
 import { useNavigation } from "@react-navigation/native";
 
-// const Skip = (): React.JSX.Element => (
-//   <TouchableOpacity>
-//     <Text className="text-cabaret-500 font-bold">Skip</Text>
-//   </TouchableOpacity>
-// );
-
 export default function SettingsInterests() {
   const queryClient = useQueryClient();
   const navigation = useNavigation();
-  const [selectedInterests, setSelectedInterests] = useState<IInterest[]>([]);
+  const [updatedInterests, setUpdatedInterests] = useState<IInterest[]>([]);
 
   const toggleInterest = (interest: IInterest) => {
-    if (selectedInterests.includes(interest)) {
-      setSelectedInterests(selectedInterests.filter((i) => i !== interest));
+    if (updatedInterests.findIndex((i) => i.id === interest.id) !== -1) {
+      setUpdatedInterests(updatedInterests.filter((i) => i.id !== interest.id));
     } else {
-      setSelectedInterests([...selectedInterests, interest]);
+      setUpdatedInterests([...updatedInterests, interest]);
     }
   };
 
-  const { data, isLoading } = useQuery({
+  // fetching interests
+  const { data: interests, isLoading: isLoadingAllInterests } = useQuery({
     queryKey: "/meetup/interests/",
-    retry: 2,
     queryFn: () => getInterests(),
-    onSuccess: (data) => {
-      console.log(data);
-    },
   });
+
+  // mutate function to update interests
   const { isLoading: isSendingLoading, mutate: sendInterests } = useMutation({
-    mutationFn: () => setInterests(selectedInterests),
+    mutationFn: () => setInterests(updatedInterests),
     mutationKey: "/auth/userinfo/update",
     onSuccess: (data) => {
       queryClient.invalidateQueries("/auth/userinfo/");
@@ -50,15 +43,16 @@ export default function SettingsInterests() {
       ]);
     },
   });
+  // fetching user info
   const { data: userInfo, isLoading: isUserLoading } = useQuery({
     queryKey: "/auth/userinfo/",
     queryFn: () => getMe(),
     retry: 1,
     onSuccess: (data) => {
-      setInterests(data.interests);
+      console.log("userInfo data", data);
+      setUpdatedInterests(data.interests);
     },
   });
-
 
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
@@ -71,37 +65,42 @@ export default function SettingsInterests() {
             </Text>
           </View>
 
-          <View className="mt-20 flex-1 w-full justify-between pb-28 ">
-            <View className="flex  flex-row justify-center flex-wrap  w-full">
-              {data &&
-                Array.isArray(data) &&
-                data.map((interest) => (
+          {interests && Array.isArray(interests) && !isUserLoading && !isLoadingAllInterests && (
+            <View className="mt-20 flex-1 w-full justify-between pb-28 ">
+              <View className="flex  flex-row justify-center flex-wrap  w-full">
+                {interests.map((interest) => (
                   <Chip
                     onPress={() => toggleInterest(interest)}
                     key={interest.id}
-                    active={selectedInterests.includes(interest)}
+                    active={
+                      // check if this interest id belong to the user interests
+                      updatedInterests.findIndex((i) => i.id === interest.id) !== -1 ? true : false
+                    }
                     text={interest.name}
                     Icon={icons[interest.name]}
                     shadow
                   />
                 ))}
+              </View>
             </View>
-          </View>
-          {(isLoading || isUserLoading) && (
-            <View className="w-full flex flex-row items-center justify-center">
+          )}
+          {(isLoadingAllInterests || isUserLoading) && (
+            <View className="w-full flex-1 h-full flex flex-row items-center justify-center">
               <ActivityIndicator size="large" color="#d14d72" />
             </View>
           )}
-          <TouchableOpacity
-            onPress={() => sendInterests()}
-            disabled={isSendingLoading || isLoading || selectedInterests.length < 3}
-            style={styles.cabaret_shadow}
-            className={`p-2  mb-4 bg-cabaret-500 h-[60px] rounded-full flex flex-row items-center justify-center ${selectedInterests.length < 3 && "bg-cabaret-400"}`}
-          >
-            <Text className="text-white font-bold text-base">
-              {isSendingLoading ? "Saving..." : "Continue"}
-            </Text>
-          </TouchableOpacity>
+          {!isLoadingAllInterests && (
+            <TouchableOpacity
+              onPress={() => sendInterests()}
+              disabled={isSendingLoading || updatedInterests.length < 3}
+              style={styles.cabaret_shadow}
+              className={`p-2  mb-4 bg-cabaret-500 h-[60px] rounded-full flex flex-row items-center justify-center ${updatedInterests.length < 3 && "bg-cabaret-400"}`}
+            >
+              <Text className="text-white font-bold text-base">
+                {isSendingLoading ? "Saving..." : "Update Interests"}
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </SafeAreaView>
