@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { clearTokens } from "@/api/tokens";
 
-const API_URL = "https://1450-78-108-167-79.ngrok-free.app";
+const API_URL = "https://rotten-areas-clean.loca.lt";
 const authRoutes = ["/auth/login/", "auth/token/refresh/", "/auth/verify-email/"];
 
 const api = axios.create({
@@ -20,7 +20,12 @@ api.interceptors.request.use(
     if (accessToken) {
       config.headers["Authorization"] = "Bearer " + accessToken;
     }
-    console.log("config=>", config);
+    const method = config.method && config.method.toUpperCase(); // Ensure method is in uppercase
+    const relativeUrl = config.url;
+
+    // Log the request details in the format "METHOD /path"
+    console.log(`${method} ${relativeUrl}`);
+
     return config;
   },
   (error) => {

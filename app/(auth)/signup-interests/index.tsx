@@ -26,6 +26,7 @@ export default function SignUpOtp() {
       setSelectedInterests([...selectedInterests, interest]);
     }
   };
+  const loading = true;
 
   const { data, isLoading } = useQuery({
     queryKey: "/meetup/interests/",
@@ -62,11 +63,10 @@ export default function SignUpOtp() {
             </Text>
           </View>
 
-          <View className="mt-20 flex-1 w-full justify-between pb-28 ">
-            <View className="flex  flex-row justify-center flex-wrap  w-full">
-              {data &&
-                Array.isArray(data) &&
-                data.map((interest) => (
+          {data && Array.isArray(data) && (
+            <View className="mt-20 flex-1 w-full justify-between pb-28 ">
+              <View className="flex flex-row justify-center flex-wrap w-full">
+                {data.map((interest) => (
                   <Chip
                     onPress={() => toggleInterest(interest)}
                     key={interest.id}
@@ -76,23 +76,26 @@ export default function SignUpOtp() {
                     shadow
                   />
                 ))}
+              </View>
             </View>
-          </View>
+          )}
           {isLoading && (
-            <View className="w-full flex flex-row items-center justify-center">
+            <View className="w-full flex-1 h-full flex flex-row items-center justify-center">
               <ActivityIndicator size="large" color="#d14d72" />
             </View>
           )}
-          <TouchableOpacity
-            onPress={() => sendInterests()}
-            disabled={isSendingLoading || isLoading || selectedInterests.length < 3}
-            style={styles.cabaret_shadow}
-            className={`p-2  mb-4 bg-cabaret-500 h-[60px] rounded-full flex flex-row items-center justify-center ${selectedInterests.length < 3 && "bg-cabaret-400"}`}
-          >
-            <Text className="text-white font-bold text-base">
-              {isSendingLoading ? "Saving..." : "Continue"}
-            </Text>
-          </TouchableOpacity>
+          {data && Array.isArray(data) && (
+            <TouchableOpacity
+              onPress={() => sendInterests()}
+              disabled={isSendingLoading || isLoading || selectedInterests.length < 3}
+              style={styles.cabaret_shadow}
+              className={`p-2 mb-16 bg-cabaret-500 h-[60px] rounded-full flex flex-row items-center justify-center ${selectedInterests.length < 3 && "bg-cabaret-400"}`}
+            >
+              <Text className="text-white font-bold text-base">
+                {isSendingLoading ? "Saving..." : "Continue"}
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </SafeAreaView>
