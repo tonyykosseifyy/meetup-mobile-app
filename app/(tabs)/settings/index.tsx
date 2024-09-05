@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, Image, ScrollView, TouchableOpacity, Switch } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  Switch,
+  ActivityIndicator,
+} from "react-native";
 import { Link as ExpoLink } from "expo-router";
 import NotificationsIcon from "@/assets/icons/settings/notifications.svg";
 import ArrowIcon from "@/assets/icons/settings/arrow.svg";
@@ -49,8 +57,8 @@ export default function Settings() {
   return (
     <ScrollView className="flex-1 bg-white">
       {isLoading ? (
-        <View className="flex-1 items-center justify-center">
-          <Text>Loading...</Text>
+        <View className="flex-1 bg-white flex items-center justify-center">
+          <ActivityIndicator size="large" color="#d14d72" />
         </View>
       ) : (
         <>

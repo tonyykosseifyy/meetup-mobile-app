@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { clearTokens } from "@/api/tokens";
 
-const API_URL = "https://cold-parts-shake.loca.lt";
+const API_URL = "https://tired-bars-hide.loca.lt";
 const authRoutes = ["/auth/login/", "auth/token/refresh/", "/auth/verify-email/"];
 
 const api = axios.create({
@@ -67,8 +67,7 @@ api.interceptors.response.use(
 
       console.log("got from backend after refresh token", response.data);
       await AsyncStorage.setItem("accessToken", response.data.access);
-      
-      
+
       console.log(response.data);
       if (error.response) {
         error.response.config.headers["Authorization"] = "Bearer " + response.data.access;

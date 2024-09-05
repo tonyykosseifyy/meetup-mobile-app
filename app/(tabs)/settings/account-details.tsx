@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { View, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -53,12 +53,18 @@ export default function AccountDetails() {
     mutationKey: "/auth/userinfo/update",
     retry: false,
     onSuccess: (data) => {
-      queryClient.invalidateQueries("/auth/userinfo/");
       Alert.alert("Account Details", "Account details updated successfully", [
-        { text: "OK", onPress: () => navigation.goBack() },
+        {
+          text: "OK",
+          onPress: () => {
+            queryClient.invalidateQueries("/auth/userinfo/");
+            navigation.goBack();
+          },
+        },
       ]);
     },
   });
+
   // get user info and populate the form
   const { data: userInfo, isFetching } = useQuery({
     queryKey: "/auth/userinfo/",
