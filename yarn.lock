@@ -8274,11 +8274,6 @@ react-native-bouncy-checkbox@^4.0.0:
   dependencies:
     "@freakycoder/react-native-bounceable" "^1.0.3"
 
-react-native-flipper@^0.265.0:
-  version "0.265.0"
-  resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.265.0.tgz#385c6fb26b27e3812bad374f2ae2ec2cdb1833bb"
-  integrity sha512-GA5Y84eOAl4xtl3q/zmTbegD3rq7OpB5MBGKVH5cmr1DnJY2DgKdALVbqmDOK3mR9sj4z6VBWiRpiU9j4j1eMg==
-
 react-native-gesture-handler@~2.16.1:
   version "2.16.2"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.16.2.tgz#032bd2a07334292d7f6cff1dc9d1ec928f72e26d"

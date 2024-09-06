@@ -85,7 +85,7 @@ class AbstractApi {
     }
   }
 
-  protected async fetch(request: RequestParams) {
+  protected async doFetch(request: RequestParams) {
     const { pathExtension, method, body, headers } = request;
     const secure = request.secure !== undefined ? request.secure : true;
 
