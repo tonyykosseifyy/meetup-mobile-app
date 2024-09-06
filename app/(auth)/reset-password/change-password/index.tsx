@@ -10,7 +10,6 @@ import styles from "@/constants/styles";
 import { Alert } from "react-native";
 import { useAuth } from "@/providers/auth.provider";
 import { router } from "expo-router";
-import { resetPassword } from "@/api/axios/users";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Header } from "@/components";
 import Auth from "@/api/auth.api";
@@ -32,7 +31,7 @@ export default function SettingsChangePassword() {
     error: updatingError,
   } = useMutation({
     mutationFn: () =>
-      resetPassword({
+      authApi.resetPassword({
         email: resetPasswordInfo ? resetPasswordInfo.email : "",
         code: resetPasswordInfo ? resetPasswordInfo.code : "",
         password,

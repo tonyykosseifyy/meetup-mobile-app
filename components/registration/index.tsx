@@ -3,7 +3,6 @@ import { Text, StyleSheet, Pressable } from "react-native";
 import { IRegistrationData } from "@/assets/data/registration_data";
 import { useMutation } from "react-query";
 import { router } from "expo-router";
-import { register, setUserInfo } from "@/api/axios/auth";
 import axios from "axios";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { View, TextInput, TouchableOpacity } from "react-native";
@@ -43,8 +42,8 @@ export default function Registration({ data }: RegistrationProps) {
   } = useMutation({
     mutationFn: () =>
       authApi.setUserInfo({
-        email,
-        password,
+        // email,
+        // password,
         full_name: fullName,
         date_of_birth: date?.toISOString().slice(0, 10),
         occupation,

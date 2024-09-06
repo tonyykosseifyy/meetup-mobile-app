@@ -28,7 +28,7 @@ export default function SettingsInterests() {
   // fetching interests
   const { data: interests, isLoading: isLoadingAllInterests } = useQuery({
     queryKey: "/meetup/interests/",
-    queryFn: meetupApi.getAllInterests,
+    queryFn: () => meetupApi.getAllInterests(),
   });
 
   // mutate function to update interests

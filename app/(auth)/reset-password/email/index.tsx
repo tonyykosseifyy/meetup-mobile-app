@@ -8,8 +8,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "@/constants/styles";
 import { setTokens, showTokens } from "@/api/utils/tokens";
 import { useMutation } from "react-query";
-import { ILoginRequest } from "@/interfaces";
-import { login } from "@/api/axios/auth";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import axios from "axios";
 import { useAuth } from "@/providers/auth.provider";

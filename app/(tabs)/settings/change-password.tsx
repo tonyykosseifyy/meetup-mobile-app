@@ -3,7 +3,6 @@ import { View, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useQuery } from "react-query";
-import { getMe } from "@/api/axios/users";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Text, TextInput } from "react-native";
 import { AntDesign, Fontisto, MaterialIcons, Feather } from "@expo/vector-icons";
@@ -12,12 +11,11 @@ import { formatDate } from "@/utils/common";
 import { useState } from "react";
 import { ActivityIndicator } from "react-native";
 import { useMutation } from "react-query";
-import { updateUser } from "@/api/axios/users";
 import axios from "axios";
 import { useQueryClient } from "react-query";
 import styles from "@/constants/styles";
 import { Alert } from "react-native";
-import { changePassword } from "@/api/axios/users";
+import Auth from "@/api/auth.api";
 
 export default function SettingsChangePassword() {
   const navigation = useNavigation();
@@ -28,10 +26,11 @@ export default function SettingsChangePassword() {
   const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const [passwordConfirmationVisible, setPasswordConfirmationVisible] = useState<boolean>(false);
+  const authApi = Auth.getInstance();
 
   const { isLoading: isUserLoading } = useQuery({
     queryKey: "/auth/userinfo/",
-    queryFn: () => getMe(),
+    queryFn: () => authApi.getMe(),
     retry: 1,
     onSuccess: (data) => {
       setName(data.full_name);
@@ -44,7 +43,7 @@ export default function SettingsChangePassword() {
     isError: isUpdatingError,
     error: updatingError,
   } = useMutation({
-    mutationFn: () => changePassword({ name, email, password }),
+    mutationFn: () => authApi.changePassword({ name, email, password }),
     mutationKey: "/auth/userinfo/update",
     retry: false,
     onSuccess: (data) => {

@@ -31,100 +31,113 @@ class Auth extends AbstractApi {
     return Auth.instance;
   }
 
-  async login(request: ILoginRequest): Promise<ILoginResponse> {
-    const response = await super.doFetch({
+  public login = async (request: ILoginRequest): Promise<ILoginResponse> => {
+    const response = await this.doFetch({
       method: "POST",
       pathExtension: "/login/",
       body: request,
       secure: false,
     });
+    console.log("login response", response);
+    const { access, refresh } = response;
+    await this.setTokens({ accessToken: access, refreshToken: refresh });
     return response as ILoginResponse;
-  }
+  };
 
-  async logout(): Promise<void> {
-    await super.clearTokens();
-  }
+  public logout = async (): Promise<void> => {
+    await this.clearTokens();
+  };
 
-  async register(request: IRegisterRequest): Promise<IRegisterResponse> {
-    const response = await super.doFetch({
+  public register = async (request: IRegisterRequest): Promise<IRegisterResponse> => {
+    const response = await this.doFetch({
       method: "POST",
       pathExtension: "/register/",
       body: request,
       secure: false,
     });
     return response as IRegisterResponse;
-  }
+  };
 
-  async setUserInfo(request: ISetUserRequest): Promise<ISetUserResponse> {
-    const response = await super.doFetch({
+  public setUserInfo = async (request: ISetUserRequest): Promise<ISetUserResponse> => {
+    const response = await this.doFetch({
       method: "POST",
       pathExtension: "/userinfo/",
       body: request,
     });
     return response as ISetUserResponse;
-  }
+  };
 
-  async verifyEmail(request: IVerifyEmailRequest): Promise<IVerifyEmailResponse> {
-    const response = await super.doFetch({
+  public verifyEmail = async (request: IVerifyEmailRequest): Promise<IVerifyEmailResponse> => {
+    const response = await this.doFetch({
       method: "POST",
       pathExtension: "/verify-email/",
       body: request,
       secure: false,
     });
     return response as IVerifyEmailResponse;
-  }
+  };
 
-  async lookup(): Promise<ILookupResponse> {
+  public lookup = async (): Promise<ILookupResponse> => {
     console.log("lookup");
-    const response = await super.doFetch({
+    const response = await this.doFetch({
       method: "GET",
       pathExtension: "/lookup/",
     });
     return response as ILookupResponse;
-  }
+  };
 
-  async getMe(): Promise<IUserResponse> {
+  public getMe = async (): Promise<IUserResponse> => {
     console.log("getMe");
-    const response = await super.doFetch({
+
+    const response = await this.doFetch({
       method: "GET",
       pathExtension: "/userinfo/",
     });
     return response as IUserResponse;
-  }
+  };
 
-  async updateUserInfo(request: ISetUserRequest): Promise<IUserResponse> {
-    const response = await super.doFetch({
+  public updateUserInfo = async (request: ISetUserRequest): Promise<IUserResponse> => {
+    const response = await this.doFetch({
       method: "PATCH",
       pathExtension: "/userinfo/",
       body: request,
     });
     return response as IUserResponse;
-  }
+  };
 
-  async changePassword(request: ISetUserRequest): Promise<void> {
-    return await super.doFetch({
+  public changePassword = async (request: {
+    name: string;
+    email: string;
+    password: string;
+  }): Promise<void> => {
+    return await this.doFetch({
       method: "POST",
       pathExtension: "/change-password/",
       body: request,
     });
-  }
+  };
 
-  async resetPassword(request: ISetUserRequest): Promise<void> {
-    return await super.doFetch({
+  public resetPassword = async (request: {
+    email: string;
+    password: string;
+    code: string;
+  }): Promise<void> => {
+    return await this.doFetch({
       method: "POST",
       pathExtension: "/reset-password/",
       body: request,
     });
-  }
+  };
 
-  async setInterests(interests: IInterestsRequest): Promise<ISetUserResponse> {
-    return await super.doFetch({
+  public setInterests = async (interests: IInterestsRequest): Promise<ISetUserResponse> => {
+    return await this.doFetch({
       method: "PATCH",
       pathExtension: "/userinfo/",
       body: {
         interests_data: interests,
       },
     });
-  }
+  };
 }
+
 export default Auth;

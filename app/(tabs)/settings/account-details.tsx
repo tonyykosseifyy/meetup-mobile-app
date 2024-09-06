@@ -3,7 +3,6 @@ import { View, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useQuery } from "react-query";
-import { getMe } from "@/api/axios/users";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Text, TextInput } from "react-native";
 import { AntDesign, Fontisto, MaterialIcons } from "@expo/vector-icons";
@@ -12,7 +11,6 @@ import { formatDate } from "@/utils/common";
 import { useState } from "react";
 import { ActivityIndicator } from "react-native";
 import { useMutation } from "react-query";
-import { updateUser } from "@/api/axios/users";
 import axios from "axios";
 import { useQueryClient } from "react-query";
 import styles from "@/constants/styles";
@@ -70,7 +68,7 @@ export default function AccountDetails() {
   // get user info and populate the form
   const { data: userInfo, isFetching } = useQuery({
     queryKey: "/auth/userinfo/",
-    queryFn: authApi.getMe,
+    queryFn: () => authApi.getMe(),
     retry: 1,
     onSuccess: (data) => {
       const { email, full_name, date_of_birth, occupation, biography } = data;

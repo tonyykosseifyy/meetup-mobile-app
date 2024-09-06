@@ -39,6 +39,7 @@ abstract class AbstractApi {
   }
 
   protected getTokens = async (): Promise<SessionType> => {
+    console.log("getting the tokens");
     if (this.sessionDirty) {
       const accessToken = (await AsyncStorage.getItem("accessToken")) ?? "";
       const refreshToken = (await AsyncStorage.getItem("refreshToken")) ?? "";
@@ -47,26 +48,27 @@ abstract class AbstractApi {
       console.log("Session: ", this.session);
       this.sessionDirty = false;
     }
+    console.log("Session: ", this.session);
     return this.session;
   };
 
-  protected async clearTokens() {
+  protected clearTokens = async (): Promise<void> => {
     await AsyncStorage.removeItem("accessToken");
     await AsyncStorage.removeItem("refreshToken");
     this.sessionDirty = true;
-  }
+  };
 
-  protected async setTokens(session: SessionType) {
+  protected setTokens = async (session: SessionType): Promise<void> => {
+    this.sessionDirty = true;
     if (session.accessToken) {
       await AsyncStorage.setItem("accessToken", session.accessToken);
     }
     if (session.refreshToken) {
       await AsyncStorage.setItem("refreshToken", session.refreshToken);
     }
-    this.sessionDirty = true;
-  }
+  };
 
-  private async refreshToken() {
+  private refreshToken = async (): Promise<void> => {
     const { refreshToken } = await this.getTokens();
 
     if (!refreshToken) {
@@ -78,30 +80,31 @@ abstract class AbstractApi {
 
     try {
       const response = await axiosInstance.post("/auth/token/refresh/", { refresh: refreshToken });
-      console.log("refreshed the token", response.data.access);
+      console.log("Refreshed the token:", response.data.access);
       await this.setTokens({ accessToken: response.data.access });
-      console.log("new access", response.data.access);
+      console.log("New access token:", response.data.access);
     } catch (error) {
       console.log("Error refreshing token:", error);
       await this.clearTokens();
       router.navigate("/login");
     }
-  }
+  };
 
-  protected async doFetch(request: RequestParams) {
+  protected doFetch = async (request: RequestParams): Promise<any> => {
     const { pathExtension, method, body, headers } = request;
-    console.log("secure", request.secure);
+    console.log("Secure:", request.secure);
     const secure = request.secure !== undefined ? request.secure : true;
 
     try {
-      // construct the request object if provided data then include it, else do not
       const requestObject: any = {
         url: `${this.path}${pathExtension}`,
         method,
       };
+
       if (body) {
         requestObject.data = body;
       }
+
       if (headers) {
         requestObject.headers = headers;
       }
@@ -122,7 +125,6 @@ abstract class AbstractApi {
 
       if (!error.response) {
         console.log("Network Error: ", error.message);
-        // Optionally, notify the user or handle the network error specifically
         return Promise.reject(error);
       }
 
@@ -133,7 +135,7 @@ abstract class AbstractApi {
         return Promise.reject(error);
       }
 
-      // else, refresh the token
+      // Refresh the token
       await this.refreshToken();
       const { accessToken: newAccessToken } = await this.getTokens();
       try {
@@ -142,12 +144,12 @@ abstract class AbstractApi {
           return axios(error.response.config);
         }
       } catch (err: any) {
-        console.log("Error refresrhing token:", err);
+        console.log("Error refreshing token:", err);
         await this.clearTokens();
         router.navigate("/login");
       }
     }
-  }
+  };
 }
 
 export default AbstractApi;

@@ -4,7 +4,6 @@ import { LogoNavbar } from "@/components/logo";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "@/constants/styles";
 import { useQuery } from "react-query";
-import { lookup } from "@/api/axios/users";
 import { IUser } from "@/interfaces";
 import { Friend } from "@/components/friend";
 import Auth from "@/api/auth.api";
@@ -25,7 +24,7 @@ export default function Home() {
   const authApi = Auth.getInstance();
   const { isLoading, error, data } = useQuery({
     queryKey: "/meetup/users/",
-    queryFn: authApi.lookup,
+    queryFn: () => authApi.lookup(),
     onSuccess: (data) => {
       console.log("REFETCH USERSSSSS", data);
     },

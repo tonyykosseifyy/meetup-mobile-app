@@ -19,7 +19,6 @@ import AboutUsIcon from "@/assets/icons/settings/aboutus.svg";
 import { Alert } from "react-native";
 import { clearTokens } from "@/api/utils/tokens";
 import { router } from "expo-router";
-import { getMe } from "@/api/axios/users";
 import { QueryClient, useQuery, useQueryClient } from "react-query";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Auth from "@/api/auth.api";
@@ -53,7 +52,7 @@ export default function Settings() {
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const { data: userInfo, isLoading } = useQuery({
     queryKey: "getMe",
-    queryFn: authApi.getMe,
+    queryFn: () => authApi.getMe(),
     retry: 1,
   });
   const queryClient = useQueryClient();
