@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { clearTokens } from "@/api/tokens";
 
-const API_URL = "https://tired-bars-hide.loca.lt";
+const API_URL = "https://swift-tips-send.loca.lt";
 const authRoutes = ["/auth/login/", "auth/token/refresh/", "/auth/verify-email/"];
 
 const api = axios.create({

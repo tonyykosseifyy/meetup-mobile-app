@@ -64,7 +64,7 @@ export default function Login() {
                     disabled={!email}
                     onPress={() => resetPasswordFunc()}
                     style={styles.cabaret_shadow}
-                    className="p-2 bg-cabaret-500 h-14 rounded-lg flex flex-row items-center justify-center"
+                    className={`p-2 bg-cabaret-500 h-14 rounded-lg flex flex-row items-center justify-center ${!email && "bg-cabaret-400"}`}
                   >
                     <Text className="text-white font-bold text-base">Continue</Text>
                   </TouchableOpacity>

@@ -870,6 +870,13 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@dev-plugins/react-query@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@dev-plugins/react-query/-/react-query-0.0.7.tgz#143ad52782a60de8e2acd9f2103f4112de7e96f4"
+  integrity sha512-A54YRUEwSHjEl4OrnP9QDwbgx4XOzCIreqYfCzPB0E4EV5U7ykCdxsm6gNhfy5EQfNvkqzrSRhO8GsR8fCfxdw==
+  dependencies:
+    flatted "^3.2.9"
+
 "@egjs/hammerjs@^2.0.17":
   version "2.0.17"
   resolved "https://registry.yarnpkg.com/@egjs/hammerjs/-/hammerjs-2.0.17.tgz#5dc02af75a6a06e4c2db0202cae38c9263895124"
@@ -8266,6 +8273,11 @@ react-native-bouncy-checkbox@^4.0.0:
   integrity sha512-dlywsd3PWF47tkZKWFtnArtGM66Hkk1iUvlQhxSbnI56eo8BaQ4VnGFsrGxA3Jc/B7KDuzS9RCtaEflJJT5gYA==
   dependencies:
     "@freakycoder/react-native-bounceable" "^1.0.3"
+
+react-native-flipper@^0.265.0:
+  version "0.265.0"
+  resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.265.0.tgz#385c6fb26b27e3812bad374f2ae2ec2cdb1833bb"
+  integrity sha512-GA5Y84eOAl4xtl3q/zmTbegD3rq7OpB5MBGKVH5cmr1DnJY2DgKdALVbqmDOK3mR9sj4z6VBWiRpiU9j4j1eMg==
 
 react-native-gesture-handler@~2.16.1:
   version "2.16.2"

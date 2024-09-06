@@ -2,6 +2,8 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "jsx": "react",
+    "module": "es2020",
+    "target": "es5",
     "strict": true,
     "paths": {
       "@/*": ["./*"]

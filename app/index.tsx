@@ -9,6 +9,7 @@ import { useQuery } from "react-query";
 import { theme } from "@/tailwind.config";
 import { getMe } from "@/api/axios/users";
 
+
 import { LogBox } from "react-native";
 LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
