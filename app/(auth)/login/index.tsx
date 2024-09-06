@@ -9,30 +9,26 @@ import styles from "@/constants/styles";
 import { setTokens, showTokens } from "@/api/utils/tokens";
 import { useMutation } from "react-query";
 import { ILoginRequest } from "@/interfaces";
-import { login } from "@/api/axios/auth";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import axios from "axios";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { Link } from "expo-router";
+import Auth from "@/api/auth.api";
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+  const authApi = Auth.getInstance();
+
   const {
     error,
     isError,
     isLoading,
     mutate: loginUser,
   } = useMutation({
-    mutationFn: ({ email, password }: ILoginRequest) => login({ email, password }),
-    mutationKey: "/auth/login/",
+    mutationFn: ({ email, password }: ILoginRequest) => authApi.login({ email, password }),
     onSuccess: (data) => {
       console.log(data);
-      const { access, refresh } = data;
-      setTokens(access, refresh);
-      showTokens();
-
       while (router.canGoBack()) {
         router.back();
       }

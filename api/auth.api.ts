@@ -1,14 +1,20 @@
 import {
+  IInterestsRequest,
   ILoginRequest,
   ILoginResponse,
   IRegisterRequest,
   IRegisterResponse,
   ISetUserRequest,
   ISetUserResponse,
+  IUser,
+  IUserInfo,
   IVerifyEmailRequest,
   IVerifyEmailResponse,
 } from "@/interfaces";
 import AbstractApi from "./utils/abstract-api";
+
+type ILookupResponse = IUser[];
+type IUserResponse = IUserInfo;
 
 class Auth extends AbstractApi {
   private static instance: Auth | null = null;
@@ -30,6 +36,7 @@ class Auth extends AbstractApi {
       method: "POST",
       pathExtension: "/login/",
       body: request,
+      secure: false,
     });
     return response as ILoginResponse;
   }
@@ -39,11 +46,12 @@ class Auth extends AbstractApi {
       method: "POST",
       pathExtension: "/register/",
       body: request,
+      secure: false,
     });
     return response as IRegisterResponse;
   }
 
-  async updateUserInfo(request: ISetUserRequest): Promise<ISetUserResponse> {
+  async setUserInfo(request: ISetUserRequest): Promise<ISetUserResponse> {
     const response = await this.doFetch({
       method: "POST",
       pathExtension: "/userinfo/",
@@ -57,9 +65,60 @@ class Auth extends AbstractApi {
       method: "POST",
       pathExtension: "/verify-email/",
       body: request,
+      secure: false,
     });
     return response as IVerifyEmailResponse;
   }
-}
 
+  async lookup(): Promise<ILookupResponse> {
+    const response = await this.doFetch({
+      method: "GET",
+      pathExtension: "/lookup/",
+    });
+    return response as ILookupResponse;
+  }
+
+  async getMe(): Promise<IUserResponse> {
+    const response = await this.doFetch({
+      method: "GET",
+      pathExtension: "/userinfo/",
+    });
+    return response as IUserResponse;
+  }
+
+  async updateUserInfo(request: ISetUserRequest): Promise<IUserResponse> {
+    const response = await this.doFetch({
+      method: "PATCH",
+      pathExtension: "/userinfo/",
+      body: request,
+    });
+    return response as IUserResponse;
+  }
+
+  async changePassword(request: ISetUserRequest): Promise<void> {
+    return await this.doFetch({
+      method: "POST",
+      pathExtension: "/change-password/",
+      body: request,
+    });
+  }
+
+  async resetPassword(request: ISetUserRequest): Promise<void> {
+    return await this.doFetch({
+      method: "POST",
+      pathExtension: "/reset-password/",
+      body: request,
+    });
+  }
+
+  async setInterests(interests: IInterestsRequest): Promise<ISetUserResponse> {
+    return await this.doFetch({
+      method: "PATCH",
+      pathExtension: "/userinfo/",
+      body: {
+        interests_data: interests,
+      },
+    });
+  }
+}
 export default Auth;

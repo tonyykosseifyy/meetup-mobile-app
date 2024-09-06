@@ -16,9 +16,9 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { getMe } from "@/api/axios/users";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-import("react-query-native-devtools").then(({ addPlugin }) => {
-  addPlugin({ queryClient });
-});
+// import("react-query-native-devtools").then(({ addPlugin }) => {
+//   addPlugin({ queryClient });
+// });
 
 SplashScreen.preventAutoHideAsync();
 

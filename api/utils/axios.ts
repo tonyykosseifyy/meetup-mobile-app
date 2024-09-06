@@ -42,7 +42,7 @@ api.interceptors.response.use(
     if (
       error &&
       error.response &&
-      (error.response.status !== 401 || authRoutes.includes(error.response.config.url || ""))
+      (error.response.status !== 401 || authRoutes.includes(error.response.config.url as string))
     ) {
       return Promise.reject(error);
     }

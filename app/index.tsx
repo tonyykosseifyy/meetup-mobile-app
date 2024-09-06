@@ -7,18 +7,18 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useQuery } from "react-query";
 import { theme } from "@/tailwind.config";
-import { getMe } from "@/api/axios/users";
-
-
 import { LogBox } from "react-native";
+import Auth from "@/api/auth.api";
+
 LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 
 export default function PreLogin() {
-  const { data: userInfo, isLoading: isUserLoading } = useQuery({
-    queryKey: "/auth/userinfo/",
+  const authApi = Auth.getInstance();
+  const { data, isLoading: isUserLoading } = useQuery({
+    queryKey: "getMe",
     retry: false,
-    queryFn: () => getMe(),
+    queryFn: authApi.getMe,
     onSuccess: () => {
       while (router.canGoBack()) {
         router.back();

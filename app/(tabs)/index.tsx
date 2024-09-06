@@ -7,6 +7,7 @@ import { useQuery } from "react-query";
 import { lookup } from "@/api/axios/users";
 import { IUser } from "@/interfaces";
 import { Friend } from "@/components/friend";
+import Auth from "@/api/auth.api";
 
 export interface CardProps {
   item: IUser;
@@ -21,9 +22,10 @@ const renderItem = ({ item }: CardProps) => {
 };
 
 export default function Home() {
+  const authApi = Auth.getInstance();
   const { isLoading, error, data } = useQuery({
     queryKey: "/meetup/users/",
-    queryFn: lookup,
+    queryFn: authApi.lookup,
     onSuccess: (data) => {
       console.log("REFETCH USERSSSSS", data);
     },

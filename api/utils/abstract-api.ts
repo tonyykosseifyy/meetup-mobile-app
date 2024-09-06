@@ -1,8 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { router } from "expo-router";
+import { showTokens } from "./tokens";
+const API_URL = "https://shiny-phones-occur.loca.lt";
+console.log("API_URL: ", API_URL);
 
-const API_URL = process.env.API_URL ?? "";
 const authRoutes = ["/auth/login/", "auth/token/refresh/", "/auth/verify-email/"];
 
 const axiosInstance = axios.create({
@@ -42,6 +44,7 @@ class AbstractApi {
       const refreshToken = (await AsyncStorage.getItem("refreshToken")) ?? "";
       this.session.accessToken = accessToken;
       this.session.refreshToken = refreshToken;
+      console.log("Session: ", this.session);
       this.sessionDirty = false;
     }
     return this.session;
@@ -87,6 +90,7 @@ class AbstractApi {
 
   protected async doFetch(request: RequestParams) {
     const { pathExtension, method, body, headers } = request;
+    console.log("secure", request.secure);
     const secure = request.secure !== undefined ? request.secure : true;
 
     try {
@@ -110,10 +114,18 @@ class AbstractApi {
         };
       }
 
+      console.log("Request Object: ", requestObject);
       const response = await axiosInstance(requestObject);
       return response.data;
     } catch (error: any) {
       console.log("Abstract Error: ", error);
+
+      if (!error.response) {
+        console.log("Network Error: ", error.message);
+        // Optionally, notify the user or handle the network error specifically
+        return Promise.reject(error);
+      }
+
       if (
         error.response &&
         (error.response.status !== 401 || authRoutes.includes(error.response.config.url || ""))
