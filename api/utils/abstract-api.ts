@@ -39,16 +39,13 @@ abstract class AbstractApi {
   }
 
   protected getTokens = async (): Promise<SessionType> => {
-    console.log("getting the tokens");
     if (this.sessionDirty) {
       const accessToken = (await AsyncStorage.getItem("accessToken")) ?? "";
       const refreshToken = (await AsyncStorage.getItem("refreshToken")) ?? "";
       this.session.accessToken = accessToken;
       this.session.refreshToken = refreshToken;
-      console.log("Session: ", this.session);
       this.sessionDirty = false;
     }
-    console.log("Session: ", this.session);
     return this.session;
   };
 

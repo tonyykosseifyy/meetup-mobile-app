@@ -38,9 +38,9 @@ class Auth extends AbstractApi {
       body: request,
       secure: false,
     });
-    console.log("login response", response);
     const { access, refresh } = response;
     await this.setTokens({ accessToken: access, refreshToken: refresh });
+    
     return response as ILoginResponse;
   };
 
