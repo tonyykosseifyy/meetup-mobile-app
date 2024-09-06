@@ -1,9 +1,10 @@
 import axios, { AxiosError } from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
-import { clearTokens } from "@/api/tokens";
+import { clearTokens } from "@/api/utils/tokens";
 
-const API_URL = "https://swift-tips-send.loca.lt";
+const API_URL = process.env.EXPO_PUBLIC_API_URL;
+
 const authRoutes = ["/auth/login/", "auth/token/refresh/", "/auth/verify-email/"];
 
 const api = axios.create({
@@ -32,6 +33,7 @@ api.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
 api.interceptors.response.use(
   (response) => response.data,
   async (error: AxiosError) => {

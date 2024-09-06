@@ -1,5 +1,5 @@
 import { ISetUserResponse } from "@/interfaces";
-import axios from "../../utils/axios";
+import axios from "../utils/axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { IInterestsRequest, IInterestsResponse } from "@/interfaces";
 
@@ -12,7 +12,7 @@ const setInterests = async (interests: IInterestsRequest): Promise<ISetUserRespo
   const token = await AsyncStorage.getItem("accessToken");
   return await axios.patch(
     "/auth/userinfo/",
-    { interests_data: interests },
+    { interests_data: interests }, 
     { headers: { Authorization: `Bearer ${token}` } }
   );
 };

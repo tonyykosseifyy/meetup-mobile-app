@@ -9,7 +9,7 @@ import { useMutation } from "react-query";
 import { verifyEmail } from "@/api/axios/auth";
 import { IVerifyEmailRequest } from "@/interfaces";
 import { router } from "expo-router";
-import { setTokens } from "@/api/tokens";
+import { setTokens } from "@/api/utils/tokens";
 import axios from "axios";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 

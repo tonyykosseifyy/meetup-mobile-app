@@ -6,7 +6,7 @@ import { router } from "expo-router";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "@/constants/styles";
-import { setTokens, showTokens } from "@/api/tokens";
+import { setTokens, showTokens } from "@/api/utils/tokens";
 import { useMutation } from "react-query";
 import { ILoginRequest } from "@/interfaces";
 import { login } from "@/api/axios/auth";

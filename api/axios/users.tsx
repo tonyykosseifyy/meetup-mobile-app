@@ -1,4 +1,4 @@
-import axios from "../../utils/axios";
+import axios from "../utils/axios";
 import {
   IUpdateUserRequest,
   IUser,
@@ -30,18 +30,13 @@ const updateUser = async (userInfo: IUpdateUserRequest): Promise<IUserResponse> 
 
 const changePassword = async (changePasswordRequest: IChangePasswordRequest): Promise<void> => {
   const token = await AsyncStorage.getItem("accessToken");
-  return await axios.post(
-    "/auth/change-password/",
-    changePasswordRequest,
-    {
-      headers: { Authorization: `Bearer ${token}` },
-    }
-  );
-}
+  return await axios.post("/auth/change-password/", changePasswordRequest, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
 
 const resetPassword = async (resetPasswordRequest: IResetPasswordRequest): Promise<void> => {
   return await axios.post("/auth/reset-password/", resetPasswordRequest);
-}
-
+};
 
 export { lookup, getMe, updateUser, changePassword, resetPassword };

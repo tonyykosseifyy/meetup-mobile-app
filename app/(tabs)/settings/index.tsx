@@ -17,7 +17,7 @@ import LogoutIcon from "@/assets/icons/settings/logout.svg";
 import PrivacyIcon from "@/assets/icons/settings/privacy.svg";
 import AboutUsIcon from "@/assets/icons/settings/aboutus.svg";
 import { Alert } from "react-native";
-import { clearTokens } from "@/api/tokens";
+import { clearTokens } from "@/api/utils/tokens";
 import { router } from "expo-router";
 import { getMe } from "@/api/axios/users";
 import { QueryClient, useQuery, useQueryClient } from "react-query";
