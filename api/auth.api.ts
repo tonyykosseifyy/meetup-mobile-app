@@ -32,7 +32,7 @@ class Auth extends AbstractApi {
   }
 
   async login(request: ILoginRequest): Promise<ILoginResponse> {
-    const response = await this.doFetch({
+    const response = await super.doFetch({
       method: "POST",
       pathExtension: "/login/",
       body: request,
@@ -41,8 +41,12 @@ class Auth extends AbstractApi {
     return response as ILoginResponse;
   }
 
+  async logout(): Promise<void> {
+    await super.clearTokens();
+  }
+
   async register(request: IRegisterRequest): Promise<IRegisterResponse> {
-    const response = await this.doFetch({
+    const response = await super.doFetch({
       method: "POST",
       pathExtension: "/register/",
       body: request,
@@ -52,7 +56,7 @@ class Auth extends AbstractApi {
   }
 
   async setUserInfo(request: ISetUserRequest): Promise<ISetUserResponse> {
-    const response = await this.doFetch({
+    const response = await super.doFetch({
       method: "POST",
       pathExtension: "/userinfo/",
       body: request,
@@ -61,7 +65,7 @@ class Auth extends AbstractApi {
   }
 
   async verifyEmail(request: IVerifyEmailRequest): Promise<IVerifyEmailResponse> {
-    const response = await this.doFetch({
+    const response = await super.doFetch({
       method: "POST",
       pathExtension: "/verify-email/",
       body: request,
@@ -71,7 +75,8 @@ class Auth extends AbstractApi {
   }
 
   async lookup(): Promise<ILookupResponse> {
-    const response = await this.doFetch({
+    console.log("lookup");
+    const response = await super.doFetch({
       method: "GET",
       pathExtension: "/lookup/",
     });
@@ -79,7 +84,8 @@ class Auth extends AbstractApi {
   }
 
   async getMe(): Promise<IUserResponse> {
-    const response = await this.doFetch({
+    console.log("getMe");
+    const response = await super.doFetch({
       method: "GET",
       pathExtension: "/userinfo/",
     });
@@ -87,7 +93,7 @@ class Auth extends AbstractApi {
   }
 
   async updateUserInfo(request: ISetUserRequest): Promise<IUserResponse> {
-    const response = await this.doFetch({
+    const response = await super.doFetch({
       method: "PATCH",
       pathExtension: "/userinfo/",
       body: request,
@@ -96,7 +102,7 @@ class Auth extends AbstractApi {
   }
 
   async changePassword(request: ISetUserRequest): Promise<void> {
-    return await this.doFetch({
+    return await super.doFetch({
       method: "POST",
       pathExtension: "/change-password/",
       body: request,
@@ -104,7 +110,7 @@ class Auth extends AbstractApi {
   }
 
   async resetPassword(request: ISetUserRequest): Promise<void> {
-    return await this.doFetch({
+    return await super.doFetch({
       method: "POST",
       pathExtension: "/reset-password/",
       body: request,
@@ -112,7 +118,7 @@ class Auth extends AbstractApi {
   }
 
   async setInterests(interests: IInterestsRequest): Promise<ISetUserResponse> {
-    return await this.doFetch({
+    return await super.doFetch({
       method: "PATCH",
       pathExtension: "/userinfo/",
       body: {

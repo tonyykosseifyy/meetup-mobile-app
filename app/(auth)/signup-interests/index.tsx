@@ -9,6 +9,8 @@ import { useMutation, useQuery } from "react-query";
 import { getInterests, setInterests } from "@/api/axios/interests";
 import { router } from "expo-router";
 import { IInterest } from "@/interfaces";
+import Auth from "@/api/auth.api";
+import Meetup from "@/api/meetup.api";
 
 // const Skip = (): React.JSX.Element => (
 //   <TouchableOpacity>
@@ -18,6 +20,8 @@ import { IInterest } from "@/interfaces";
 
 export default function SignUpOtp() {
   const [selectedInterests, setSelectedInterests] = useState<IInterest[]>([]);
+  const authApi = Auth.getInstance();
+  const meetupApi = Meetup.getInstance();
 
   const toggleInterest = (interest: IInterest) => {
     if (selectedInterests.includes(interest)) {
@@ -31,13 +35,13 @@ export default function SignUpOtp() {
   const { data, isLoading } = useQuery({
     queryKey: "/meetup/interests/",
     retry: 2,
-    queryFn: () => getInterests(),
+    queryFn: () => meetupApi.getAllInterests(),
     onSuccess: (data) => {
       console.log(data);
     },
   });
   const { isLoading: isSendingLoading, mutate: sendInterests } = useMutation({
-    mutationFn: () => setInterests(selectedInterests),
+    mutationFn: () => authApi.setInterests(selectedInterests),
     mutationKey: "/auth/userinfo/",
     onSuccess: (data) => {
       console.log(data);

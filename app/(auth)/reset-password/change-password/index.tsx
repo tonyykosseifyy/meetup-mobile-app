@@ -13,9 +13,11 @@ import { router } from "expo-router";
 import { resetPassword } from "@/api/axios/users";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Header } from "@/components";
+import Auth from "@/api/auth.api";
 
 export default function SettingsChangePassword() {
   const { resetPasswordInfo } = useAuth();
+  const authApi = Auth.getInstance();
 
   const [password, setPassword] = useState<string>("");
   const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");

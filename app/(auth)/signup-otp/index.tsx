@@ -12,9 +12,11 @@ import { router } from "expo-router";
 import { setTokens } from "@/api/utils/tokens";
 import axios from "axios";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import Auth from "@/api/auth.api";
 
 export default function SignUpOtp() {
   const { registeredUser } = useAuth();
+  const authApi = Auth.getInstance();
   const [email, password] = [registeredUser?.email, registeredUser?.password];
   const [code, onChangeCode] = useState<string>("");
 
@@ -34,7 +36,7 @@ export default function SignUpOtp() {
     error,
   } = useMutation({
     mutationFn: ({ email, password, code }: IVerifyEmailRequest) =>
-      verifyEmail({ email, password, code }),
+      authApi.verifyEmail({ email, password, code }),
     onSuccess(data) {
       while (router.canGoBack()) {
         router.back();

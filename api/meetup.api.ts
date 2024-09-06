@@ -17,9 +17,11 @@ class Meetup extends AbstractApi {
   }
 
   async getAllInterests(): Promise<IInterestsResponse> {
-    const response = await this.doFetch({
+    console.log("get all interests");
+
+    const response = await super.doFetch({
       method: "GET",
-      pathExtension: "/interests/",
+      pathExtension: "/interests",
     });
     return response as IInterestsResponse;
   }

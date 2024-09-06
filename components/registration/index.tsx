@@ -13,12 +13,14 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Ionicons } from "@expo/vector-icons";
 import Header from "../header";
 import { useAuth } from "@/providers/auth.provider";
+import Auth from "@/api/auth.api";
 
 interface RegistrationProps {
   data: IRegistrationData;
 }
 export default function Registration({ data }: RegistrationProps) {
   const { updateContextUser } = useAuth();
+  const authApi = Auth.getInstance();
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -40,7 +42,7 @@ export default function Registration({ data }: RegistrationProps) {
     error: updatingUserInfoError,
   } = useMutation({
     mutationFn: () =>
-      setUserInfo({
+      authApi.setUserInfo({
         email,
         password,
         full_name: fullName,
@@ -89,7 +91,7 @@ export default function Registration({ data }: RegistrationProps) {
     isError: isRegisteringError,
     error: registeringError,
   } = useMutation({
-    mutationFn: () => register({ email, password }),
+    mutationFn: () => authApi.register({ email, password }),
     mutationKey: "/auth/register/",
     retry: false,
     onError: (error) => {

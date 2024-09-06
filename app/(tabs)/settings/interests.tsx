@@ -1,19 +1,18 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { View, Text, TouchableOpacity, ActivityIndicator, Alert } from "react-native";
-import { Header } from "@/components";
 import Chip from "@/components/chip";
 import styles from "@/constants/styles";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { interests, icons } from "@/app/(auth)/signup-interests/data";
+import { icons } from "@/app/(auth)/signup-interests/data";
 import { useMutation, useQuery } from "react-query";
-import { getInterests, setInterests } from "@/api/axios/interests";
-import { router } from "expo-router";
 import { IInterest } from "@/interfaces";
-import { getMe } from "@/api/axios/users";
 import { useQueryClient } from "react-query";
 import { useNavigation } from "@react-navigation/native";
+import Auth from "@/api/auth.api";
+import Meetup from "@/api/meetup.api";
 
 export default function SettingsInterests() {
+  const authApi = Auth.getInstance();
+  const meetupApi = Meetup.getInstance();
   const queryClient = useQueryClient();
   const navigation = useNavigation();
   const [updatedInterests, setUpdatedInterests] = useState<IInterest[]>([]);
@@ -29,12 +28,12 @@ export default function SettingsInterests() {
   // fetching interests
   const { data: interests, isLoading: isLoadingAllInterests } = useQuery({
     queryKey: "/meetup/interests/",
-    queryFn: () => getInterests(),
+    queryFn: meetupApi.getAllInterests,
   });
 
   // mutate function to update interests
   const { isLoading: isSendingLoading, mutate: sendInterests } = useMutation({
-    mutationFn: () => setInterests(updatedInterests),
+    mutationFn: () => authApi.setInterests(updatedInterests),
     mutationKey: "/auth/userinfo/update",
     onSuccess: (data) => {
       Alert.alert("Your Interests", "Your Interests are updated successfully", [
@@ -56,7 +55,7 @@ export default function SettingsInterests() {
   } = useQuery({
     queryKey: "/auth/userinfo/",
     refetchOnMount: true,
-    queryFn: () => getMe(),
+    queryFn: () => authApi.getMe(),
   });
 
   useEffect(() => {

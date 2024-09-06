@@ -33,8 +33,6 @@ interface ISetUserRequest {
   occupation?: string;
   biography?: string;
   interests?: number[];
-  email: string;
-  password: string;
 }
 
 interface ISetUserResponse {

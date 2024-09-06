@@ -17,8 +17,10 @@ import axios from "axios";
 import { useQueryClient } from "react-query";
 import styles from "@/constants/styles";
 import { Alert } from "react-native";
+import Auth from "@/api/auth.api";
 
 export default function AccountDetails() {
+  const authApi = Auth.getInstance();
   const navigation = useNavigation();
   const queryClient = useQueryClient();
   const [email, setEmail] = useState<string>("");
@@ -44,7 +46,7 @@ export default function AccountDetails() {
     error: updatingError,
   } = useMutation({
     mutationFn: () =>
-      updateUser({
+      authApi.updateUserInfo({
         full_name: fullName,
         date_of_birth: date?.toISOString().slice(0, 10),
         occupation,
@@ -68,7 +70,7 @@ export default function AccountDetails() {
   // get user info and populate the form
   const { data: userInfo, isFetching } = useQuery({
     queryKey: "/auth/userinfo/",
-    queryFn: () => getMe(),
+    queryFn: authApi.getMe,
     retry: 1,
     onSuccess: (data) => {
       const { email, full_name, date_of_birth, occupation, biography } = data;

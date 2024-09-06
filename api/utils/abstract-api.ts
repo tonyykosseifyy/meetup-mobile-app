@@ -28,7 +28,7 @@ interface RequestParams {
   secure?: boolean;
 }
 
-class AbstractApi {
+abstract class AbstractApi {
   readonly path: string;
   readonly axiosInstance = axiosInstance;
   private session: SessionType = {};
@@ -38,7 +38,7 @@ class AbstractApi {
     this.path = path;
   }
 
-  async getTokens(): Promise<SessionType> {
+  protected getTokens = async (): Promise<SessionType> => {
     if (this.sessionDirty) {
       const accessToken = (await AsyncStorage.getItem("accessToken")) ?? "";
       const refreshToken = (await AsyncStorage.getItem("refreshToken")) ?? "";
@@ -48,15 +48,15 @@ class AbstractApi {
       this.sessionDirty = false;
     }
     return this.session;
-  }
+  };
 
-  async clearTokens() {
+  protected async clearTokens() {
     await AsyncStorage.removeItem("accessToken");
     await AsyncStorage.removeItem("refreshToken");
     this.sessionDirty = true;
   }
 
-  async setTokens(session: SessionType) {
+  protected async setTokens(session: SessionType) {
     if (session.accessToken) {
       await AsyncStorage.setItem("accessToken", session.accessToken);
     }
@@ -66,7 +66,7 @@ class AbstractApi {
     this.sessionDirty = true;
   }
 
-  async refreshToken() {
+  private async refreshToken() {
     const { refreshToken } = await this.getTokens();
 
     if (!refreshToken) {

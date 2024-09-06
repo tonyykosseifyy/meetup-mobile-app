@@ -22,8 +22,10 @@ import { router } from "expo-router";
 import { getMe } from "@/api/axios/users";
 import { QueryClient, useQuery, useQueryClient } from "react-query";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import Auth from "@/api/auth.api";
 
 const logoutPrompt = (queryClient: QueryClient) => {
+  const authApi = Auth.getInstance()
   Alert.alert("Logout", "Are you sure you want to logout?", [
     {
       text: "Cancel",
@@ -34,7 +36,7 @@ const logoutPrompt = (queryClient: QueryClient) => {
       style: "destructive",
       text: "Yes",
       onPress: () => {
-        clearTokens();
+        authApi.logout();
         queryClient.resetQueries();
         while (router.canGoBack()) {
           router.back();
@@ -46,11 +48,12 @@ const logoutPrompt = (queryClient: QueryClient) => {
 };
 
 export default function Settings() {
+  const authApi = Auth.getInstance();
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const { data: userInfo, isLoading } = useQuery({
-    queryKey: "/auth/userinfo/",
-    queryFn: () => getMe(),
+    queryKey: "getMe",
+    queryFn: authApi.getMe,
     retry: 1,
   });
   const queryClient = useQueryClient();
