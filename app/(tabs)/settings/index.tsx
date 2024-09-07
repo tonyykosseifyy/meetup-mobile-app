@@ -24,7 +24,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Auth from "@/api/auth.api";
 
 const logoutPrompt = (queryClient: QueryClient) => {
-  const authApi = Auth.getInstance()
+  const authApi = Auth.getInstance();
   Alert.alert("Logout", "Are you sure you want to logout?", [
     {
       text: "Cancel",
@@ -36,11 +36,11 @@ const logoutPrompt = (queryClient: QueryClient) => {
       text: "Yes",
       onPress: () => {
         authApi.logout();
-        queryClient.resetQueries();
         while (router.canGoBack()) {
           router.back();
         }
         router.replace("/");
+        queryClient.removeQueries();
       },
     },
   ]);
@@ -59,7 +59,7 @@ export default function Settings() {
   return (
     <ScrollView className="flex-1 bg-white">
       {isLoading ? (
-        <View className="flex-1 bg-white flex items-center justify-center">
+        <View className="flex-1 h-full bg-white flex items-center justify-center">
           <ActivityIndicator size="large" color="#d14d72" />
         </View>
       ) : (

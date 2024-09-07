@@ -15,7 +15,7 @@ LogBox.ignoreAllLogs(); //Ignore all log notifications
 
 export default function PreLogin() {
   const authApi = Auth.getInstance();
-  const { data, isLoading: isUserLoading } = useQuery({
+  const { data: userInfo, isLoading: isUserLoading } = useQuery({
     queryKey: "getMe",
     retry: false,
     queryFn: authApi.getMe,

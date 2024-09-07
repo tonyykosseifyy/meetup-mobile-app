@@ -7,7 +7,7 @@ const API_URL = "https://smooth-kids-start.loca.lt";
 
 console.log("API_URL: ", API_URL);
 
-const authRoutes = ["/auth/login/", "auth/token/refresh/", "/auth/verify-email/"];
+const authRoutes = ["auth/login/", "auth/token/refresh/", "auth/verify-email/", "auth/userinfo/"];
 
 const axiosInstance = axios.create({
   baseURL: API_URL,
