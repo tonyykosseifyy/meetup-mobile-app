@@ -1,8 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
+import axios, { Axios, AxiosError } from "axios";
 import { router } from "expo-router";
-import { showTokens } from "./tokens";
-const API_URL = "https://shiny-phones-occur.loca.lt";
+import { Alert } from "react-native";
+
+const API_URL = "https://smooth-kids-start.loca.lt";
+
 console.log("API_URL: ", API_URL);
 
 const authRoutes = ["/auth/login/", "auth/token/refresh/", "/auth/verify-email/"];
@@ -50,9 +52,9 @@ abstract class AbstractApi {
   };
 
   protected clearTokens = async (): Promise<void> => {
+    this.sessionDirty = true;
     await AsyncStorage.removeItem("accessToken");
     await AsyncStorage.removeItem("refreshToken");
-    this.sessionDirty = true;
   };
 
   protected setTokens = async (session: SessionType): Promise<void> => {
@@ -89,7 +91,6 @@ abstract class AbstractApi {
 
   protected doFetch = async (request: RequestParams): Promise<any> => {
     const { pathExtension, method, body, headers } = request;
-    console.log("Secure:", request.secure);
     const secure = request.secure !== undefined ? request.secure : true;
 
     try {
@@ -116,34 +117,42 @@ abstract class AbstractApi {
 
       console.log("Request Object: ", requestObject);
       const response = await axiosInstance(requestObject);
+      console.log("Response: ", response.data);
       return response.data;
     } catch (error: any) {
-      console.log("Abstract Error: ", error);
+      if (error instanceof AxiosError) {
+        console.log("Abstract Error: ", error);
 
-      if (!error.response) {
-        console.log("Network Error: ", error.message);
-        return Promise.reject(error);
-      }
-
-      if (
-        error.response &&
-        (error.response.status !== 401 || authRoutes.includes(error.response.config.url || ""))
-      ) {
-        return Promise.reject(error);
-      }
-
-      // Refresh the token
-      await this.refreshToken();
-      const { accessToken: newAccessToken } = await this.getTokens();
-      try {
-        if (error.response) {
-          error.response.config.headers["Authorization"] = "Bearer " + newAccessToken;
-          return axios(error.response.config);
+        if (!error.response) {
+          console.log("Network Error: ", error.message);
+          Alert.alert("Network Error", "Please check your internet connection and try again.", [
+            {
+              text: "OK",
+            },
+          ]);
+          return Promise.reject(error);
         }
-      } catch (err: any) {
-        console.log("Error refreshing token:", err);
-        await this.clearTokens();
-        router.navigate("/login");
+
+        if (
+          error.response &&
+          (error.response.status !== 401 || authRoutes.includes(error.response.config.url || ""))
+        ) {
+          return Promise.reject(error);
+        }
+
+        // Refresh the token
+        await this.refreshToken();
+        const { accessToken: newAccessToken } = await this.getTokens();
+        try {
+          error.response.config.headers["Authorization"] = "Bearer " + newAccessToken;
+          return await axios(error.response.config);
+        } catch (err: any) {
+          console.log("Error refreshing token:", err);
+          await this.clearTokens();
+          router.navigate("/login");
+        }
+      } else {
+        return Promise.reject(error);
       }
     }
   };

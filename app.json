@@ -12,9 +12,12 @@
       "resizeMode": "contain",
       "backgroundColor": "#d14d72"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.selimellieh72.meetupapp"
     },
     "android": {
       "adaptiveIcon": {
@@ -23,7 +26,9 @@
       },
       "package": "com.selimellieh72.meetupapp"
     },
-    "plugins": ["expo-router"],
+    "plugins": [
+      "expo-router"
+    ],
     "experiments": {
       "typedRoutes": true
     },

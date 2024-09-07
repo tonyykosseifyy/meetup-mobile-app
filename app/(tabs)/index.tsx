@@ -26,10 +26,10 @@ export default function Home() {
     queryKey: "/meetup/users/",
     queryFn: () => authApi.lookup(),
     onSuccess: (data) => {
-      console.log("REFETCH USERSSSSS", data);
+      // console.log("REFETCH USERSSSSS", data);
     },
   });
-  console.log("EL DATA EL DATA", data);
+  // console.log("EL DATA EL DATA", data);
 
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">

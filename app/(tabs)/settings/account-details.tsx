@@ -37,6 +37,7 @@ export default function AccountDetails() {
     setDate(date);
     setDatePickerVisibility(false);
   };
+  
   const {
     mutate: editUser,
     isLoading: isUpdating,
@@ -72,7 +73,6 @@ export default function AccountDetails() {
     retry: 1,
     onSuccess: (data) => {
       const { email, full_name, date_of_birth, occupation, biography } = data;
-      console.log(data);
       setEmail(email);
       setFullName(full_name);
       setOccupation(occupation);

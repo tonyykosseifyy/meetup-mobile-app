@@ -18,16 +18,24 @@ export default function TabLayout() {
         options={{
           title: "My Requests",
 
-          tabBarIcon: ({ color }) => {
-            return <FontAwesome6 size={28} name="bell" color={color} />;
-          },
+          tabBarIcon: ({ color }) => (
+            <View className="flex flex-col items-center">
+              <FontAwesome6 size={26} name="bell" color={color} />
+              <Text className="text-[11px] text-slate-600 mt-1">Notifications</Text>
+            </View>
+          ),
         }}
       />
       <Tabs.Screen
         name="index"
         options={{
           title: "Home",
-          tabBarIcon: ({ color }) => <FontAwesome6 size={28} name="compass" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <View className="flex flex-col items-center">
+              <FontAwesome6 size={26} name="compass" color={color} />
+              <Text className={`text-[11px] text-slate-600 mt-1`}>Discover</Text>
+            </View>
+          ),
         }}
       />
       <Tabs.Screen
@@ -35,7 +43,12 @@ export default function TabLayout() {
         options={{
           title: "Settings",
           headerShown: false,
-          tabBarIcon: ({ color }) => <SettingsIcon width={25} height={25} fill={color} />,
+          tabBarIcon: ({ color }) => (
+            <View className="flex flex-col items-center">
+              <SettingsIcon width={26} height={25} fill={color} />
+              <Text className="text-[11px] text-slate-600 mt-1">Settings</Text>
+            </View>
+          ),
         }}
       />
     </Tabs>
@@ -51,7 +64,7 @@ const AnimatedTabBar = ({
 
   return (
     <View
-      className="bg-white py-1"
+      className="bg-white py-1 backdrop-blur-lg"
       style={[{ paddingBottom: bottom - 30 }, override_styles.shadow]}
     >
       <View className="flex flex-row place-content-evenly justify-evenly">
@@ -74,43 +87,17 @@ const AnimatedTabBar = ({
 };
 
 const TabBarComponent = ({ active, options, onPress }: any) => {
-  const iconAnim = useRef(new Animated.Value(0)).current; // Controls icon movement
-  const dotOpacityAnim = useRef(new Animated.Value(0)).current; // Controls dot visibility
-
-  useEffect(() => {
-    // Animate icon upwards and dot opacity
-    Animated.parallel([
-      Animated.timing(iconAnim, {
-        toValue: active ? -10 : 0, // Move up by 10 units if active
-        duration: 200,
-        useNativeDriver: true, // Using native driver for better performance
-      }),
-      Animated.timing(dotOpacityAnim, {
-        toValue: active ? 1 : 0, // Fully visible if active, otherwise hidden
-        duration: 200,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  }, [active, iconAnim, dotOpacityAnim]);
-
   return (
-    <Pressable onPress={onPress} className="py-3">
-      <Animated.View style={{ transform: [{ translateY: iconAnim }] }}>
+    <Pressable onPress={onPress} className="mb-5 pt-1">
+      <Animated.View>
         {options.tabBarIcon ? (
           options.tabBarIcon({
-            color: active ? theme!.extend!.colors!.cabaret[500] : "#7a7a7a",
+            color: active ? theme!.extend!.colors!.cabaret[500] : "#475569",
             active,
           })
         ) : (
           <Text>?</Text>
         )}
-        <Animated.View
-          style={{
-            opacity: dotOpacityAnim, // Control opacity through animated value
-          }}
-        >
-          <View className="h-2 w-2 mt-2 mx-auto bg-cabaret-500 rounded-full" />
-        </Animated.View>
       </Animated.View>
     </Pressable>
   );
