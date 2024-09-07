@@ -138,6 +138,19 @@ class Auth extends AbstractApi {
     });
   };
 
+  public resetPassword = async (request: {
+    email: string;
+    code: string;
+    password: string;
+  }): Promise<void> => {
+    return await this.doFetch({
+      method: "PATCH",
+      pathExtension: "/forgot-password/",
+      body: request,
+      secure: false,
+    });
+  };
+
   public setInterests = async (interests: IInterestsRequest): Promise<ISetUserResponse> => {
     return await this.doFetch({
       method: "PATCH",

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { View, TouchableOpacity } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Text, TextInput } from "react-native";
@@ -37,7 +37,6 @@ export default function SettingsChangePassword() {
         password,
       }),
     mutationKey: "/auth/userinfo/reset-password",
-    retry: false,
     onSuccess: (data) => {
       Alert.alert(
         "Reset Password",
@@ -56,6 +55,11 @@ export default function SettingsChangePassword() {
       );
     },
   });
+
+  const isDisabled = useMemo(
+    () => !password || !passwordConfirmation || isUpdating || password !== passwordConfirmation,
+    [password, passwordConfirmation, isUpdating]
+  );
 
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
@@ -127,17 +131,12 @@ export default function SettingsChangePassword() {
                 </View>
               )}
 
-              <View className="mt-8">
+              <View className="mt-28">
                 <TouchableOpacity
-                  disabled={
-                    !password ||
-                    !passwordConfirmation ||
-                    isUpdating ||
-                    password !== passwordConfirmation
-                  }
+                  disabled={isDisabled}
                   onPress={() => mutateResetPassword()}
                   style={styles.cabaret_shadow}
-                  className="p-2 bg-cabaret-500 h-14 rounded-lg flex flex-row items-center justify-center"
+                  className={`p-2 bg-cabaret-500 h-14 rounded-lg flex flex-row items-center justify-center ${isDisabled && "bg-cabaret-400"}`}
                 >
                   {isUpdating ? (
                     <Text className="text-white font-bold text-base">Saving...</Text>
