@@ -40,7 +40,7 @@ class Auth extends AbstractApi {
     });
     const { access, refresh } = response;
     await this.setTokens({ accessToken: access, refreshToken: refresh });
-    
+
     return response as ILoginResponse;
   };
 
@@ -117,15 +117,12 @@ class Auth extends AbstractApi {
     });
   };
 
-  public resetPassword = async (request: {
-    email: string;
-    password: string;
-    code: string;
-  }): Promise<void> => {
+  public requestResetPassword = async (request: { email: string }): Promise<void> => {
     return await this.doFetch({
       method: "POST",
-      pathExtension: "/reset-password/",
+      pathExtension: "/forgot-password/",
       body: request,
+      secure: false,
     });
   };
 

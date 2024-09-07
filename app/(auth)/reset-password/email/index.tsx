@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, TouchableOpacity, Text, TextInput } from "react-native";
+import { View, TouchableOpacity, Text, TextInput, Alert } from "react-native";
 import { Ionicons, AntDesign, Feather } from "@expo/vector-icons";
 import { Header, Footer } from "@/components";
 import { router } from "expo-router";
@@ -9,18 +9,44 @@ import styles from "@/constants/styles";
 import { setTokens, showTokens } from "@/api/utils/tokens";
 import { useMutation } from "react-query";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import axios from "axios";
 import { useAuth } from "@/providers/auth.provider";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import Auth from "@/api/auth.api";
+import axios from "axios";
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
+  const authApi = Auth.getInstance();
   const { setResetPasswordInfo } = useAuth();
 
-  const resetPasswordFunc = () => {
-    setResetPasswordInfo({ email, code: "" });
-    router.replace("/(auth)/reset-password/otp");
-  };
+  const {
+    error,
+    isError,
+    isLoading,
+    mutate: requestResetPassword,
+  } = useMutation({
+    mutationFn: ({ email }: { email: string }) => authApi.requestResetPassword({ email }),
+    onSuccess: () => {
+      Alert.alert(
+        "Reset Password",
+        "We have sent you an email with a code to reset your password.",
+        [
+          {
+            text: "OK",
+            onPress: () => {
+              setResetPasswordInfo({ email, code: "" });
+              router.replace("/(auth)/reset-password/otp");
+            },
+          },
+        ]
+      );
+    },
+    onError: (error) => {
+      if (axios.isAxiosError(error)) {
+        console.error(error.response?.data);
+      }
+    },
+  });
 
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
@@ -57,14 +83,31 @@ export default function Login() {
                   />
                 </View>
 
+                {isError && (
+                  <View className="mt-8 bg-red-50 p-4 border border-red-500 rounded-lg flex flex-row items-center space-x-2">
+                    <MaterialIcons name="error-outline" size={20} color="rgb(239 68 68)" />
+                    <Text className="text-red-500 text-sm leading-[18px]">
+                      Whoops!{" "}
+                      {axios.isAxiosError(error) && error.response
+                        ? (error.response.data.message as any as string)
+                        : "An error occured with registration."}{" "}
+                      Please check your information and try again.
+                    </Text>
+                  </View>
+                )}
+
                 <View className="mt-28">
                   <TouchableOpacity
                     disabled={!email}
-                    onPress={() => resetPasswordFunc()}
+                    onPress={() => requestResetPassword({ email })}
                     style={styles.cabaret_shadow}
                     className={`p-2 bg-cabaret-500 h-14 rounded-lg flex flex-row items-center justify-center ${!email && "bg-cabaret-400"}`}
                   >
-                    <Text className="text-white font-bold text-base">Continue</Text>
+                    {isLoading ? (
+                      <Text className="text-white font-bold text-base"> Working on it...</Text>
+                    ) : (
+                      <Text className="text-white font-bold text-base">Continue</Text>
+                    )}
                   </TouchableOpacity>
                 </View>
               </View>

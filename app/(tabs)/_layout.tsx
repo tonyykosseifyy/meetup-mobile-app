@@ -21,7 +21,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => (
             <View className="flex flex-col items-center">
               <FontAwesome6 size={26} name="bell" color={color} />
-              <Text className="text-[11px] text-slate-600 mt-1">Notifications</Text>
+              <Text className="text-[11px] text-slate-500 mt-1">Notifications</Text>
             </View>
           ),
         }}
@@ -33,7 +33,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => (
             <View className="flex flex-col items-center">
               <FontAwesome6 size={26} name="compass" color={color} />
-              <Text className={`text-[11px] text-slate-600 mt-1`}>Discover</Text>
+              <Text className={`text-[11px] text-slate-500 mt-1`}>Discover</Text>
             </View>
           ),
         }}
@@ -46,7 +46,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => (
             <View className="flex flex-col items-center">
               <SettingsIcon width={26} height={25} fill={color} />
-              <Text className="text-[11px] text-slate-600 mt-1">Settings</Text>
+              <Text className="text-[11px] text-slate-500 mt-1">Settings</Text>
             </View>
           ),
         }}
@@ -92,7 +92,7 @@ const TabBarComponent = ({ active, options, onPress }: any) => {
       <Animated.View>
         {options.tabBarIcon ? (
           options.tabBarIcon({
-            color: active ? theme!.extend!.colors!.cabaret[500] : "#475569",
+            color: active ? "#d14d72" : "#475569",
             active,
           })
         ) : (
