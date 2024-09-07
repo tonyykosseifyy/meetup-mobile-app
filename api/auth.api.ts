@@ -106,14 +106,14 @@ class Auth extends AbstractApi {
   };
 
   public changePassword = async (request: {
-    name: string;
-    email: string;
-    password: string;
+    current_password: string;
+    new_password: string;
   }): Promise<void> => {
     return await this.doFetch({
-      method: "POST",
-      pathExtension: "/change-password/",
+      method: "PATCH",
+      pathExtension: "/password-reset/",
       body: request,
+      secure: true,
     });
   };
 

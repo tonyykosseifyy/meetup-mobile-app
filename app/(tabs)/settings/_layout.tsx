@@ -38,6 +38,18 @@ export default function Layout() {
           ),
         }}
       />
+      <Stack.Screen
+        name="change-password"
+        options={{
+          title: "Your Password",
+          headerShown: true,
+          headerLeft: (props) => (
+            <TouchableOpacity onPress={router.back}>
+              <MaterialIcons name="arrow-back-ios-new" size={25} color="black" />
+            </TouchableOpacity>
+          ),
+        }}
+      />
     </Stack>
   );
 }

@@ -22,6 +22,7 @@ import { router } from "expo-router";
 import { QueryClient, useQuery, useQueryClient } from "react-query";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Auth from "@/api/auth.api";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const logoutPrompt = (queryClient: QueryClient) => {
   const authApi = Auth.getInstance();
@@ -106,11 +107,25 @@ export default function Settings() {
 
         <Text className="text-lg mb-4 mt-2">Account Information</Text>
 
+        {/* Account details */}
         <ExpoLink href="/(tabs)/settings/account-details" asChild>
           <TouchableOpacity className="mb-4 flex p-4 h-16 flex-row items-center justify-between bg-[#F2F2F2] rounded-lg">
             <View className="flex flex-row items-center">
               <AccountDetailsIcon width={19} />
               <Text className="ml-3">Account Details</Text>
+            </View>
+            <View>
+              <ArrowIcon width={19} />
+            </View>
+          </TouchableOpacity>
+        </ExpoLink>
+
+        {/* Change Password */}
+        <ExpoLink href="/(tabs)/settings/change-password" asChild>
+          <TouchableOpacity className="mb-4 flex p-4 h-16 flex-row items-center justify-between bg-[#F2F2F2] rounded-lg">
+            <View className="flex flex-row items-center">
+              <MaterialCommunityIcons name="security" style={{ opacity: 0.6 }} size={20} color="#222222" />
+              <Text className="ml-3">Change Password</Text>
             </View>
             <View>
               <ArrowIcon width={19} />
