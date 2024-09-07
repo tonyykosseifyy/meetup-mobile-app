@@ -126,6 +126,18 @@ class Auth extends AbstractApi {
     });
   };
 
+  public checkResetOtpCode = async (request: {
+    email: string;
+    verification_code: string;
+  }): Promise<void> => {
+    return await this.doFetch({
+      method: "POST",
+      pathExtension: "/reset-password/verify-otp/",
+      body: request,
+      secure: false,
+    });
+  };
+
   public setInterests = async (interests: IInterestsRequest): Promise<ISetUserResponse> => {
     return await this.doFetch({
       method: "PATCH",

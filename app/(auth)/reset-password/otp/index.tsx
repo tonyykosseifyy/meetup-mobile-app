@@ -6,19 +6,40 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "@/constants/styles";
 import { useAuth } from "@/providers/auth.provider";
 import { router } from "expo-router";
+import Auth from "@/api/auth.api";
+import { useMutation } from "react-query";
+import axios from "axios";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+
 
 export default function ResetPasswordOTP() {
-  const { resetPasswordInfo, setResetPasswordInfo } = useAuth();
-  const email = resetPasswordInfo ? resetPasswordInfo.email : "";
   const [code, onChangeCode] = useState<string>("");
 
-  const changePasswordFunc = () => {
-    setResetPasswordInfo({
-      email,
-      code,
-    });
-    router.push("/(auth)/reset-password/change-password");
-  };
+  const { resetPasswordInfo, setResetPasswordInfo } = useAuth();
+  const email = resetPasswordInfo ? resetPasswordInfo.email : "";
+  const authApi = Auth.getInstance();
+
+  const {
+    error,
+    isError,
+    isLoading,
+    mutate: checkResetOtpCode,
+  } = useMutation({
+    mutationFn: ({ email, verification_code }: { email: string; verification_code: string }) =>
+      authApi.checkResetOtpCode({ email, verification_code }),
+    onSuccess: () => {
+      setResetPasswordInfo({
+        email,
+        code,
+      });
+      router.replace("/(auth)/reset-password/change-password");
+    },
+    onError: (error) => {
+      if (axios.isAxiosError(error)) {
+        console.error(error.response?.data);
+      }
+    },
+  });
 
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
@@ -35,14 +56,32 @@ export default function ResetPasswordOTP() {
 
           <View className="mt-20 w-11/12 mx-auto">
             <OtpInput value={code} onChange={onChangeCode} />
+
+            {isError && (
+              <View className="mt-8 bg-red-50 p-4 border border-red-500 rounded-lg flex flex-row items-center space-x-2">
+                <MaterialIcons name="error-outline" size={20} color="rgb(239 68 68)" />
+                <Text className="text-red-500 text-sm leading-[18px]">
+                  Whoops!{" "}
+                  {axios.isAxiosError(error) && error.response
+                    ? (error.response.data.message as any as string)
+                    : "An error occured with registration."}{" "}
+                  Please check your information and try again.
+                </Text>
+              </View>
+            )}
+
             <View className="mt-32">
               <TouchableOpacity
-                onPress={() => changePasswordFunc()}
+                onPress={() => checkResetOtpCode({ email, verification_code: code })}
                 disabled={!code || code.length != 4}
                 style={styles.cabaret_shadow}
                 className="p-2 bg-cabaret-500 h-[60px] rounded-full flex flex-row items-center justify-center"
               >
-                <Text className="text-white font-bold text-base">Continue</Text>
+                {isLoading ? (
+                  <Text className="text-white font-bold text-base"> Working on it...</Text>
+                ) : (
+                  <Text className="text-white font-bold text-base">Continue</Text>
+                )}
               </TouchableOpacity>
             </View>
           </View>
