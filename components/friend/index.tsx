@@ -60,14 +60,13 @@ export const Friend = ({ item }: CardProps) => {
         </View>
 
         <View className="flex flex-1">
-          <Text className="font-bold text-base">
-            {item.user_info?.full_name},{" "}
-            <Text className="text-cabaret-500">
-              {/* generate the age, dateofbirht - local date */}
-              {calculateAge(item.user_info?.date_of_birth)}
+          <View className="flex flex-col">
+            <Text className="font-bold text-base text-slate-950">{item.user_info?.full_name}</Text>
+            <Text className="text-cabaret-800 font-light">{item.user_info?.occupation}</Text>
+            <Text className="text-slate-500 text-xs mt-0.5">
+              {calculateAge(item.user_info?.date_of_birth)} years old
             </Text>
-          </Text>
-          <Text className="text-cabaret-500 font-bold">{item.user_info?.occupation}</Text>
+          </View>
         </View>
       </View>
       <Text className="text-slate-500 text-[12px] mx-4 mt-4">{item.user_info?.biography}</Text>
