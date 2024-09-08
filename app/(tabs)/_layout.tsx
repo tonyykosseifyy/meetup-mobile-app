@@ -3,9 +3,9 @@ import FontAwesome6 from "@expo/vector-icons/FontAwesome6.js";
 import { Tabs } from "expo-router";
 import { Pressable, View, Text, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { theme } from "../../tailwind.config.js";
 import SettingsIcon from "@/assets/icons/navbar/settings.svg";
 import { Animated } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function TabLayout() {
   return (
@@ -19,26 +19,46 @@ export default function TabLayout() {
           title: "My Requests",
 
           tabBarIcon: ({ color }) => {
+            const iconColor = color === "#d14d72" ? "#d14d72" : "#64748b";
+            const styles =
+              color === "#d14d72" ? "text-cabaret-500 font-semibold" : "text-slate-500";
             return (
-              <View className="flex flex-col items-center">
-                <FontAwesome6 size={26} name="bell" color={color} />
-                <Text className="text-[11px] text-slate-500 mt-1">Notifications</Text>
+              <View className="flex flex-col items-center w-20">
+                <Ionicons name="chatbubble-outline" size={22} color={iconColor} />
+                <Text className={`text-[11px] text-slate-500 mt-1 ${styles}`}>Chat</Text>
               </View>
             );
-          }
-
+          },
         }}
       />
       <Tabs.Screen
         name="index"
         options={{
           title: "Home",
-          tabBarIcon: ({ color }) => (
-            <View className="flex flex-col items-center">
-              <FontAwesome6 size={26} name="compass" color={color} />
-              <Text className={`text-[11px] text-slate-500 mt-1`}>Discover</Text>
-            </View>
-          ),
+          tabBarIcon: ({ color }) => {
+            const iconColor = color === "#d14d72" ? "#d14d72" : "#64748b";
+            const styles =
+              color === "#d14d72" ? "text-cabaret-500 font-semibold" : "text-slate-500";
+            return (
+              <View className="flex flex-col items-center w-20">
+                <Ionicons name="chatbubble-outline" size={22} color={iconColor} />
+                <Text className={`text-[11px] text-slate-500 mt-1 ${styles}`}>Discover</Text>
+              </View>
+            );
+          },
+          // tabBarIcon: ({ color, focused }) => {
+          //   console.log("foci", focused);
+          //   return (
+          //     <View className="flex flex-col items-center">
+          //       <FontAwesome6 size={26} name="compass" color={color} />
+          //       <Text
+          //         className={`text-[11px] mt-1 ${focused ? "text-cabaret-500" : "text-slate-500"}`}
+          //       >
+          //         Discover
+          //       </Text>
+          //     </View>
+          //   );
+          // },
         }}
       />
       <Tabs.Screen
@@ -46,12 +66,23 @@ export default function TabLayout() {
         options={{
           title: "Settings",
           headerShown: false,
-          tabBarIcon: ({ color }) => (
-            <View className="flex flex-col items-center">
-              <SettingsIcon width={26} height={25} fill={color} />
-              <Text className="text-[11px] text-slate-500 mt-1">Settings</Text>
-            </View>
-          ),
+          tabBarIcon: ({ color }) => {
+            const iconColor = color === "#d14d72" ? "#d14d72" : "#64748b";
+            const styles =
+              color === "#d14d72" ? "text-cabaret-500 font-semibold" : "text-slate-500";
+            return (
+              <View className="flex flex-col items-center w-20">
+                <Ionicons name="chatbubble-outline" size={22} color={iconColor} />
+                <Text className={`text-[11px] text-slate-500 mt-1 ${styles}`}>Settings</Text>
+              </View>
+            );
+          },
+          // tabBarIcon: ({ color }) => (
+          //   <View className="flex flex-col items-center">
+          //     <SettingsIcon width={26} height={25} fill={color} />
+          //     <Text className="text-[11px] text-slate-500 mt-1">Settings</Text>
+          //   </View>
+          // ),
         }}
       />
     </Tabs>
