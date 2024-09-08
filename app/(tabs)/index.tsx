@@ -27,7 +27,6 @@ const renderItem = ({ item }: CardProps) => {
 };
 
 export default function Home() {
-  const authApi = Auth.getInstance();
   const meetupApi = Meetup.getInstance();
 
   const [activeTab, setActiveTab] = useState<TabType>(TabType.FOR_YOU);
