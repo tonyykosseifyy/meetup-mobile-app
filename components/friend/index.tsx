@@ -43,7 +43,7 @@ export const Friend = ({ item }: CardProps) => {
 
   return (
     <View
-      className="bg-white my-2 mx-2 px-2 pt-6 pb-6 relative rounded-3xl"
+      className="bg-white my-2 mx-2 px-2 pt-5 pb-6 relative rounded-3xl"
       style={override_styles.shadow}
     >
       <TouchableOpacity
@@ -54,7 +54,7 @@ export const Friend = ({ item }: CardProps) => {
       </TouchableOpacity>
       <View className="flex flex-row items-center mb-2">
         <View className="flex flex-row items-center h-full ">
-          <View className="w-14 h-14 p-1 bg-cabaret-100 rounded-2xl border-solid border border-cabaret-500 mx-2">
+          <View className="w-14 h-14 p-1 bg-cabaret-100 rounded-xl border-solid border border-cabaret-400 mx-2">
             <Image
               source={require("@/assets/avatars/adjusted_avatar_1.png")}
               className="w-full h-full rounded-full object-contain"
@@ -62,11 +62,14 @@ export const Friend = ({ item }: CardProps) => {
           </View>
         </View>
 
-        <View className="flex flex-1">
+        <View className="flex flex-1 ml-1">
           <View className="flex flex-col">
-            <Text className="font-bold text-base text-slate-950">{item.user_info?.full_name}</Text>
-            <Text className="text-cabaret-800 font-light">{item.user_info?.occupation}</Text>
-            <Text className="text-slate-500 text-xs mt-0.5">
+            <Text className="font-semibold text-[15px] text-slate-950">
+              {item.user_info?.full_name},
+              <Text className="text-cabaret-800 font-light"> {item.user_info?.occupation}</Text>
+            </Text>
+
+            <Text className="text-slate-500 font-light text-xs mt-[0.5px]">
               {calculateAge(item.user_info?.date_of_birth)} years old
             </Text>
           </View>
