@@ -102,8 +102,17 @@ export default function Home() {
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
       <View className="flex-1">
-        <View className="pt-4 pb-4">
-          <LogoNavbar />
+        <View className="pt-1 pb-3">
+          <View className="flex flex-row items-center justify-center w-full">
+            <View>
+              <Image
+                className="h-5"
+                source={require("@/assets/images/full_logo3.png")}
+                alt="Logo Full"
+                resizeMode="contain"
+              />
+            </View>
+          </View>
         </View>
 
         <View className="relative flex flex-row w-60 mx-auto mb-2">
