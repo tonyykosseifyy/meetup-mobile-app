@@ -3,7 +3,7 @@ import axios, { Axios, AxiosError } from "axios";
 import { router } from "expo-router";
 import { Alert } from "react-native";
 
-const API_URL = "https://flat-days-tan.loca.lt";
+const API_URL = "https://chilly-kids-lick.loca.lt";
 
 console.log("API_URL: ", API_URL);
 
@@ -48,6 +48,7 @@ abstract class AbstractApi {
       this.session.refreshToken = refreshToken;
       this.sessionDirty = false;
     }
+    // console.log("Session: ", this.session);
     return this.session;
   };
 
@@ -115,9 +116,9 @@ abstract class AbstractApi {
         };
       }
 
-      console.log("Request Object: ", requestObject);
+      // console.log("Request Object: ", requestObject);
       const response = await axiosInstance(requestObject);
-      console.log("Response: ", response.data);
+      // console.log("Response: ", response.data);
       return response.data;
     } catch (error: any) {
       if (error instanceof AxiosError) {
@@ -145,9 +146,13 @@ abstract class AbstractApi {
         const { accessToken: newAccessToken } = await this.getTokens();
         try {
           error.response.config.headers["Authorization"] = "Bearer " + newAccessToken;
-          return await axios(error.response.config);
+          console.log("Retrying request with new access token...", error.response.config);
+          // console.log('error.response.config', error.response.config)
+          const retriedResponse = await this.axiosInstance(error.response.config);
+          console.log("Retried Response: ", retriedResponse.data);
+          return retriedResponse.data;
         } catch (err: any) {
-          console.log("Error refreshing token:", err);
+          console.log("Error with the retried response:", err);
           await this.clearTokens();
           router.navigate("/login");
         }
