@@ -28,6 +28,8 @@ interface IRefreshResponse {
 }
 
 interface ISetUserRequest {
+  email: string;
+  password: string;
   full_name?: string;
   date_of_birth?: string;
   occupation?: string;

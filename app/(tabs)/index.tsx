@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, Image } from "react-native";
 import { LogoNavbar } from "@/components/logo";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -6,8 +6,8 @@ import styles from "@/constants/styles";
 import { useQuery } from "react-query";
 import { IUser } from "@/interfaces";
 import { Friend } from "@/components/friend";
-import Auth from "@/api/auth.api";
 import Meetup from "@/api/meetup.api";
+import * as Location from "expo-location";
 
 export interface CardProps {
   item: IUser;
@@ -30,6 +30,31 @@ export default function Home() {
   const meetupApi = Meetup.getInstance();
 
   const [activeTab, setActiveTab] = useState<TabType>(TabType.FOR_YOU);
+
+  const [location, setLocation] = useState<Location.LocationObject | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string>("");
+
+  console.log("location", location);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
+
+  let text = "Waiting..";
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+  }
 
   const fetchUsers = useCallback(async () => {
     switch (activeTab) {

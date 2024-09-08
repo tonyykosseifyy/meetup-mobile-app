@@ -31,7 +31,7 @@ export default function Registration({ data }: RegistrationProps) {
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const [yourSelf, setYourSelf] = useState(true);
   const [mother, setMother] = useState(false);
-  const [date, setDate] = useState(null);
+  const [date, setDate] = useState<Date | null>(null);
 
   // useMutation((userInfo) => setUserInfo(userInfo))
   const {
@@ -42,10 +42,10 @@ export default function Registration({ data }: RegistrationProps) {
   } = useMutation({
     mutationFn: () =>
       authApi.setUserInfo({
-        // email,
-        // password,
+        email,
+        password,
         full_name: fullName,
-        date_of_birth: date?.toISOString().slice(0, 10),
+        date_of_birth: (date as Date).toISOString().slice(0, 10),
         occupation,
         biography,
       }),
@@ -74,7 +74,7 @@ export default function Registration({ data }: RegistrationProps) {
         email,
         password,
         full_name: fullName,
-        date_of_birth: date?.toISOString().slice(0, 10),
+        date_of_birth: (date as Date).toISOString().slice(0, 10),
         occupation,
         biography,
         interests: [],

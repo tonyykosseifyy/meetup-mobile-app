@@ -59,10 +59,12 @@ class Auth extends AbstractApi {
   };
 
   public setUserInfo = async (request: ISetUserRequest): Promise<ISetUserResponse> => {
+    console.log(request);
     const response = await this.doFetch({
       method: "POST",
       pathExtension: "/userinfo/",
       body: request,
+      secure: false,
     });
     return response as ISetUserResponse;
   };
@@ -126,10 +128,7 @@ class Auth extends AbstractApi {
     });
   };
 
-  public checkResetOtpCode = async (request: {
-    email: string;
-    code: string;
-  }): Promise<void> => {
+  public checkResetOtpCode = async (request: { email: string; code: string }): Promise<void> => {
     return await this.doFetch({
       method: "POST",
       pathExtension: "/check-otp-validity/",
