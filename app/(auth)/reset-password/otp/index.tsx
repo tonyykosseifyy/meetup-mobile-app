@@ -11,7 +11,6 @@ import { useMutation } from "react-query";
 import axios from "axios";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
-
 export default function ResetPasswordOTP() {
   const [code, onChangeCode] = useState<string>("");
 
@@ -25,8 +24,8 @@ export default function ResetPasswordOTP() {
     isLoading,
     mutate: checkResetOtpCode,
   } = useMutation({
-    mutationFn: ({ email, verification_code }: { email: string; verification_code: string }) =>
-      authApi.checkResetOtpCode({ email, verification_code }),
+    mutationFn: ({ email, code }: { email: string; code: string }) =>
+      authApi.checkResetOtpCode({ email, code }),
     onSuccess: () => {
       setResetPasswordInfo({
         email,
@@ -72,7 +71,7 @@ export default function ResetPasswordOTP() {
 
             <View className="mt-32">
               <TouchableOpacity
-                onPress={() => checkResetOtpCode({ email, verification_code: code })}
+                onPress={() => checkResetOtpCode({ email, code })}
                 disabled={!code || code.length != 4}
                 style={styles.cabaret_shadow}
                 className="p-2 bg-cabaret-500 h-[60px] rounded-full flex flex-row items-center justify-center"

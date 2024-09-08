@@ -128,11 +128,11 @@ class Auth extends AbstractApi {
 
   public checkResetOtpCode = async (request: {
     email: string;
-    verification_code: string;
+    code: string;
   }): Promise<void> => {
     return await this.doFetch({
       method: "POST",
-      pathExtension: "/reset-password/verify-otp/",
+      pathExtension: "/check-otp-validity/",
       body: request,
       secure: false,
     });

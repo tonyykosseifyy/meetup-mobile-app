@@ -156,7 +156,7 @@ export default function Settings() {
           className="mb-4 flex p-4 h-16 flex-row items-center justify-between bg-[#F2F2F2] rounded-lg"
         >
           <View className="flex flex-row items-center">
-            <LogoutIcon width={19} />
+            <LogoutIcon width={18} />
             <Text className="ml-3">Logout</Text>
           </View>
           <View>
