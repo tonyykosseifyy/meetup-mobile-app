@@ -18,12 +18,15 @@ export default function TabLayout() {
         options={{
           title: "My Requests",
 
-          tabBarIcon: ({ color }) => (
-            <View className="flex flex-col items-center">
-              <FontAwesome6 size={26} name="bell" color={color} />
-              <Text className="text-[11px] text-slate-500 mt-1">Notifications</Text>
-            </View>
-          ),
+          tabBarIcon: ({ color }) => {
+            return (
+              <View className="flex flex-col items-center">
+                <FontAwesome6 size={26} name="bell" color={color} />
+                <Text className="text-[11px] text-slate-500 mt-1">Notifications</Text>
+              </View>
+            );
+          }
+
         }}
       />
       <Tabs.Screen
@@ -64,10 +67,10 @@ const AnimatedTabBar = ({
 
   return (
     <View
-      className="bg-white py-1 backdrop-blur-lg"
+      className="bg-white py-1 backdrop-blur-sm backdrop-brightness-125"
       style={[{ paddingBottom: bottom - 30 }, override_styles.shadow]}
     >
-      <View className="flex flex-row place-content-evenly justify-evenly">
+      <View className="flex flex-row items-center justify-around">
         {routes.map((route: any, index: any) => {
           const active = index === activeIndex;
           const { options } = descriptors[route.key];

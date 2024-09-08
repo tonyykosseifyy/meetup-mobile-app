@@ -7,7 +7,10 @@ import { useQuery } from "react-query";
 import { IUser } from "@/interfaces";
 import { Friend } from "@/components/friend";
 import Auth from "@/api/auth.api";
+import { Image } from "react-native";
 
+// icon library:
+// https://www.iconfinder.com/icons/3099544/woman_shrugging_icon
 export interface CardProps {
   item: IUser;
 }
@@ -54,19 +57,26 @@ export default function Home() {
             <ActivityIndicator size="large" color="#d14d72" />
           </View>
         )}
-        {data && data?.length >= 1 && (
+        {/* {data && data?.length >= 1 && (
           <FlatList
             data={data} // Assuming the fetched data is an object with a 'users' array
             renderItem={renderItem}
-            keyExtractor={(item) => item.email} // Ensure 'item.id' is a unique identifier
+            keyExtractor={(item) => item.email}
           />
-        )}
-        {data?.length == 0 && !isLoading && (
+        )} */}
+        {/* data?.length == 0 && !isLoading */}
+        {
           <View className="flex-1 justify-center items-center">
-            <Text className="text-black font-bold">No users found</Text>
-            <Text className="text-black">Please try again later</Text>
+            <Image
+              source={require("@/assets/images/no-user-found.png")}
+              className="w-32 h-32 mb-5"
+            />
+            <Text className="text-cabaret-950 text-base text-center">Oops! No Users Found</Text>
+            <Text className="text-slate-600 mt-2 text-center text-sm w-[80%]">
+              Give it another shot or check back soon—we’re always updating!
+            </Text>
           </View>
-        )}
+        }
       </View>
     </SafeAreaView>
   );
