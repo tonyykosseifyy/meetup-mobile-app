@@ -1,5 +1,13 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, Image } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  ActivityIndicator,
+  Image,
+  Animated,
+} from "react-native";
 import { LogoNavbar } from "@/components/logo";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "@/constants/styles";
@@ -75,6 +83,22 @@ export default function Home() {
     },
   });
 
+  const [indicatorPosition] = useState(new Animated.Value(0));
+
+  useEffect(() => {
+    // Animate the indicator position when the active tab changes
+    Animated.spring(indicatorPosition, {
+      toValue: activeTab === TabType.FOR_YOU ? 0 : 1,
+      useNativeDriver: false,
+    }).start();
+  }, [activeTab]);
+
+  const tabWidth = 120; 
+  const indicatorTranslateX = indicatorPosition.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, tabWidth], // Move the indicator bar based on tab width
+  });
+
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-white">
       <View className="flex-1">
@@ -82,38 +106,33 @@ export default function Home() {
           <LogoNavbar />
         </View>
 
-        <View className="flex flex-row items-center justify-center w-4/5 mx-auto mb-5 mt-2">
+        <View className="relative flex flex-row w-60 mx-auto mb-2">
           <TouchableOpacity
-            className={`flex-1 flex flex-row justify-center p-4 relative rounded-full ${
-              activeTab === TabType.FOR_YOU ? "bg-cabaret-500" : "bg-white"
-            }`}
-            style={activeTab === TabType.FOR_YOU ? {} : styles.grey_shadow}
             onPress={() => setActiveTab(TabType.FOR_YOU)}
+            className={`flex-1 items-center p-2`}
           >
             <Text
-              className={
-                activeTab === TabType.FOR_YOU ? "text-white font-bold" : "text-black font-bold"
-              }
+              className={`${activeTab === TabType.FOR_YOU ? "text-cabaret-500 font-bold" : "text-slate-700 font-medium"}`}
             >
               For You
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={activeTab === TabType.NEARBY ? {} : styles.grey_shadow}
-            className={`ml-4 flex-1 flex flex-row justify-center p-4 relative rounded-full ${
-              activeTab === TabType.NEARBY ? "bg-cabaret-500" : "bg-white"
-            }`}
             onPress={() => setActiveTab(TabType.NEARBY)}
+            className={`flex-1 items-center p-2`}
           >
             <Text
-              className={
-                activeTab === TabType.NEARBY ? "text-white font-bold" : "text-black font-bold"
-              }
+              className={`font-medium ${activeTab === TabType.NEARBY ? "text-cabaret-500 font-bold" : "text-slate-700 font-medium"}`}
             >
               Nearby
             </Text>
           </TouchableOpacity>
+          <Animated.View
+            className="absolute bottom-[1px] h-[1.6px] bg-cabaret-500 rounded-full ml-[42px]"
+            style={{ width: "13%", transform: [{ translateX: indicatorTranslateX }] }}
+          />
         </View>
+
         {isLoading && (
           <View className="flex-1 justify-center items-center">
             <ActivityIndicator size="large" color="#d14d72" />
