@@ -50,6 +50,18 @@ export default function Layout() {
           ),
         }}
       />
+      <Stack.Screen
+        name="change-avatar"
+        options={{
+          title: "Your Avatar",
+          headerShown: true,
+          headerLeft: (props) => (
+            <TouchableOpacity onPress={router.back}>
+              <MaterialIcons name="arrow-back-ios-new" size={25} color="black" />
+            </TouchableOpacity>
+          ),
+        }}
+      />
     </Stack>
   );
 }

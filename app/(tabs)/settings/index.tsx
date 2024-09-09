@@ -21,7 +21,7 @@ import { router } from "expo-router";
 import { QueryClient, useQuery, useQueryClient } from "react-query";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Auth from "@/api/auth.api";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { calculateAge } from "@/utils/common";
 
 const logoutPrompt = (queryClient: QueryClient) => {
@@ -71,11 +71,16 @@ export default function Settings() {
       {/* Top Profile */}
       <View className="mt-7 mx-4">
         <View className="flex flex-row items-center">
-          <View className="w-24 h-24 rounded-full p-1.5 bg-cabaret-50/50 border-solid border border-cabaret-200">
+          <View className="relative w-24 h-24 rounded-full p-1.5 bg-cabaret-50/50 border-solid border border-cabaret-200">
             <Image
               source={require("@/assets/images/sample_avatar.jpeg")}
               className="w-full h-full rounded-full object-contain"
             />
+            <ExpoLink href="/(tabs)/settings/change-avatar" asChild>
+              <TouchableOpacity className="absolute bottom-0 right-0 bg-white p-1.5 rounded-full">
+                <AntDesign name="pluscircle" size={20} color="#d14d72" />
+              </TouchableOpacity>
+            </ExpoLink>
           </View>
           <View className="flex flex-1 ml-4 pb-3">
             <View className="flex flex-col">
