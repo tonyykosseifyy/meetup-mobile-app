@@ -71,17 +71,19 @@ export default function Settings() {
       {/* Top Profile */}
       <View className="mt-7 mx-4">
         <View className="flex flex-row items-center">
-          <View className="relative w-24 h-24 rounded-full p-1.5 bg-cabaret-50/50 border-solid border border-cabaret-200">
-            <Image
-              source={require("@/assets/images/sample_avatar.jpeg")}
-              className="w-full h-full rounded-full object-contain"
-            />
-            <ExpoLink href="/(tabs)/settings/change-avatar" asChild>
-              <TouchableOpacity className="absolute bottom-0 right-0 bg-white p-1.5 rounded-full">
+          <ExpoLink href="/(tabs)/settings/change-avatar" asChild>
+            <TouchableOpacity className="relative w-24 h-24 rounded-full p-1.5 bg-cabaret-50/50 border-solid border border-cabaret-200">
+              <Image
+                source={require("@/assets/images/sample_avatar.jpeg")}
+                className="w-full h-full rounded-full object-contain"
+              />
+
+              <View className="absolute bottom-0 right-0 bg-white p-1.5 rounded-full">
                 <AntDesign name="pluscircle" size={20} color="#d14d72" />
-              </TouchableOpacity>
-            </ExpoLink>
-          </View>
+              </View>
+            </TouchableOpacity>
+          </ExpoLink>
+
           <View className="flex flex-1 ml-4 pb-3">
             <View className="flex flex-col">
               <Text className="text-sm text-slate-950">
