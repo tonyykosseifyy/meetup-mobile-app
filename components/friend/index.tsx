@@ -53,7 +53,7 @@ export const Friend = ({ item }: CardProps) => {
         <InviteIcon />
       </TouchableOpacity>
       <View className="flex flex-row items-center mb-2">
-        <View className="flex flex-row items-center h-full ">
+        <View className="flex flex-row items-center h-full">
           <View className="w-14 h-14 p-1 bg-cabaret-100 rounded-xl border-solid border border-cabaret-400 mx-2">
             <Image
               source={require("@/assets/avatars/adjusted_avatar_1.png")}
@@ -85,9 +85,7 @@ export const Friend = ({ item }: CardProps) => {
       </View>
 
       <Text className="text-slate-500 text-[13px] leading-5 ml-2 mr-4 mt-3">
-        {item.user_info?.biography} Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt,
-        odio. Deleniti recusandae sequi laborum ratione, exercitationem quas, autem necessitatibus
-        dolor sint beatae mollitia incidunt iure, vel reprehenderit odit. Similique, itaque.
+        {item.user_info?.biography} 
       </Text>
 
       <View className="w-full flex flex-row justify-center mt-5 px-2">

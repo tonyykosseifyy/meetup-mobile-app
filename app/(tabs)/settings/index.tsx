@@ -23,6 +23,15 @@ import { QueryClient, useQuery, useQueryClient } from "react-query";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Auth from "@/api/auth.api";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { calculateAge } from "@/utils/common";
+import { StyleSheet } from "react-native";
+
+const truncateText = (text, maxLength) => {
+  if (text.length > maxLength) {
+    return text.slice(0, maxLength) + "...";
+  }
+  return text;
+};
 
 const logoutPrompt = (queryClient: QueryClient) => {
   const authApi = Auth.getInstance();
@@ -68,12 +77,40 @@ export default function Settings() {
   }
   return (
     <ScrollView className="flex-1 bg-white">
-      <Image
-        source={require("@/assets/images/sample_avatar.jpeg")}
-        className="w-32 h-32 mt-8 mb-2 self-center rounded-full border-solid border-2 border-cabaret-500 mx-4"
-      />
-      <Text className="text-center font-bold text-lg">{userInfo?.full_name}</Text>
-      <View className="mx-4 mt-6">
+      {/* Top Profile */}
+      <View className="mt-7 mx-4">
+        <View className="flex flex-row items-center">
+          <View className="w-24 h-24 rounded-full p-1.5 bg-cabaret-50/50 border-solid border border-cabaret-200">
+            <Image
+              source={require("@/assets/images/sample_avatar.jpeg")}
+              className="w-full h-full rounded-full object-contain"
+            />
+          </View>
+          <View className="flex flex-1 ml-4 pb-3">
+            <View className="flex flex-col">
+              <Text className="text-sm text-slate-950">
+                {userInfo?.full_name},
+                <Text className="text-cabaret-800 mb-[1px]"> {userInfo?.occupation}</Text>
+              </Text>
+              <Text className="text-cabaret-500 italic underline text-xs mb-[1px]">
+                {userInfo?.email}
+              </Text>
+              <Text className="text-slate-500 font-light text-xs mt-[2px]">
+                {calculateAge(userInfo?.date_of_birth)} years old
+              </Text>
+            </View>
+          </View>
+        </View>
+
+        <View>
+          <Text className="text-slate-500 text-[12px] leading-4 ml-2 mt-3">
+            {userInfo?.biography}
+          </Text>
+        </View>
+      </View>
+      <View className="h-px bg-gray-300 my-6 mx-4" />
+
+      <View className="mx-4">
         <Text className="text-lg mb-4">General</Text>
 
         <TouchableOpacity className="mb-4 flex p-4 h-16 flex-row items-center justify-between bg-[#F2F2F2] rounded-lg">
@@ -124,7 +161,12 @@ export default function Settings() {
         <ExpoLink href="/(tabs)/settings/change-password" asChild>
           <TouchableOpacity className="mb-4 flex p-4 h-16 flex-row items-center justify-between bg-[#F2F2F2] rounded-lg">
             <View className="flex flex-row items-center">
-              <MaterialCommunityIcons name="security" style={{ opacity: 0.6 }} size={20} color="#222222" />
+              <MaterialCommunityIcons
+                name="security"
+                style={{ opacity: 0.6 }}
+                size={20}
+                color="#222222"
+              />
               <Text className="ml-3">Change Password</Text>
             </View>
             <View>

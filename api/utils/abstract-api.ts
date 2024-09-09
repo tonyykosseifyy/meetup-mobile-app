@@ -3,7 +3,7 @@ import axios, { Axios, AxiosError } from "axios";
 import { router } from "expo-router";
 import { Alert } from "react-native";
 
-const API_URL = "https://major-results-grow.loca.lt";
+const API_URL = "https://rare-views-lick.loca.lt";
 
 console.log("API_URL: ", API_URL);
 
