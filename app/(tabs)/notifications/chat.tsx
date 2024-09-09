@@ -99,7 +99,7 @@ export default function PreLogin() {
   const queryClient = useQueryClient();
 
   const { data: userInfo, isLoading: isUserLoading } = useQuery({
-    queryKey: "/auth/userinfo/",
+    queryKey: "getMe",
     retry: 2,
     queryFn: () => getMe(),
   });

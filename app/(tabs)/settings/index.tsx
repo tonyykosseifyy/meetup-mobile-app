@@ -17,15 +17,12 @@ import LogoutIcon from "@/assets/icons/settings/logout.svg";
 import PrivacyIcon from "@/assets/icons/settings/privacy.svg";
 import AboutUsIcon from "@/assets/icons/settings/aboutus.svg";
 import { Alert } from "react-native";
-import { clearTokens } from "@/api/utils/tokens";
 import { router } from "expo-router";
 import { QueryClient, useQuery, useQueryClient } from "react-query";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Auth from "@/api/auth.api";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { calculateAge } from "@/utils/common";
-import { StyleSheet } from "react-native";
-
 
 const logoutPrompt = (queryClient: QueryClient) => {
   const authApi = Auth.getInstance();

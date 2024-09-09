@@ -68,7 +68,7 @@ export default function AccountDetails() {
 
   // get user info and populate the form
   const { data: userInfo, isFetching } = useQuery({
-    queryKey: "/auth/userinfo/",
+    queryKey: "getMe",
     queryFn: () => authApi.getMe(),
     retry: 1,
     onSuccess: (data) => {

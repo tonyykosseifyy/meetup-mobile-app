@@ -40,7 +40,7 @@ export default function SettingsInterests() {
         {
           text: "OK",
           onPress: () => {
-            queryClient.invalidateQueries("/auth/userinfo/");
+            queryClient.invalidateQueries("getMe");
             navigation.goBack();
           },
         },
@@ -53,7 +53,7 @@ export default function SettingsInterests() {
     isLoading: isUserLoading,
     isFetching,
   } = useQuery({
-    queryKey: "/auth/userinfo/",
+    queryKey: "getMe",
     refetchOnMount: true,
     queryFn: () => authApi.getMe(),
   });
