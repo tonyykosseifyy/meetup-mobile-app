@@ -5,7 +5,7 @@ import { Pressable, View, Text, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import SettingsIcon from "@/assets/icons/navbar/settings.svg";
 import { Animated } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons, Octicons } from "@expo/vector-icons";
 
 export default function TabLayout() {
   return (
@@ -24,8 +24,9 @@ export default function TabLayout() {
               color === "#d14d72" ? "text-cabaret-500 font-semibold" : "text-slate-500";
             return (
               <View className="flex flex-col items-center w-20">
-                <Ionicons name="chatbubble-outline" size={22} color={iconColor} />
-                <Text className={`text-[11px] text-slate-500 mt-1 ${styles}`}>Chat</Text>
+                <MaterialIcons name="chat-bubble-outline" size={22} color={iconColor} />
+                {/* <MaterialIcons name="chat-bubble-outline" size={24} color="black" /> */}
+                <Text className={`text-[11px] text-slate-500 mt-1 ${styles}`}>Inbox</Text>
               </View>
             );
           },
@@ -41,7 +42,8 @@ export default function TabLayout() {
               color === "#d14d72" ? "text-cabaret-500 font-semibold" : "text-slate-500";
             return (
               <View className="flex flex-col items-center w-20">
-                <Ionicons name="chatbubble-outline" size={22} color={iconColor} />
+                <Octicons name="people" size={22} color={iconColor} />
+                {/* <Octicons name="people" size={24} color="black" /> */}
                 <Text className={`text-[11px] text-slate-500 mt-1 ${styles}`}>Discover</Text>
               </View>
             );
@@ -72,11 +74,13 @@ export default function TabLayout() {
               color === "#d14d72" ? "text-cabaret-500 font-semibold" : "text-slate-500";
             return (
               <View className="flex flex-col items-center w-20">
-                <Ionicons name="chatbubble-outline" size={22} color={iconColor} />
-                <Text className={`text-[11px] text-slate-500 mt-1 ${styles}`}>Settings</Text>
+                <Octicons name="person" size={22} color={iconColor} />
+                {/* <Octicons name="person" size={24} color="black" /> */}
+                <Text className={`text-[11px] text-slate-500 mt-1 ${styles}`}>Profile</Text>
               </View>
             );
           },
+
           // tabBarIcon: ({ color }) => (
           //   <View className="flex flex-col items-center">
           //     <SettingsIcon width={26} height={25} fill={color} />
