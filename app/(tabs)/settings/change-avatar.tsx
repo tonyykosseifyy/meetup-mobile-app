@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, Image, Text, ActivityIndicator, Alert } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  Image,
+  Text,
+  ActivityIndicator,
+  Alert,
+  ScrollView,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useQuery } from "react-query";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -8,6 +16,7 @@ import Auth from "@/api/auth.api";
 import axios from "axios";
 import styles from "@/constants/styles";
 import { ImageSourcePropType, Animated } from "react-native";
+import { FlatList } from "react-native";
 
 const avatarImages: Record<number, ImageSourcePropType> = {
   1: require("@/assets/avatars/avatar1.png"),
@@ -106,7 +115,7 @@ export default function ProfileAvatar() {
             <Text className="mt-1 text-slate-700">Choose an avatar that represents you best!</Text>
           </View>
 
-          <View className="flex-1 h-full justify-evenly flex flex-row flex-wrap gap-3 mt-4">
+          <View className="mt-4 flex flex-row flex-wrap justify-evenly" >
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((avatar) => (
               <TouchableOpacity
                 style={selectedAvatar === avatar ? styles.cabaret_shadow : {}}
