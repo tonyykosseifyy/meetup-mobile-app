@@ -115,7 +115,7 @@ export default function ProfileAvatar() {
             <Text className="mt-1 text-slate-700">Choose an avatar that represents you best!</Text>
           </View>
 
-          <View className="mt-4 flex flex-row flex-wrap justify-evenly" >
+          <View className="mt-7 flex flex-row flex-wrap justify-evenly">
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((avatar) => (
               <TouchableOpacity
                 style={selectedAvatar === avatar ? styles.cabaret_shadow : {}}
