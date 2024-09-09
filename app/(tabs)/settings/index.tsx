@@ -26,12 +26,6 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { calculateAge } from "@/utils/common";
 import { StyleSheet } from "react-native";
 
-const truncateText = (text, maxLength) => {
-  if (text.length > maxLength) {
-    return text.slice(0, maxLength) + "...";
-  }
-  return text;
-};
 
 const logoutPrompt = (queryClient: QueryClient) => {
   const authApi = Auth.getInstance();
@@ -96,7 +90,7 @@ export default function Settings() {
                 {userInfo?.email}
               </Text>
               <Text className="text-slate-500 font-light text-xs mt-[2px]">
-                {calculateAge(userInfo?.date_of_birth)} years old
+                {calculateAge(userInfo?.date_of_birth as string)} years old
               </Text>
             </View>
           </View>

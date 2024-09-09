@@ -6,6 +6,7 @@ import {
   IRegisterResponse,
   ISetUserRequest,
   ISetUserResponse,
+  IUpdateUserRequest,
   IUser,
   IUserInfo,
   IVerifyEmailRequest,
@@ -98,7 +99,7 @@ class Auth extends AbstractApi {
     return response as IUserResponse;
   };
 
-  public updateUserInfo = async (request: ISetUserRequest): Promise<IUserResponse> => {
+  public updateUserInfo = async (request: IUpdateUserRequest): Promise<IUserResponse> => {
     const response = await this.doFetch({
       method: "PATCH",
       pathExtension: "/userinfo/",

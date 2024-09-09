@@ -58,7 +58,7 @@ export default function AccountDetails() {
         {
           text: "OK",
           onPress: () => {
-            queryClient.invalidateQueries("/auth/userinfo/");
+            queryClient.invalidateQueries("getMe");
             navigation.goBack();
           },
         },
