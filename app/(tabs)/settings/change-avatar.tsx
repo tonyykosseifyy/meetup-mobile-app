@@ -165,7 +165,7 @@ export default function ProfileAvatar() {
             </View>
           )}
           {isUpdating && (
-            <View className="flex flex-1 h-full items-center justify-center mt-10">
+            <View className="opacity-100 bg-white w-full items-center justify-center mt-10">
               <ActivityIndicator size="large" color="#d14d72" />
             </View>
           )}
