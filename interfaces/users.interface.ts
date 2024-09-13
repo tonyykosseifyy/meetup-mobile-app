@@ -27,6 +27,9 @@ interface IUserInfo {
   interests: IInterest[];
   email: string;
   password: string;
+  avatar_id: number | null;
+  loc_lat: number | null;
+  loc_lon: number | null;
 }
 
 interface IUpdateUserRequest {
@@ -35,6 +38,9 @@ interface IUpdateUserRequest {
   occupation?: string;
   biography?: string;
   interests?: number[];
+  avatar_id: number | null;
+  loc_lat?: number | null;
+  loc_lon?: number | null;
 }
 
 interface IChangePasswordRequest {

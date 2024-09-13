@@ -160,6 +160,13 @@ class Auth extends AbstractApi {
       },
     });
   };
+  public getAllAvatars = async (): Promise<IUserResponse> => {
+    const response = await this.doFetch({
+      method: "GET",
+      pathExtension: "/avatars/",
+    });
+    return response as IUserResponse;
+  };
 }
 
 export default Auth;

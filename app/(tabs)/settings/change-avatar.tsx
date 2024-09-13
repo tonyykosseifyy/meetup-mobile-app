@@ -18,6 +18,8 @@ import styles from "@/constants/styles";
 import { ImageSourcePropType, Animated } from "react-native";
 import { FlatList } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+import Feather from "@expo/vector-icons/Feather";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 const avatarImages: Record<number, ImageSourcePropType> = {
   1: require("@/assets/avatars/avatar1.png"),
@@ -52,24 +54,6 @@ const avatarImages: Record<number, ImageSourcePropType> = {
   30: require("@/assets/avatars/avatar30.png"),
 };
 
-// Helper function to handle double-tap
-const useDoubleTap = (onDoubleTap: { (): void; (): void }) => {
-  const [tapCount, setTapCount] = useState(0);
-
-  const handleTap = () => {
-    setTapCount((prev) => prev + 1);
-  };
-
-  React.useEffect(() => {
-    if (tapCount === 2) {
-      onDoubleTap();
-      setTapCount(0); // Reset tap count after double-tap
-    }
-  }, [tapCount]);
-
-  return handleTap;
-};
-
 export default function ProfileAvatar() {
   const authApi = Auth.getInstance();
   const navigation = useNavigation();
@@ -77,10 +61,6 @@ export default function ProfileAvatar() {
 
   const [selectedAvatar, setSelectedAvatar] = useState<number | null>(null);
 
-  // Double-tap handler
-  const handleDoubleTap = (avatar: React.SetStateAction<number | null>) => {
-    setSelectedAvatar(avatar);
-  };
 
   // Mutation for updating user info
   const {
@@ -89,7 +69,7 @@ export default function ProfileAvatar() {
     isError: isUpdatingError,
     error: updatingError,
   } = useMutation({
-    mutationFn: () => authApi.updateUserInfo({ avatar: selectedAvatar }),
+    mutationFn: () => authApi.updateUserInfo({ avatar_id: selectedAvatar }),
     mutationKey: "/auth/userinfo/update",
     onSuccess: (data) => {
       Alert.alert("Profile Avatar", "Profile Avatar updated successfully", [
@@ -107,6 +87,10 @@ export default function ProfileAvatar() {
       Alert.alert("Profile Avatar", "An error occurred while updating your profile avatar.", [
         {
           text: "OK",
+          onPress: () => {
+            queryClient.invalidateQueries("getMe");
+            navigation.goBack();
+          },
         },
       ]);
     },
@@ -116,8 +100,9 @@ export default function ProfileAvatar() {
   const { data: userInfo, isFetching } = useQuery({
     queryKey: "getMe",
     queryFn: () => authApi.getMe(),
-    retry: 1,
   });
+
+  
 
   // Handle loading state
   if (isFetching) {
@@ -155,9 +140,9 @@ export default function ProfileAvatar() {
                   {selectedAvatar === avatar && (
                     <TouchableOpacity
                       onPress={() => editUser()}
-                      className="absolute bottom-0 right-0 bg-white p-1.5 rounded-full"
+                      className="absolute bottom-0 right-0 bg-white p-1 rounded-full"
                     >
-                      <AntDesign name="pluscircle" size={20} color="#d14d72" />
+                      <Ionicons name="checkmark-circle" size={24} color="#d14d72" />
                     </TouchableOpacity>
                   )}
                 </TouchableOpacity>

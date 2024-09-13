@@ -3,7 +3,7 @@ import axios, { Axios, AxiosError } from "axios";
 import { router } from "expo-router";
 import { Alert } from "react-native";
 
-const API_URL = "https://long-fans-greet.loca.lt";
+const API_URL = "https://puny-ducks-dress.loca.lt";
 
 console.log("API_URL: ", API_URL);
 
@@ -48,7 +48,7 @@ abstract class AbstractApi {
       this.session.refreshToken = refreshToken;
       this.sessionDirty = false;
     }
-    // console.log("Session: ", this.session);
+    console.log("Session: ", this.session);
     return this.session;
   };
 
