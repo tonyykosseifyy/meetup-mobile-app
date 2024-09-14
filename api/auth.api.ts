@@ -78,6 +78,7 @@ class Auth extends AbstractApi {
       body: request,
       secure: false,
     });
+    await this.setTokens({ accessToken: response.access, refreshToken: response.refresh });
     return response as IVerifyEmailResponse;
   };
 

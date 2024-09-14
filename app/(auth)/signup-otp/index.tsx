@@ -42,7 +42,7 @@ export default function SignUpOtp() {
       }
       console.log(data);
       const { access, refresh } = data;
-      setTokens(access, refresh);
+      
 
       router.replace("/signup-interests/");
     },
