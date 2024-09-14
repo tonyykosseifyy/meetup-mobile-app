@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   Image,
   Animated,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { LogoNavbar } from "@/components/logo";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -17,6 +18,7 @@ import { Friend } from "@/components/friend";
 import Meetup from "@/api/meetup.api";
 import * as Location from "expo-location";
 import Auth from "@/api/auth.api";
+import { Picker } from "@react-native-picker/picker";
 
 export interface CardProps {
   item: IUser;
@@ -46,8 +48,7 @@ export default function Home() {
   const [location, setLocation] = useState<Location.LocationObject | null>(null);
   const [errorMsg, setErrorMsg] = useState<string>("");
 
-  console.log("location", location);
-
+  const [selectedLanguage, setSelectedLanguage] = useState();
 
   // fetch user info
   // const { data: userInfo } = useQuery({
@@ -57,8 +58,6 @@ export default function Home() {
   //     console.log("User info fetched successfully", data);
   //   }
   // });
-
-  
 
   const { mutate: submitLocationInfo } = useMutation({
     mutationFn: ({ loc_lat, loc_lon }: { loc_lat: number; loc_lon: number }) =>
@@ -172,6 +171,7 @@ export default function Home() {
             <ActivityIndicator size="large" color="#d14d72" />
           </View>
         )}
+        
         {data && data.length > 0 && (
           <FlatList data={data} renderItem={renderItem} keyExtractor={(item) => item.email} />
         )}
@@ -191,3 +191,4 @@ export default function Home() {
     </SafeAreaView>
   );
 }
+
