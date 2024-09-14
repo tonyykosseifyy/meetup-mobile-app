@@ -6,8 +6,8 @@ import { Alert } from "react-native";
 export const API_URL = "https://famous-apes-change.loca.lt";
 
 console.log("API_URL: ", API_URL);
-
-const authRoutes = ["auth/login/", "auth/token/refresh/", "auth/verify-email/", "auth/userinfo/"];
+// auth/userinfo
+const authRoutes = ["auth/login/", "auth/token/refresh/", "auth/verify-email/"];
 
 const axiosInstance = axios.create({
   baseURL: API_URL,
@@ -68,13 +68,19 @@ abstract class AbstractApi {
     }
   };
 
-  private refreshToken = async (): Promise<void> => {
+  private navigateToLogin = async (url: string): Promise<void> => {
+    console.log("url", url);
+    if (url !== "auth/userinfo/") router.navigate("/login");
+  };
+
+
+  private refreshToken = async (url: string): Promise<void> => {
     const { refreshToken } = await this.getTokens();
 
     if (!refreshToken) {
       console.log("No refresh token found. Redirecting to login...");
       await this.clearTokens();
-      router.navigate("/login");
+      this.navigateToLogin(url);
       return;
     }
 
@@ -86,7 +92,7 @@ abstract class AbstractApi {
     } catch (error) {
       console.log("Error refreshing token:", error);
       await this.clearTokens();
-      router.navigate("/login");
+      this.navigateToLogin(url);
     }
   };
 
@@ -142,7 +148,7 @@ abstract class AbstractApi {
         }
 
         // Refresh the token
-        await this.refreshToken();
+        await this.refreshToken(error.response.config.url ?? "");
         const { accessToken: newAccessToken } = await this.getTokens();
         try {
           error.response.config.headers["Authorization"] = "Bearer " + newAccessToken;
@@ -154,7 +160,7 @@ abstract class AbstractApi {
         } catch (err: any) {
           console.log("Error with the retried response:", err);
           await this.clearTokens();
-          router.navigate("/login");
+          this.navigateToLogin(error.response.config.url ?? "");
         }
       } else {
         return Promise.reject(error);

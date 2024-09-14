@@ -42,7 +42,7 @@ export default function Home() {
   const [location, setLocation] = useState<Location.LocationObject | null>(null);
   const [errorMsg, setErrorMsg] = useState<string>("");
 
-  console.log("location", location);
+  // console.log("location", location);
 
   useEffect(() => {
     (async () => {

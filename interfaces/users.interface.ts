@@ -31,7 +31,6 @@ interface IUserInfo {
   interests: IInterest[];
   email: string;
   password: string;
-  avatar_id: number | null;
   loc_lat: number | null;
   loc_lon: number | null;
   avatar: {

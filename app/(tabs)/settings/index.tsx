@@ -41,7 +41,7 @@ const logoutPrompt = (queryClient: QueryClient) => {
         while (router.canGoBack()) {
           router.back();
         }
-        router.replace("/");
+        router.replace("/(auth)/login");
         queryClient.removeQueries();
       },
     },

@@ -79,6 +79,9 @@ export default function Registration({ data }: RegistrationProps) {
         biography,
         interests: [],
         id,
+        avatar: null,
+        loc_lat: null,
+        loc_lon: null,
       });
       router.replace("/signup-otp/");
     },
