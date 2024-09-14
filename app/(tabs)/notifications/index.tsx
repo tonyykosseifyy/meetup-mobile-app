@@ -5,7 +5,7 @@ import { Image } from "react-native";
 import { router } from "expo-router";
 import Meetup from "@/api/meetup.api";
 import Auth from "@/api/auth.api";
-
+import { API_URL } from "@/api/utils/abstract-api";
 // interface MeetupRequestResponse {
 //   id: number;
 //   request_from: IUser;
@@ -61,12 +61,21 @@ export default function Tab() {
             >
               <View className=" w-full flex-row justify-between p-4 ">
                 <View className="flex  flex-row   ">
-                  <View className="w-14 h-14 p-[0.5px] rounded-full border-solid border-2 border-cabaret-500 ">
+                  {/* <View className="w-14 h-14 p-[0.5px] rounded-full border-solid border-2 border-cabaret-500 ">
                     <Image
                       source={require("@/assets/avatars/adjusted_avatar_1.png")}
                       className="w-full h-full rounded-full object-contain"
                     />
+                  </View> */}
+
+                  <View className="w-12 h-12 p-1 bg-cabaret-100 rounded-xl border-solid border border-cabaret-400 mx-2">
+                    <Image
+                      // source={require("@/assets/avatars/adjusted_avatar_1.png")}
+                      source={{ uri: `${API_URL}${item.request_to.user_info.avatar?.image_url}` }}
+                      className="w-full h-full rounded-full object-contain"
+                    />
                   </View>
+
                   <View className="flex justify-evenly ml-2">
                     <Text>
                       {item.request_from.id == userInfo?.id

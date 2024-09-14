@@ -24,7 +24,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import Meetup from "@/api/meetup.api";
 import Auth from "@/api/auth.api";
-
+import { API_URL } from "@/api/utils/abstract-api";
 
 enum Sender {
   Me = "me",
@@ -139,26 +139,33 @@ export default function PreLogin() {
     userInfo?.id;
 
   return (
-    <SafeAreaView edges={["top"]} className="flex-1 bg-[#F6F6F6] relative">
+    <SafeAreaView edges={["top"]} className="flex-1 bg-gray-50 relative">
       <View className={`flex justify-between  bg-white flex-auto`}>
-        <View className="bg-[#F6F6F6] flex flex-row items-center justify-between px-6 h-20">
+        <View className="bg-gray-50 flex flex-row items-center justify-between px-6 h-14">
           <View className="flex flex-row items-center">
             <TouchableOpacity onPress={() => router.back()}>
-              <MaterialIcons name="arrow-back-ios-new" size={25} color="black" />
+              <MaterialIcons name="arrow-back-ios-new" size={20} color="##334155" />
             </TouchableOpacity>
-            <View className="w-12 h-12 p-[0.5px] rounded-full border-solid border-[2px] border-cabaret-500 ml-5">
+            {/* <View className="w-12 h-12 p-[0.5px] rounded-full border-solid border-[2px] border-cabaret-500 ml-5">
               <Image
                 source={require("@/assets/avatars/adjusted_avatar_1.png")}
                 className="w-full h-full rounded-full object-contain"
               />
+            </View> */}
+            <View className="w-10 h-10 p-1 ml-4 bg-cabaret-100 rounded-xl border-solid border border-cabaret-400">
+              <Image
+                // source={require("@/assets/avatars/adjusted_avatar_1.png")}
+                source={{ uri: `${API_URL}${meeting?.request_from.user_info.avatar?.image_url}` }}
+                className="w-full h-full rounded-full object-contain"
+              />
             </View>
             <View className="ml-3 ">
-              <Text className="text-black text-lg font-medium -mt-1">
+              <Text className="text-black text-base -mt-1">
                 {meeting?.request_from.id == userInfo?.id
                   ? meeting?.request_to.user_info.full_name
                   : meeting?.request_from.user_info.full_name}
               </Text>
-              <Text className="text-cabaret-500 -mt-[0.7px] font-semibold text-xs">
+              <Text className="text-cabaret-500 -mt-[0.7px] font-light text-xs">
                 {meeting?.request_from.id == userInfo?.id
                   ? meeting?.request_to.user_info.occupation
                   : meeting?.request_from.user_info.occupation}
@@ -166,9 +173,9 @@ export default function PreLogin() {
             </View>
           </View>
 
-          <TouchableOpacity>
+          {/* <TouchableOpacity>
             <MaterialCommunityIcons name="dots-vertical" size={27} color="black" />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
 
         <ScrollView
