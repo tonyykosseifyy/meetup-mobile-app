@@ -7,18 +7,14 @@ import {
   ActivityIndicator,
   Image,
   Animated,
-  TouchableWithoutFeedback,
 } from "react-native";
-import { LogoNavbar } from "@/components/logo";
 import { SafeAreaView } from "react-native-safe-area-context";
-import styles from "@/constants/styles";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { IUser } from "@/interfaces";
 import { Friend } from "@/components/friend";
 import Meetup from "@/api/meetup.api";
 import * as Location from "expo-location";
 import Auth from "@/api/auth.api";
-import { Picker } from "@react-native-picker/picker";
 
 export interface CardProps {
   item: IUser;
@@ -48,7 +44,7 @@ export default function Home() {
   const [location, setLocation] = useState<Location.LocationObject | null>(null);
   const [errorMsg, setErrorMsg] = useState<string>("");
 
-  const [selectedLanguage, setSelectedLanguage] = useState();
+  // const [selectedLanguage, setSelectedLanguage] = useState();
 
   // fetch user info
   // const { data: userInfo } = useQuery({

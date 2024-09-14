@@ -6,32 +6,18 @@ import InviteIcon from "@/assets/icons/home/invite.svg";
 import { calculateAge } from "@/utils/common";
 import { CardProps } from "../../app/(tabs)";
 import { useMutation, useQueryClient } from "react-query";
-import { requestMeeting } from "@/api/axios/meetup";
 import { icons } from "@/app/(auth)/signup-interests/data";
-import { MeetupRequestResponse, RequestMeetingsResponse } from "@/interfaces/meetup.interface";
-import { router } from "expo-router";
 import { API_URL } from "@/api/utils/abstract-api";
+import Meetup from "@/api/meetup.api";
 
 export const Friend = ({ item }: CardProps) => {
   const queryClient = useQueryClient();
+  const meetupApi = Meetup.getInstance();
 
-  const { mutate: sendRequest, isLoading } = useMutation<
-    {
-      meeting_request: MeetupRequestResponse;
-    },
-    unknown,
-    {
-      userId: number;
-    }
-  >({
-    mutationFn: ({ userId }) => {
-      return requestMeeting({ userId });
-    },
+  const { mutate: sendRequest, isLoading } = useMutation({
+    mutationFn: ({ userId }: { userId: number }) => meetupApi.requestMeeting({ userId }),
     mutationKey: "/meetup/meeting-requests/place-time-requests/",
-    retry: false,
-    onSuccess: async ({ meeting_request }) => {
-      // test
-
+    onSuccess: async () => {
       await queryClient.invalidateQueries("/meetup/users/", {
         refetchInactive: true,
       });
