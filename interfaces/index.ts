@@ -26,6 +26,7 @@ import {
   MeetupRequestResponse,
   RequestPlaceTimeForMeetingRequest,
   RequestPlaceTimeForMeetingResponse,
+  AvatarsReponse,
 } from "./meetup.interface";
 
 export {
@@ -49,4 +50,5 @@ export {
   IInterest,
   IChangePasswordRequest,
   IResetPasswordRequest,
+  AvatarsReponse,
 };

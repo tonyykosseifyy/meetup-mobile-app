@@ -10,6 +10,7 @@ import { requestMeeting } from "@/api/axios/meetup";
 import { icons } from "@/app/(auth)/signup-interests/data";
 import { MeetupRequestResponse, RequestMeetingsResponse } from "@/interfaces/meetup.interface";
 import { router } from "expo-router";
+import { API_URL } from "@/api/utils/abstract-api";
 
 export const Friend = ({ item }: CardProps) => {
   const queryClient = useQueryClient();
@@ -56,7 +57,8 @@ export const Friend = ({ item }: CardProps) => {
         <View className="flex flex-row items-center h-full">
           <View className="w-14 h-14 p-1 bg-cabaret-100 rounded-xl border-solid border border-cabaret-400 mx-2">
             <Image
-              source={require("@/assets/avatars/adjusted_avatar_1.png")}
+              // source={require("@/assets/avatars/adjusted_avatar_1.png")}
+              source={{ uri: `${API_URL}${item.user_info.avatar?.image_url}` }}
               className="w-full h-full rounded-full object-contain"
             />
           </View>
@@ -85,7 +87,7 @@ export const Friend = ({ item }: CardProps) => {
       </View>
 
       <Text className="text-slate-500 text-[13px] leading-5 ml-2 mr-4 mt-3">
-        {item.user_info?.biography} 
+        {item.user_info?.biography}
       </Text>
 
       <View className="w-full flex flex-row justify-center mt-5 px-2">

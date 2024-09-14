@@ -11,6 +11,7 @@ import {
   IUserInfo,
   IVerifyEmailRequest,
   IVerifyEmailResponse,
+  AvatarsReponse,
 } from "@/interfaces";
 import AbstractApi from "./utils/abstract-api";
 
@@ -160,12 +161,12 @@ class Auth extends AbstractApi {
       },
     });
   };
-  public getAllAvatars = async (): Promise<IUserResponse> => {
+  public getAllAvatars = async (): Promise<AvatarsReponse[]> => {
     const response = await this.doFetch({
       method: "GET",
       pathExtension: "/avatars/",
     });
-    return response as IUserResponse;
+    return response as AvatarsReponse[];
   };
 }
 

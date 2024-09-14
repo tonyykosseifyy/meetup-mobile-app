@@ -1,58 +1,13 @@
 import React, { useState } from "react";
-import {
-  View,
-  TouchableOpacity,
-  Image,
-  Text,
-  ActivityIndicator,
-  Alert,
-  ScrollView,
-} from "react-native";
+import { View, TouchableOpacity, Image, Text, ActivityIndicator, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useQuery } from "react-query";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useMutation, useQueryClient } from "react-query";
 import Auth from "@/api/auth.api";
-import axios from "axios";
 import styles from "@/constants/styles";
-import { ImageSourcePropType, Animated } from "react-native";
-import { FlatList } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
-import Feather from "@expo/vector-icons/Feather";
 import Ionicons from "@expo/vector-icons/Ionicons";
-
-const avatarImages: Record<number, ImageSourcePropType> = {
-  1: require("@/assets/avatars/avatar1.png"),
-  2: require("@/assets/avatars/avatar2.png"),
-  3: require("@/assets/avatars/avatar3.png"),
-  4: require("@/assets/avatars/avatar4.png"),
-  5: require("@/assets/avatars/avatar5.png"),
-  6: require("@/assets/avatars/avatar6.png"),
-  7: require("@/assets/avatars/avatar7.png"),
-  8: require("@/assets/avatars/avatar8.png"),
-  9: require("@/assets/avatars/avatar9.png"),
-  10: require("@/assets/avatars/avatar10.png"),
-  11: require("@/assets/avatars/avatar11.png"),
-  12: require("@/assets/avatars/avatar12.png"),
-  13: require("@/assets/avatars/avatar13.png"),
-  14: require("@/assets/avatars/avatar14.png"),
-  15: require("@/assets/avatars/avatar15.png"),
-  16: require("@/assets/avatars/avatar16.png"),
-  17: require("@/assets/avatars/avatar17.png"),
-  18: require("@/assets/avatars/avatar18.png"),
-  19: require("@/assets/avatars/avatar19.png"),
-  20: require("@/assets/avatars/avatar20.png"),
-  21: require("@/assets/avatars/avatar21.png"),
-  22: require("@/assets/avatars/avatar22.png"),
-  23: require("@/assets/avatars/avatar23.png"),
-  24: require("@/assets/avatars/avatar24.png"),
-  25: require("@/assets/avatars/avatar25.png"),
-  26: require("@/assets/avatars/avatar26.png"),
-  27: require("@/assets/avatars/avatar27.png"),
-  28: require("@/assets/avatars/avatar28.png"),
-  29: require("@/assets/avatars/avatar29.png"),
-  30: require("@/assets/avatars/avatar30.png"),
-};
+import { API_URL } from "@/api/utils/abstract-api";
 
 export default function ProfileAvatar() {
   const authApi = Auth.getInstance();
@@ -60,7 +15,6 @@ export default function ProfileAvatar() {
   const queryClient = useQueryClient();
 
   const [selectedAvatar, setSelectedAvatar] = useState<number | null>(null);
-
 
   // Mutation for updating user info
   const {
@@ -97,15 +51,28 @@ export default function ProfileAvatar() {
   });
 
   // Fetch user info
-  const { data: userInfo, isFetching } = useQuery({
+  const { data: userInfo, isLoading: isLoadingUserInfo, isFetching } = useQuery({
     queryKey: "getMe",
     queryFn: () => authApi.getMe(),
+    onSettled: (data) => {
+      if (data?.avatar) {
+        console.log("selected avatar: ", data.avatar.id);
+        setSelectedAvatar(data.avatar.id);
+      }
+    },
   });
 
-  
+  const {
+    data: avatars,
+    isLoading: isLoadingAvatars,
+    isError: isErrorAvatars,
+  } = useQuery({
+    queryKey: "getAvatars",
+    queryFn: () => authApi.getAllAvatars(),
+  });
 
   // Handle loading state
-  if (isFetching) {
+  if (isLoadingUserInfo || isLoadingAvatars || isFetching) {
     return (
       <View className="flex-1 bg-white flex items-center justify-center">
         <ActivityIndicator size="large" color="#d14d72" />
@@ -121,23 +88,20 @@ export default function ProfileAvatar() {
             <Text className="mt-1 text-slate-700">Choose an avatar that represents you best!</Text>
           </View>
 
-          {!isUpdating && (
+          {!isUpdating && !isLoadingUserInfo && !isFetching && Array.isArray(avatars) && (
             <View className="mt-7 flex flex-row flex-wrap justify-between">
-              {[
-                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
-                24, 25, 26, 27, 28, 29, 30,
-              ].map((avatar) => (
+              {avatars.map((avatar) => (
                 <TouchableOpacity
-                  style={selectedAvatar === avatar ? styles.cabaret_shadow : {}}
-                  className={`relative h-40 w-40 my-4 bg-white p-3 rounded-full ${selectedAvatar === avatar ? "border bg-cabaret-50 border-cabaret-400" : ""}`}
-                  key={avatar}
-                  onPress={() => setSelectedAvatar(avatar)}
+                  style={selectedAvatar === avatar.id ? styles.cabaret_shadow : {}}
+                  className={`relative h-40 w-40 my-4 bg-white p-3 rounded-full ${selectedAvatar === avatar.id ? "border bg-cabaret-50 border-cabaret-400" : ""}`}
+                  key={avatar.id}
+                  onPress={() => setSelectedAvatar(avatar.id)}
                 >
                   <Image
                     className="w-full h-full object-contain rounded-full bg-transparent"
-                    source={avatarImages[avatar]}
+                    source={{ uri: `${API_URL}${avatar.image_url}` }}
                   />
-                  {selectedAvatar === avatar && (
+                  {selectedAvatar === avatar.id && (
                     <TouchableOpacity
                       onPress={() => editUser()}
                       className="absolute bottom-0 right-0 bg-white p-1 rounded-full"

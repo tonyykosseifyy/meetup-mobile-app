@@ -23,6 +23,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Auth from "@/api/auth.api";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { calculateAge } from "@/utils/common";
+import { API_URL } from "@/api/utils/abstract-api";
 
 const logoutPrompt = (queryClient: QueryClient) => {
   const authApi = Auth.getInstance();
@@ -51,13 +52,16 @@ export default function Settings() {
   const authApi = Auth.getInstance();
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
-  const { data: userInfo, isLoading } = useQuery({
+  const {
+    data: userInfo,
+    isLoading,
+    isFetching,
+  } = useQuery({
     queryKey: "getMe",
     queryFn: () => authApi.getMe(),
-    retry: 1,
   });
   const queryClient = useQueryClient();
-  if (isLoading) {
+  if (isFetching) {
     return (
       <View className="flex-1 bg-white">
         <View className="flex-1 h-full bg-white flex items-center justify-center">
@@ -73,10 +77,16 @@ export default function Settings() {
         <View className="flex flex-row items-center">
           <ExpoLink href="/(tabs)/settings/change-avatar" asChild>
             <TouchableOpacity className="relative w-24 h-24 rounded-full p-1.5 bg-cabaret-50/50 border-solid border border-cabaret-200">
-              <Image
-                source={require("@/assets/images/sample_avatar.jpeg")}
-                className="w-full h-full rounded-full object-contain"
-              />
+              {!isFetching ? (
+                <Image
+                  source={{ uri: `${API_URL}${userInfo?.avatar?.image_url}` }}
+                  className="w-full h-full rounded-full object-contain"
+                />
+              ) : (
+                <View className="flex-1 h-full flex items-center justify-center">
+                  <ActivityIndicator size="small" color="#d14d72" />
+                </View>
+              )}
 
               <View className="absolute bottom-0 right-0 bg-white p-1.5 rounded-full">
                 <AntDesign name="pluscircle" size={20} color="#d14d72" />
