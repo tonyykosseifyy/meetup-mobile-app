@@ -11,11 +11,12 @@ import {
 import { LogoNavbar } from "@/components/logo";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "@/constants/styles";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { IUser } from "@/interfaces";
 import { Friend } from "@/components/friend";
 import Meetup from "@/api/meetup.api";
 import * as Location from "expo-location";
+import Auth from "@/api/auth.api";
 
 export interface CardProps {
   item: IUser;
@@ -36,13 +37,40 @@ const renderItem = ({ item }: CardProps) => {
 
 export default function Home() {
   const meetupApi = Meetup.getInstance();
+  const authApi = Auth.getInstance();
+
+  const queryClient = useQueryClient();
 
   const [activeTab, setActiveTab] = useState<TabType>(TabType.FOR_YOU);
 
   const [location, setLocation] = useState<Location.LocationObject | null>(null);
   const [errorMsg, setErrorMsg] = useState<string>("");
 
-  // console.log("location", location);
+  console.log("location", location);
+
+
+  // fetch user info
+  // const { data: userInfo } = useQuery({
+  //   queryKey: "getMe",
+  //   queryFn: () => authApi.getMe(),
+  //   onSettled: (data) => {
+  //     console.log("User info fetched successfully", data);
+  //   }
+  // });
+
+  
+
+  const { mutate: submitLocationInfo } = useMutation({
+    mutationFn: ({ loc_lat, loc_lon }: { loc_lat: number; loc_lon: number }) =>
+      authApi.updateUserInfo({
+        loc_lat: loc_lat,
+        loc_lon: loc_lon,
+      }),
+    mutationKey: "/auth/userinfo/update",
+    onSuccess: () => {
+      queryClient.invalidateQueries("getMe");
+    },
+  });
 
   useEffect(() => {
     (async () => {
@@ -52,17 +80,14 @@ export default function Home() {
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
+      let userLocation = await Location.getCurrentPositionAsync({});
+      setLocation(userLocation);
+      submitLocationInfo({
+        loc_lat: userLocation.coords.latitude,
+        loc_lon: userLocation.coords.longitude,
+      });
     })();
   }, []);
-
-  let text = "Waiting..";
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = JSON.stringify(location);
-  }
 
   const fetchUsers = useCallback(async () => {
     switch (activeTab) {
@@ -93,7 +118,7 @@ export default function Home() {
     }).start();
   }, [activeTab]);
 
-  const tabWidth = 120; 
+  const tabWidth = 120;
   const indicatorTranslateX = indicatorPosition.interpolate({
     inputRange: [0, 1],
     outputRange: [0, tabWidth], // Move the indicator bar based on tab width
