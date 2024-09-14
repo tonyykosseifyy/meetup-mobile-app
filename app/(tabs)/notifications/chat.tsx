@@ -17,20 +17,15 @@ import Message from "@/components/chat/message";
 import ChatButton from "@/components/chat/button";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import LocationIcon from "@/assets/icons/settings/location.svg";
-// import styles from "@/constants/styles";
 import PlaceChip from "@/components/chat/placechip";
 import TimeIcon from "@/assets/icons/chat/time.svg";
 import { Button } from "@/components";
 import { router, useLocalSearchParams } from "expo-router";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { getMe } from "@/api/axios/users";
-import { MeetupRequestResponse } from "@/interfaces";
-import {
-  changeMeetingStatus,
-  requestMeetings,
-  requestPlaceTimeForMeeting,
-  retrieveMeeting,
-} from "@/api/axios/meetup";
+import Meetup from "@/api/meetup.api";
+import Auth from "@/api/auth.api";
+
+
 enum Sender {
   Me = "me",
   Her = "her",
@@ -61,9 +56,13 @@ const times = [
 ];
 
 export default function PreLogin() {
+  const meetupApi = Meetup.getInstance();
+  const authApi = Auth.getInstance();
   const bottomSheetRef = useRef<BottomSheet>(null);
   const [place, setPlace] = useState<string>("");
   const [time, setTime] = useState<string>("");
+
+  const queryClient = useQueryClient();
 
   const snapPoints = useMemo(() => ["50%", "85%"], []);
 
@@ -87,63 +86,34 @@ export default function PreLogin() {
 
   const id = useLocalSearchParams().meetingId as string;
 
-  const { data: meeting, isLoading: isLoadingMeeting } = useQuery(
-    "/meetup/me/meeting-requests/" + id + "/",
-    {
-      queryFn: () => retrieveMeeting({ id }),
-      retry: 2,
-      onSuccess: (data) => {},
-    }
-  );
-
-  const queryClient = useQueryClient();
+  const { data: meeting, isLoading: isLoadingMeeting } = useQuery({
+    queryKey: "/meetup/me/meeting-requests/" + id + "/",
+    queryFn: () => meetupApi.retrieveMeeting({ id }),
+  });
 
   const { data: userInfo, isLoading: isUserLoading } = useQuery({
     queryKey: "getMe",
-    retry: 2,
-    queryFn: () => getMe(),
+    queryFn: () => authApi.getMe(),
   });
 
-  const {
-    mutate: proposePlaceTime,
-    isLoading: isProposingPlaceTime,
-    isError: isProposingPlaceTimeError,
-    error: proposingPlaceTimeError,
-  } = useMutation<
-    unknown,
-    unknown,
-    {
-      id: number;
-      timeSlot: string;
-      place: string;
-    }
-  >({
-    mutationFn: ({ id, timeSlot, place }) => {
-      return requestPlaceTimeForMeeting({ id, timeSlot, place });
-    },
+  const { mutate: proposePlaceTime, isLoading: isProposingPlaceTime } = useMutation({
+    mutationFn: ({ id, timeSlot, place }: { id: number; timeSlot: string; place: string }) =>
+      meetupApi.requestPlaceTimeForMeeting({ id, timeSlot, place }),
     mutationKey: "/meetup/meeting-requests/place-time-requests/",
-    retry: false,
     onSuccess: (data) => {
       handleClosePress();
       setTime("");
       setPlace("");
       queryClient.invalidateQueries("/meetup/me/meeting-requests/" + id + "/");
+      queryClient.invalidateQueries("/meetup/me/meeting-requests/");
     },
   });
 
-  const {
-    mutate: changeStatusMeeting,
-    isLoading: isChangeStatusMeeting,
-    isError: isChangeStatusMeetingError,
-    error: changeStatusMeetingError,
-  } = useMutation<unknown, unknown, { id: number; status: "accept" | "reject" }>({
-    mutationFn: ({ id, status }) => {
-      return changeMeetingStatus({ id, status });
-    },
+  const { mutate: changeStatusMeeting } = useMutation({
+    mutationFn: ({ id, status }: { id: number; status: "accept" | "reject" }) =>
+      meetupApi.changeMeetingStatus({ id, status }),
     mutationKey: "/meetup/meeting-requests/respond/",
-    retry: false,
-    onSuccess: (data) => {
-      console.log("MEETING" + data);
+    onSuccess: () => {
       handleClosePress();
       setTime("");
       setPlace("");

@@ -1,13 +1,10 @@
-import { requestMeetings } from "@/api/axios/meetup";
-import React, { useEffect } from "react";
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useMutation, useQuery } from "react-query";
+import React from "react";
+import { View, Text, FlatList, TouchableOpacity, ActivityIndicator } from "react-native";
+import { useQuery } from "react-query";
 import { Image } from "react-native";
-import { useAuth } from "@/providers/auth.provider";
 import { router } from "expo-router";
-import { getMe } from "@/api/axios/users";
-import { formatTimeTo12Hour } from "@/utils/common";
+import Meetup from "@/api/meetup.api";
+import Auth from "@/api/auth.api";
 
 // interface MeetupRequestResponse {
 //   id: number;
@@ -21,18 +18,24 @@ import { formatTimeTo12Hour } from "@/utils/common";
 // }
 
 export default function Tab() {
-  const { isLoading, data, error } = useQuery("/meetup/me/meeting-requests/", requestMeetings);
-  const { data: userInfo, isLoading: isUserLoading } = useQuery({
-    queryKey: "/auth/userinfo/",
-    retry: 2,
-    queryFn: () => getMe(),
+  const meetupApi = Meetup.getInstance();
+  const authApi = Auth.getInstance();
+
+  const { data, isLoading } = useQuery({
+    queryKey: "/meetup/me/meeting-requests/",
+    queryFn: () => meetupApi.requestMeetings({}),
+  });
+
+  const { data: userInfo } = useQuery({
+    queryKey: "getMe",
+    queryFn: () => authApi.getMe(),
   });
 
   return (
     <View style={{ flex: 1, display: "flex", backgroundColor: "white" }}>
       {isLoading ? (
-        <View className="flex-1 justify-center items-center">
-          <Text className="text-center text-gray-400">Loading...</Text>
+        <View className="w-full flex-1 h-full flex flex-row items-center justify-center">
+          <ActivityIndicator size="large" color="#d14d72" />
         </View>
       ) : data?.length == 0 && !isLoading ? (
         <View className="flex-1 justify-center items-center">
