@@ -47,7 +47,7 @@ export default function SignUpOtp() {
       while (router.canGoBack()) {
         router.back();
       }
-      router.replace("/(tabs)");
+      router.replace("/choose-avatar");
     },
   });
 
