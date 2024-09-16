@@ -12,12 +12,33 @@ import {
   IVerifyEmailRequest,
   IVerifyEmailResponse,
   AvatarsReponse,
+  IInterest,
 } from "@/interfaces";
 import AbstractApi from "./utils/abstract-api";
 
 type ILookupResponse = IUser[];
 type IUserResponse = IUserInfo;
 
+type GetMeResponse = {
+  id?: number;
+  full_name: string;
+  date_of_birth: string;
+  occupation: string;
+  biography: string;
+  interests: IInterest[];
+  email: string;
+  password: string;
+  loc_lat: number | null;
+  loc_lon: number | null;
+  city: {
+    id: string;
+    name: string;
+  };
+  avatar: {
+    id: number;
+    image_url: string;
+  } | null;
+};
 class Auth extends AbstractApi {
   private static instance: Auth | null = null;
   readonly path = "auth";
@@ -91,14 +112,14 @@ class Auth extends AbstractApi {
     return response as ILookupResponse;
   };
 
-  public getMe = async (): Promise<IUserResponse> => {
+  public getMe = async (): Promise<GetMeResponse> => {
     console.log("getMe");
 
     const response = await this.doFetch({
       method: "GET",
       pathExtension: "/userinfo/",
     });
-    return response as IUserResponse;
+    return response as GetMeResponse;
   };
 
   public updateUserInfo = async (request: IUpdateUserRequest): Promise<IUserResponse> => {

@@ -15,10 +15,10 @@ interface IUser {
     occupation: string;
     biography: string;
     interests: IInterest[];
-    avatar : {
+    avatar: {
       id: number;
       image_url: string;
-    } | null
+    } | null;
   };
 }
 
@@ -49,6 +49,7 @@ interface IUpdateUserRequest {
   avatar_id?: number | null;
   loc_lat?: number | null;
   loc_lon?: number | null;
+  city_id?: string;
 }
 
 interface IChangePasswordRequest {

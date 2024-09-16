@@ -77,13 +77,10 @@ export default function Registration({ data }: RegistrationProps) {
   const [date, setDate] = useState<Date | null>(null);
   const [currentCity, setCurrentCity] = useState<string | null>(null);
 
-  const [cities, setCities] = useState<{ id: string; name: string }[] | null>(null);
-
-  const citySelected =
-    cities?.findIndex((item) => item.id.toString() === currentCity?.toString()) !== -1;
   const onCityChange = (cityId: string | null) => {
     setCurrentCity(cityId);
   };
+
   const {
     mutate: setUserInfoAfterRegister,
     isLoading: isUpdatingUserInfo,
@@ -163,10 +160,10 @@ export default function Registration({ data }: RegistrationProps) {
   const { data: citiesData, isLoading: isLoadingCities } = useQuery({
     queryFn: () => meetupApi.getAllCities(),
     queryKey: ["meetup", "cities"],
-    onSuccess: (data) => {
-      setCities(data);
-    },
   });
+
+  const citySelected =
+    citiesData?.findIndex((item) => item.id.toString() === currentCity?.toString()) !== -1;
 
   const handleConfirm = (date: Date) => {
     setDatePickerVisibility(false);
@@ -184,7 +181,8 @@ export default function Registration({ data }: RegistrationProps) {
       !password ||
       !date ||
       !fullName ||
-      !occupation
+      !occupation ||
+      !citySelected
     );
   };
 
@@ -246,7 +244,7 @@ export default function Registration({ data }: RegistrationProps) {
                     <Text className="text-[#666666]">Your City</Text>
                   </View>
                 )}
-                <Dropdown onValueChange={onCityChange} items={cities} />
+                <Dropdown onValueChange={onCityChange} items={citiesData ?? []} />
               </View>
             </View>
 

@@ -48,7 +48,7 @@ abstract class AbstractApi {
       this.session.refreshToken = refreshToken;
       this.sessionDirty = false;
     }
-    console.log("Session: ", this.session);
+    // console.log("Session: ", this.session);
     return this.session;
   };
 

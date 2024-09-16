@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useQuery } from "react-query";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -16,9 +16,58 @@ import { useQueryClient } from "react-query";
 import styles from "@/constants/styles";
 import { Alert } from "react-native";
 import Auth from "@/api/auth.api";
+import Meetup from "@/api/meetup.api";
+import RNPickerSelect from "react-native-picker-select";
+import { router } from "expo-router";
+
+interface DropdownProps {
+  onValueChange: (value: any) => void;
+  items: { id: string; name: string }[] | null;
+  itemKey: string;
+}
+
+export const Dropdown = ({ onValueChange, items, itemKey }: DropdownProps) => {
+  const additionalProps = itemKey ? { itemKey: itemKey } : {};
+  console.log("item keu", itemKey);
+
+  const formattedDropdownItems = items
+    ? items.map((item) => ({
+        label: item.name,
+        value: item.id,
+        key: item.id,
+      }))
+    : [];
+
+  return (
+    <RNPickerSelect
+      {...additionalProps}
+      placeholder={{
+        label: "",
+        value: null,
+      }}
+      style={{
+        inputIOS: {
+          height: "100%",
+          width: 200,
+          display: "flex",
+          alignItems: "center",
+        },
+        inputAndroid: {
+          height: "100%",
+          width: 200,
+          display: "flex",
+          alignItems: "center",
+        },
+      }}
+      onValueChange={onValueChange}
+      items={formattedDropdownItems}
+    />
+  );
+};
 
 export default function AccountDetails() {
   const authApi = Auth.getInstance();
+  const meetupApi = Meetup.getInstance();
   const navigation = useNavigation();
   const queryClient = useQueryClient();
   const [email, setEmail] = useState<string>("");
@@ -27,6 +76,24 @@ export default function AccountDetails() {
   const [biography, setBiography] = useState<string>("");
   const [dateChanged, setDateChanged] = useState<boolean>(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState<boolean>(false);
+
+  const [currentCity, setCurrentCity] = useState<string | null>(null);
+
+  const onCityChange = (cityId: string | null) => {
+    setCurrentCity(cityId);
+  };
+
+  useEffect(() => {
+    if (currentCity) {
+      onCityChange(currentCity);
+    }
+  }, [currentCity]);
+  console.log("cur city", currentCity);
+
+  const { data: citiesData, isLoading: isLoadingCities } = useQuery({
+    queryFn: () => meetupApi.getAllCities(),
+    queryKey: ["meetup", "cities"],
+  });
 
   const [date, setDate] = useState(() => {
     const now = new Date();
@@ -37,7 +104,7 @@ export default function AccountDetails() {
     setDate(date);
     setDatePickerVisibility(false);
   };
-  
+
   const {
     mutate: editUser,
     isLoading: isUpdating,
@@ -50,6 +117,7 @@ export default function AccountDetails() {
         date_of_birth: date?.toISOString().slice(0, 10),
         occupation,
         biography,
+        city_id: currentCity ?? "1",
       }),
     mutationKey: "/auth/userinfo/update",
     retry: false,
@@ -67,22 +135,33 @@ export default function AccountDetails() {
   });
 
   // get user info and populate the form
-  const { data: userInfo, isFetching } = useQuery({
+  const {
+    data: userInfo,
+    isFetching,
+    isLoading: isLoadingUserInfo,
+  } = useQuery({
     queryKey: "getMe",
     queryFn: () => authApi.getMe(),
-    retry: 1,
-    onSuccess: (data) => {
-      const { email, full_name, date_of_birth, occupation, biography } = data;
+  });
+
+  useEffect(() => {
+    if (userInfo) {
+      console.log(userInfo);
+      const { email, full_name, date_of_birth, occupation, biography, city } = userInfo;
       setEmail(email);
       setFullName(full_name);
       setOccupation(occupation);
       setBiography(biography);
       setDate(new Date(date_of_birth));
       setDateChanged(true);
-    },
-  });
+      onCityChange(city.id);
+    }
+  }, [userInfo, router]);
+
+  const citySelected =
+    citiesData?.findIndex((item) => item.id.toString() === currentCity?.toString()) !== -1;
   // changed this line remove && !email
-  if (isFetching) {
+  if (isFetching || isLoadingCities) {
     return (
       <View className="flex-1 bg-white flex items-center justify-center">
         <ActivityIndicator size="large" color="#d14d72" />
@@ -120,6 +199,28 @@ export default function AccountDetails() {
                 value={occupation}
                 onChangeText={setOccupation}
               />
+            </View>
+
+            {/* Current City */}
+            <View className="mt-7 py-2 px-5 bg-white h-14 rounded-lg flex flex-row items-center justify-between border-[1px] border-solid border-cabaret-500">
+              <SimpleLineIcons
+                name="location-pin"
+                size={18}
+                color="black"
+                style={{ opacity: 0.5 }}
+              />
+              <View className="w-full flex-1 h-6 ml-3 flex flex-row items-center relative">
+                {!citySelected && (
+                  <View className="absolute">
+                    <Text className="text-[#666666]">Your City</Text>
+                  </View>
+                )}
+                <Dropdown
+                  itemKey={currentCity ?? ""}
+                  onValueChange={onCityChange}
+                  items={citiesData ?? []}
+                />
+              </View>
             </View>
 
             {/* email */}
