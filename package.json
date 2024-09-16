@@ -52,6 +52,7 @@
     "react-native-input-outline": "^1.5.2",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-modal-datetime-picker": "^17.1.0",
+    "react-native-picker-select": "^9.3.1",
     "react-native-radio-buttons-group": "^3.1.0",
     "react-native-react-query-devtools": "^1.1.0",
     "react-native-reanimated": "~3.10.1",

@@ -13,6 +13,60 @@ import { Ionicons } from "@expo/vector-icons";
 import Header from "../header";
 import { useAuth } from "@/providers/auth.provider";
 import Auth from "@/api/auth.api";
+import RNPickerSelect from "react-native-picker-select";
+import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
+
+// export interface Item {
+//     label: string;
+//     value: any;
+//     key?: string | number;
+//     color?: string;
+//     testID?: string;
+//     /**
+//      * Used when you want a different label displayed
+//      * on the input than what is displayed on the Picker
+//      *
+//      * If falsy, label is used
+//      */
+//     inputLabel?: string;
+// }
+
+interface DropdownProps {
+  onValueChange: (value: any) => void;
+  items: string[];
+}
+
+export const Dropdown = ({ onValueChange, items }: DropdownProps) => {
+  const formattedDropdownItems = items.map((item) => ({
+    label: item,
+    value: item,
+  }));
+
+  return (
+    <RNPickerSelect
+      placeholder={{
+        label: "",
+        value: null,
+      }}
+      style={{
+        inputIOS: {
+          height: "100%",
+          width: 200,
+          display: "flex",
+          alignItems: "center",
+        },
+        inputAndroid: {
+          height: "100%",
+          width: 200,
+          display: "flex",
+          alignItems: "center",
+        },
+      }}
+      onValueChange={onValueChange}
+      items={formattedDropdownItems}
+    />
+  );
+};
 
 interface RegistrationProps {
   data: IRegistrationData;
@@ -32,7 +86,20 @@ export default function Registration({ data }: RegistrationProps) {
   const [yourSelf, setYourSelf] = useState(true);
   const [mother, setMother] = useState(false);
   const [date, setDate] = useState<Date | null>(null);
+  const [currentCity, setCurrentCity] = useState<string>("");
 
+  const [cities, setCities] = useState([
+    "Jbeil",
+    "Beirut",
+    "Tripoli",
+    "Zahle",
+    "Saida",
+    "Baalbek",
+    "Tyre",
+  ]);
+  const onCityChange = (city: any) => {
+    setCurrentCity(city);
+  };
   // useMutation((userInfo) => setUserInfo(userInfo))
   const {
     mutate: setUserInfoAfterRegister,
@@ -106,6 +173,7 @@ export default function Registration({ data }: RegistrationProps) {
     },
   });
 
+  console.log("current city", currentCity);
   const handleConfirm = (date: Date) => {
     setDatePickerVisibility(false);
     setTimeout(() => {
@@ -160,6 +228,24 @@ export default function Registration({ data }: RegistrationProps) {
                 value={occupation}
                 onChangeText={setOccupation}
               />
+            </View>
+
+            {/* Current City */}
+            <View className="mt-7 py-2 px-5 bg-white h-14 rounded-lg flex flex-row items-center justify-between border-[1px] border-solid border-cabaret-500">
+              <SimpleLineIcons
+                name="location-pin"
+                size={18}
+                color="black"
+                style={{ opacity: 0.5 }}
+              />
+              <View className="w-full flex-1 h-6 ml-3 flex flex-row items-center relative">
+                {!cities.includes(currentCity) && (
+                  <View className="absolute">
+                    <Text className="text-[#666666]">Your City</Text>
+                  </View>
+                )}
+                <Dropdown onValueChange={onCityChange} items={cities} />
+              </View>
             </View>
 
             {/* email */}
