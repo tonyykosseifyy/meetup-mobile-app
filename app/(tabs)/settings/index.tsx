@@ -60,6 +60,7 @@ export default function Settings() {
     queryKey: "getMe",
     queryFn: () => authApi.getMe(),
   });
+
   const queryClient = useQueryClient();
   if (isFetching) {
     return (

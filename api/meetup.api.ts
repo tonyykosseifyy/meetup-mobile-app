@@ -1,6 +1,16 @@
-import { IInterestsResponse, IUser, MeetupRequestRequest, MeetupRequestResponse } from "@/interfaces";
+import {
+  IInterestsResponse,
+  IUser,
+  MeetupRequestRequest,
+  MeetupRequestResponse,
+} from "@/interfaces";
 import AbstractApi from "./utils/abstract-api";
-import { RequestMeetingsRequest, RequestMeetingsResponse, RequestPlaceTimeForMeetingRequest, RequestPlaceTimeForMeetingResponse } from "@/interfaces/meetup.interface";
+import {
+  RequestMeetingsRequest,
+  RequestMeetingsResponse,
+  RequestPlaceTimeForMeetingRequest,
+  RequestPlaceTimeForMeetingResponse,
+} from "@/interfaces/meetup.interface";
 
 class Meetup extends AbstractApi {
   private static instance: Meetup | null = null;
@@ -23,6 +33,15 @@ class Meetup extends AbstractApi {
       pathExtension: "/interests",
     });
     return response as IInterestsResponse;
+  }
+
+  async getAllCities(): Promise<{ id: string; name: string }[]> {
+    const response = await this.doFetch({
+      method: "GET",
+      pathExtension: "/cities",
+      secure: false,
+    });
+    return response as { id: string; name: string }[];
   }
 
   async getForYouLookup(): Promise<IUser[]> {
@@ -50,7 +69,7 @@ class Meetup extends AbstractApi {
     return response as MeetupRequestResponse;
   }
 
-  async requestMeetings({} : RequestMeetingsRequest): Promise<RequestMeetingsResponse> {
+  async requestMeetings({}: RequestMeetingsRequest): Promise<RequestMeetingsResponse> {
     const response = await this.doFetch({
       method: "GET",
       pathExtension: "/me/meeting-requests/",
@@ -58,7 +77,11 @@ class Meetup extends AbstractApi {
     return response as RequestMeetingsResponse;
   }
 
-  async requestPlaceTimeForMeeting({ id, timeSlot, place }: RequestPlaceTimeForMeetingRequest): Promise<RequestPlaceTimeForMeetingResponse> {
+  async requestPlaceTimeForMeeting({
+    id,
+    timeSlot,
+    place,
+  }: RequestPlaceTimeForMeetingRequest): Promise<RequestPlaceTimeForMeetingResponse> {
     const response = await this.doFetch({
       method: "POST",
       pathExtension: `/meeting-requests/${id}/place-time-requests/`,
@@ -88,5 +111,3 @@ class Meetup extends AbstractApi {
   }
 }
 export default Meetup;
-
-

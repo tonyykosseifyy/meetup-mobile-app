@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Text, StyleSheet, Pressable } from "react-native";
+import { Text, StyleSheet, Pressable, ActivityIndicator } from "react-native";
 import { IRegistrationData } from "@/assets/data/registration_data";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { router } from "expo-router";
 import axios from "axios";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -15,32 +15,20 @@ import { useAuth } from "@/providers/auth.provider";
 import Auth from "@/api/auth.api";
 import RNPickerSelect from "react-native-picker-select";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
-
-// export interface Item {
-//     label: string;
-//     value: any;
-//     key?: string | number;
-//     color?: string;
-//     testID?: string;
-//     /**
-//      * Used when you want a different label displayed
-//      * on the input than what is displayed on the Picker
-//      *
-//      * If falsy, label is used
-//      */
-//     inputLabel?: string;
-// }
+import Meetup from "@/api/meetup.api";
 
 interface DropdownProps {
   onValueChange: (value: any) => void;
-  items: string[];
+  items: { id: string; name: string }[] | null;
 }
 
 export const Dropdown = ({ onValueChange, items }: DropdownProps) => {
-  const formattedDropdownItems = items.map((item) => ({
-    label: item,
-    value: item,
-  }));
+  const formattedDropdownItems = items
+    ? items.map((item) => ({
+        label: item.name,
+        value: item.id,
+      }))
+    : [];
 
   return (
     <RNPickerSelect
@@ -74,6 +62,7 @@ interface RegistrationProps {
 export default function Registration({ data }: RegistrationProps) {
   const { updateContextUser } = useAuth();
   const authApi = Auth.getInstance();
+  const meetupApi = Meetup.getInstance();
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -86,21 +75,15 @@ export default function Registration({ data }: RegistrationProps) {
   const [yourSelf, setYourSelf] = useState(true);
   const [mother, setMother] = useState(false);
   const [date, setDate] = useState<Date | null>(null);
-  const [currentCity, setCurrentCity] = useState<string>("");
+  const [currentCity, setCurrentCity] = useState<string | null>(null);
 
-  const [cities, setCities] = useState([
-    "Jbeil",
-    "Beirut",
-    "Tripoli",
-    "Zahle",
-    "Saida",
-    "Baalbek",
-    "Tyre",
-  ]);
-  const onCityChange = (city: any) => {
-    setCurrentCity(city);
+  const [cities, setCities] = useState<{ id: string; name: string }[] | null>(null);
+
+  const citySelected =
+    cities?.findIndex((item) => item.id.toString() === currentCity?.toString()) !== -1;
+  const onCityChange = (cityId: string | null) => {
+    setCurrentCity(cityId);
   };
-  // useMutation((userInfo) => setUserInfo(userInfo))
   const {
     mutate: setUserInfoAfterRegister,
     isLoading: isUpdatingUserInfo,
@@ -115,6 +98,7 @@ export default function Registration({ data }: RegistrationProps) {
         date_of_birth: (date as Date).toISOString().slice(0, 10),
         occupation,
         biography,
+        city_id: currentCity ?? "1",
       }),
     mutationKey: "/auth/userinfo/",
     retry: false,
@@ -136,6 +120,7 @@ export default function Registration({ data }: RegistrationProps) {
         biography,
         interests: [],
         id,
+        city_id: currentCity,
       });
       updateContextUser({
         email,
@@ -149,6 +134,7 @@ export default function Registration({ data }: RegistrationProps) {
         avatar: null,
         loc_lat: null,
         loc_lon: null,
+        city_id: currentCity ?? "1",
       });
       router.replace("/signup-otp/");
     },
@@ -173,7 +159,15 @@ export default function Registration({ data }: RegistrationProps) {
     },
   });
 
-  console.log("current city", currentCity);
+  // fetch cities first
+  const { data: citiesData, isLoading: isLoadingCities } = useQuery({
+    queryFn: () => meetupApi.getAllCities(),
+    queryKey: ["meetup", "cities"],
+    onSuccess: (data) => {
+      setCities(data);
+    },
+  });
+
   const handleConfirm = (date: Date) => {
     setDatePickerVisibility(false);
     setTimeout(() => {
@@ -181,6 +175,7 @@ export default function Registration({ data }: RegistrationProps) {
     }, 0);
   };
 
+  console.log("typeof current city", typeof currentCity);
   const isDisabled = () => {
     return (
       isRegistering ||
@@ -193,6 +188,13 @@ export default function Registration({ data }: RegistrationProps) {
     );
   };
 
+  if (isLoadingCities) {
+    return (
+      <View className="flex-1 justify-center items-center">
+        <ActivityIndicator size="large" color="#d14d72" />
+      </View>
+    );
+  }
   return (
     <View className="flex-1 bg-white flex">
       <KeyboardAwareScrollView className="h-screen">
@@ -239,7 +241,7 @@ export default function Registration({ data }: RegistrationProps) {
                 style={{ opacity: 0.5 }}
               />
               <View className="w-full flex-1 h-6 ml-3 flex flex-row items-center relative">
-                {!cities.includes(currentCity) && (
+                {!citySelected && (
                   <View className="absolute">
                     <Text className="text-[#666666]">Your City</Text>
                   </View>

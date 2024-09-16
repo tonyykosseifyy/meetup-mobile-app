@@ -33,6 +33,7 @@ interface IUserInfo {
   password: string;
   loc_lat: number | null;
   loc_lon: number | null;
+  city_id: string;
   avatar: {
     id: number;
     image_url: string;

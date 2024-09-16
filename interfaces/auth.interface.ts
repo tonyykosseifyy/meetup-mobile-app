@@ -35,6 +35,7 @@ interface ISetUserRequest {
   occupation?: string;
   biography?: string;
   interests?: number[];
+  city_id: string
 }
 
 interface ISetUserResponse {

@@ -3,7 +3,7 @@ import axios, { Axios, AxiosError } from "axios";
 import { router } from "expo-router";
 import { Alert } from "react-native";
 
-export const API_URL = "https://huge-jobs-hammer.loca.lt";
+export const API_URL = "https://fruity-regions-kiss.loca.lt";
 
 console.log("API_URL: ", API_URL);
 // auth/userinfo
@@ -149,6 +149,9 @@ abstract class AbstractApi {
         // Refresh the token
         await this.refreshToken(error.response.config.url ?? "");
         const { accessToken: newAccessToken } = await this.getTokens();
+        if (!newAccessToken) {
+          return;
+        }
         try {
           error.response.config.headers["Authorization"] = "Bearer " + newAccessToken;
           console.log("Retrying request with new access token...", error.response.config);
