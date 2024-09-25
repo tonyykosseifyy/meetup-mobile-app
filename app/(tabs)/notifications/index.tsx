@@ -72,8 +72,9 @@ export default function Tab() {
                     </Text>
                     {item.status === "waiting" && item.place_time_requests.length >= 1 ? (
                       <Text className="text-gray-400">
-                        Last request {item.place_time_requests[0].place.name} -{" "}
-                        {item.place_time_requests[0].time.slot}
+                        Last request{" "}
+                        {item.place_time_requests[item.place_time_requests.length - 1].place.name} -{" "}
+                        {item.place_time_requests[item.place_time_requests.length - 1].time.slot}
                       </Text>
                     ) : item.status === "pending" ? (
                       <Text className="text-gray-400 text-[12px]">

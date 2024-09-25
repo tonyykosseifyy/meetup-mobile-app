@@ -2,7 +2,8 @@ import axios, { AxiosError } from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 
-const API_URL = "https://selimellieh.pythonanywhere.com";
+// const API_URL = "http://localhost:8000";
+const API_URL = "https://f99c-91-232-101-248.ngrok-free.app"
 const authRoutes = ["/auth/login/", "auth/token/refresh/", "/auth/verify-email/"];
 
 const api = axios.create({
