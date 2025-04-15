@@ -10,6 +10,11 @@ interface MeetupRequest {
   request_from_accepting: boolean;
 }
 
+interface AvatarsReponse {
+  id: number;
+  image_url: string ;
+}
+
 interface MeetupRequestRequest {
   userId: number;
 }
@@ -25,7 +30,9 @@ interface RequestPlaceTimeForMeetingRequest {
 }
 
 interface RequestPlaceTimeForMeetingResponse {
-  // later
+  request_from: IUser;
+  request_to: IUser;
+  // place_time_requests: 
 }
 
 type RetrieveMeetingResponse = MeetupRequest;
@@ -37,4 +44,5 @@ export {
   RequestPlaceTimeForMeetingRequest,
   RequestPlaceTimeForMeetingResponse,
   RetrieveMeetingResponse,
+  AvatarsReponse
 };

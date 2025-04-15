@@ -7,22 +7,23 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useQuery } from "react-query";
 import { theme } from "@/tailwind.config";
-import { getMe } from "@/api/axios/users";
-
 import { LogBox } from "react-native";
+import Auth from "@/api/auth.api";
+
 LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 
 export default function PreLogin() {
+  const authApi = Auth.getInstance();
   const { data: userInfo, isLoading: isUserLoading } = useQuery({
-    queryKey: "/auth/userinfo/",
+    queryKey: "getMe",
     retry: false,
-    queryFn: () => getMe(),
+    queryFn: authApi.getMe,
     onSuccess: () => {
       while (router.canGoBack()) {
         router.back();
       }
-      router.replace("/(tabs)/");
+      router.replace("/(tabs)");
     },
   });
 
@@ -61,7 +62,7 @@ export default function PreLogin() {
           <View className="w-10/12 flex flex-col items-start justify-start">
             <View>
               <Text className="font-bold text-2xl">Ahla w Sahla bi Le2ine!</Text>
-              <Text className="w-72 mt-1 text-slate-800 leading-5">
+              <Text className="w-72 mt-1 text-slate-700 leading-5">
                 Yalla, join us at Le2ine! Find friends who love what you love.
               </Text>
             </View>

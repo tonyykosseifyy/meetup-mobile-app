@@ -1,10 +1,8 @@
-import React, { useMemo, useState } from "react";
-import { Text, StyleSheet, Pressable } from "react-native";
+import React, { useState } from "react";
+import { Text, StyleSheet, Pressable, ActivityIndicator } from "react-native";
 import { IRegistrationData } from "@/assets/data/registration_data";
 import { useMutation, useQuery } from "react-query";
-import { useQueryClient } from "react-query";
 import { router } from "expo-router";
-import { register, setUserInfo } from "@/api/axios/auth";
 import axios from "axios";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { View, TextInput, TouchableOpacity } from "react-native";
@@ -13,19 +11,58 @@ import { formatDate } from "@/utils/common";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Ionicons } from "@expo/vector-icons";
 import Header from "../header";
-import { useAuth } from "@/api/mutations/auth/AuthProvider";
-// import { CheckBox } from "react-native";
-import BouncyCheckbox from "react-native-bouncy-checkbox";
-import RadioGroup from "react-native-radio-buttons-group";
+import { useAuth } from "@/providers/auth.provider";
+import Auth from "@/api/auth.api";
+import RNPickerSelect from "react-native-picker-select";
+import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
+import Meetup from "@/api/meetup.api";
+
+interface DropdownProps {
+  onValueChange: (value: any) => void;
+  items: { id: string; name: string }[] | null;
+}
+
+export const Dropdown = ({ onValueChange, items }: DropdownProps) => {
+  const formattedDropdownItems = items
+    ? items.map((item) => ({
+        label: item.name,
+        value: item.id,
+      }))
+    : [];
+
+  return (
+    <RNPickerSelect
+      placeholder={{
+        label: "",
+        value: null,
+      }}
+      style={{
+        inputIOS: {
+          height: "100%",
+          width: 200,
+          display: "flex",
+          alignItems: "center",
+        },
+        inputAndroid: {
+          height: "100%",
+          width: 200,
+          display: "flex",
+          alignItems: "center",
+        },
+      }}
+      onValueChange={onValueChange}
+      items={formattedDropdownItems}
+    />
+  );
+};
 
 interface RegistrationProps {
   data: IRegistrationData;
 }
-// are you creating this account on behalf of yourself or on behalf of your mom/grandmother
-
 export default function Registration({ data }: RegistrationProps) {
-  const queryClient = useQueryClient();
   const { updateContextUser } = useAuth();
+  const authApi = Auth.getInstance();
+  const meetupApi = Meetup.getInstance();
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -35,9 +72,15 @@ export default function Registration({ data }: RegistrationProps) {
   const [dateChanged, setDateChanged] = useState<boolean>(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState<boolean>(false);
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+  const [yourSelf, setYourSelf] = useState(true);
+  const [mother, setMother] = useState(false);
+  const [date, setDate] = useState<Date | null>(null);
+  const [currentCity, setCurrentCity] = useState<string | null>(null);
 
-  const [date, setDate] = useState(null);
-  // useMutation((userInfo) => setUserInfo(userInfo))
+  const onCityChange = (cityId: string | null) => {
+    setCurrentCity(cityId);
+  };
+
   const {
     mutate: setUserInfoAfterRegister,
     isLoading: isUpdatingUserInfo,
@@ -45,13 +88,14 @@ export default function Registration({ data }: RegistrationProps) {
     error: updatingUserInfoError,
   } = useMutation({
     mutationFn: () =>
-      setUserInfo({
+      authApi.setUserInfo({
         email,
         password,
         full_name: fullName,
-        date_of_birth: date?.toISOString().slice(0, 10),
+        date_of_birth: (date as Date).toISOString().slice(0, 10),
         occupation,
         biography,
+        city_id: currentCity ?? "1",
       }),
     mutationKey: "/auth/userinfo/",
     retry: false,
@@ -73,16 +117,21 @@ export default function Registration({ data }: RegistrationProps) {
         biography,
         interests: [],
         id,
+        city_id: currentCity,
       });
       updateContextUser({
         email,
         password,
         full_name: fullName,
-        date_of_birth: date?.toISOString().slice(0, 10),
+        date_of_birth: (date as Date).toISOString().slice(0, 10),
         occupation,
         biography,
         interests: [],
         id,
+        avatar: null,
+        loc_lat: null,
+        loc_lon: null,
+        city_id: currentCity ?? "1",
       });
       router.replace("/signup-otp/");
     },
@@ -94,18 +143,27 @@ export default function Registration({ data }: RegistrationProps) {
     isError: isRegisteringError,
     error: registeringError,
   } = useMutation({
-    mutationFn: () => register({ email, password }),
+    mutationFn: () => authApi.register({ email, password }),
     mutationKey: "/auth/register/",
     retry: false,
     onError: (error) => {
       if (axios.isAxiosError(error)) {
-        console.log(error.response?.data);
+        console.log("signup page error ", error.response?.data);
       }
     },
     onSuccess: () => {
       setUserInfoAfterRegister();
     },
   });
+
+  // fetch cities first
+  const { data: citiesData, isLoading: isLoadingCities } = useQuery({
+    queryFn: () => meetupApi.getAllCities(),
+    queryKey: ["meetup", "cities"],
+  });
+
+  const citySelected =
+    citiesData?.findIndex((item) => item.id.toString() === currentCity?.toString()) !== -1;
 
   const handleConfirm = (date: Date) => {
     setDatePickerVisibility(false);
@@ -114,6 +172,7 @@ export default function Registration({ data }: RegistrationProps) {
     }, 0);
   };
 
+  console.log("typeof current city", typeof currentCity);
   const isDisabled = () => {
     return (
       isRegistering ||
@@ -122,13 +181,18 @@ export default function Registration({ data }: RegistrationProps) {
       !password ||
       !date ||
       !fullName ||
-      !occupation
+      !occupation ||
+      !citySelected
     );
   };
 
-  const [yourSelf, setYourSelf] = useState(true);
-  const [mother, setMother] = useState(false);
-
+  if (isLoadingCities) {
+    return (
+      <View className="flex-1 justify-center items-center">
+        <ActivityIndicator size="large" color="#d14d72" />
+      </View>
+    );
+  }
   return (
     <View className="flex-1 bg-white flex">
       <KeyboardAwareScrollView className="h-screen">
@@ -139,7 +203,7 @@ export default function Registration({ data }: RegistrationProps) {
         <View className="px-5">
           <View>
             <Text className="font-medium text-2xl">{data.title}</Text>
-            <Text className="mt-1 text-slate-800">{data.subtitle}</Text>
+            <Text className="mt-1 text-slate-700">{data.subtitle}</Text>
           </View>
           <View className="mt-10">
             {/* name */}
@@ -164,6 +228,24 @@ export default function Registration({ data }: RegistrationProps) {
                 value={occupation}
                 onChangeText={setOccupation}
               />
+            </View>
+
+            {/* Current City */}
+            <View className="mt-7 py-2 px-5 bg-white h-14 rounded-lg flex flex-row items-center justify-between border-[1px] border-solid border-cabaret-500">
+              <SimpleLineIcons
+                name="location-pin"
+                size={18}
+                color="black"
+                style={{ opacity: 0.5 }}
+              />
+              <View className="w-full flex-1 h-6 ml-3 flex flex-row items-center relative">
+                {!citySelected && (
+                  <View className="absolute">
+                    <Text className="text-[#666666]">Your City</Text>
+                  </View>
+                )}
+                <Dropdown onValueChange={onCityChange} items={citiesData ?? []} />
+              </View>
             </View>
 
             {/* email */}
@@ -246,24 +328,30 @@ export default function Registration({ data }: RegistrationProps) {
             </View>
 
             <View className="px-5 mt-6 flex">
-              <Text className="text-sm text-slate-800 -ml-5 mb-2">
+              <Text className="text-sm text-slate-700 -ml-5 mb-2">
                 On whose behalf are you creating this account?
               </Text>
               <View className="-ml-5 flex flex-col justify-between">
-                <Pressable onPress={() => {
-                  setYourSelf(true);
-                  setMother(false);
-                }} className="mt-3 flex flex-row items-center">
+                <Pressable
+                  onPress={() => {
+                    setYourSelf(true);
+                    setMother(false);
+                  }}
+                  className="mt-3 flex flex-row items-center"
+                >
                   <View className="rounded-full border-[1.5px] border-solid border-cabaret-500 w-4 h-4 flex items-center justify-center">
                     {yourSelf && <View className="bg-cabaret-500 w-2 h-2 rounded-full" />}
                   </View>
                   <Text className="ml-2 text-xs text-slate-700">Yourself</Text>
                 </Pressable>
 
-                <Pressable onPress={() => {
-                  setMother(true);
-                  setYourSelf(false);
-                }} className="mt-3 flex flex-row items-center">
+                <Pressable
+                  onPress={() => {
+                    setMother(true);
+                    setYourSelf(false);
+                  }}
+                  className="mt-3 flex flex-row items-center"
+                >
                   <View className="rounded-full border-[1.5px] border-solid border-cabaret-500 w-4 h-4 flex items-center justify-center">
                     {mother && <View className="bg-cabaret-500 w-2 h-2 rounded-full" />}
                   </View>
@@ -271,12 +359,16 @@ export default function Registration({ data }: RegistrationProps) {
                 </Pressable>
               </View>
             </View>
+
             {isRegisteringError && (
-              <View className="mt-4">
-                <Text className="text-red-500 font-bold">
+              <View className="mt-8 bg-red-50 p-4 border border-red-500 rounded-lg flex flex-row items-center space-x-2">
+                <MaterialIcons name="error-outline" size={20} color="rgb(239 68 68)" />
+                <Text className="text-red-500 text-sm leading-[18px]">
+                  Whoops!{" "}
                   {axios.isAxiosError(registeringError) && registeringError.response
                     ? (registeringError.response.data.message as any as string)
-                    : "An error occured with registration."}
+                    : "An error occured with registration."}{" "}
+                  Please check your information and try again.
                 </Text>
               </View>
             )}

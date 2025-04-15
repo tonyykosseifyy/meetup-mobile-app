@@ -10,11 +10,14 @@ import {
   Inter_700Bold,
 } from "@expo-google-fonts/inter";
 import React, { useState } from "react";
-import { AuthProvider } from "@/api/mutations/auth/AuthProvider";
+import { AuthProvider } from "@/providers/auth.provider";
 // import { DevToolsBubble } from "react-native-react-query-devtools";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { getMe } from "@/api/axios/users";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+
+// import("react-query-native-devtools").then(({ addPlugin }) => {
+//   addPlugin({ queryClient });
+// });
 
 SplashScreen.preventAutoHideAsync();
 
@@ -28,14 +31,12 @@ export default function RootLayout() {
     Inter_700Bold,
   });
   const [loading, setLoading] = useState<boolean>(false);
-  const [userError, setUserError] = useState<boolean>(false);
-  const getAuthenticated = async () => {
-    const data = await getMe();
-    return data;
-  };
 
   useEffect(() => {
-    if (error) throw error;
+    if (error) {
+      console.error(error);
+      setLoading(false);
+    }
   }, [error]);
 
   useEffect(() => {

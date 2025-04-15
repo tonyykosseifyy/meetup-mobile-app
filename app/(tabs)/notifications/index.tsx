@@ -1,14 +1,11 @@
-import { requestMeetings } from "@/api/axios/meetup";
-import React, { useEffect } from "react";
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useMutation, useQuery } from "react-query";
+import React from "react";
+import { View, Text, FlatList, TouchableOpacity, ActivityIndicator } from "react-native";
+import { useQuery } from "react-query";
 import { Image } from "react-native";
-import { useAuth } from "@/api/mutations/auth/AuthProvider";
 import { router } from "expo-router";
-import { getMe } from "@/api/axios/users";
-import { formatTimeTo12Hour } from "@/utils/common";
-
+import Meetup from "@/api/meetup.api";
+import Auth from "@/api/auth.api";
+import { API_URL } from "@/api/utils/abstract-api";
 // interface MeetupRequestResponse {
 //   id: number;
 //   request_from: IUser;
@@ -21,18 +18,24 @@ import { formatTimeTo12Hour } from "@/utils/common";
 // }
 
 export default function Tab() {
-  const { isLoading, data, error } = useQuery("/meetup/me/meeting-requests/", requestMeetings);
-  const { data: userInfo, isLoading: isUserLoading } = useQuery({
-    queryKey: "/auth/userinfo/",
-    retry: 2,
-    queryFn: () => getMe(),
+  const meetupApi = Meetup.getInstance();
+  const authApi = Auth.getInstance();
+
+  const { data, isLoading } = useQuery({
+    queryKey: "/meetup/me/meeting-requests/",
+    queryFn: () => meetupApi.requestMeetings({}),
+  });
+
+  const { data: userInfo } = useQuery({
+    queryKey: "getMe",
+    queryFn: () => authApi.getMe(),
   });
 
   return (
     <View style={{ flex: 1, display: "flex", backgroundColor: "white" }}>
       {isLoading ? (
-        <View className="flex-1 justify-center items-center">
-          <Text className="text-center text-gray-400">Loading...</Text>
+        <View className="w-full flex-1 h-full flex flex-row items-center justify-center">
+          <ActivityIndicator size="large" color="#d14d72" />
         </View>
       ) : data?.length == 0 && !isLoading ? (
         <View className="flex-1 justify-center items-center">
@@ -58,12 +61,21 @@ export default function Tab() {
             >
               <View className=" w-full flex-row justify-between p-4 ">
                 <View className="flex  flex-row   ">
-                  <View className="w-14 h-14 p-[0.5px] rounded-full border-solid border-2 border-cabaret-500 ">
+                  {/* <View className="w-14 h-14 p-[0.5px] rounded-full border-solid border-2 border-cabaret-500 ">
                     <Image
                       source={require("@/assets/avatars/adjusted_avatar_1.png")}
                       className="w-full h-full rounded-full object-contain"
                     />
+                  </View> */}
+
+                  <View className="w-12 h-12 p-1 bg-cabaret-100 rounded-xl border-solid border border-cabaret-400 mx-2">
+                    <Image
+                      // source={require("@/assets/avatars/adjusted_avatar_1.png")}
+                      source={{ uri: `${API_URL}${item.request_to.user_info.avatar?.image_url}` }}
+                      className="w-full h-full rounded-full object-contain"
+                    />
                   </View>
+
                   <View className="flex justify-evenly ml-2">
                     <Text>
                       {item.request_from.id == userInfo?.id

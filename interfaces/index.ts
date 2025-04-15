@@ -5,7 +5,10 @@ import {
   IInterestsResponse,
   IInterestsRequest,
   IInterest,
+  IChangePasswordRequest,
+  IResetPasswordRequest,
 } from "./users.interface";
+
 import {
   ILoginResponse,
   ILoginRequest,
@@ -23,6 +26,7 @@ import {
   MeetupRequestResponse,
   RequestPlaceTimeForMeetingRequest,
   RequestPlaceTimeForMeetingResponse,
+  AvatarsReponse,
 } from "./meetup.interface";
 
 export {
@@ -44,4 +48,7 @@ export {
   IInterestsResponse,
   IInterestsRequest,
   IInterest,
+  IChangePasswordRequest,
+  IResetPasswordRequest,
+  AvatarsReponse,
 };
