@@ -23,8 +23,8 @@ import { Button } from "@/components";
 import { router, useLocalSearchParams } from "expo-router";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import Meetup from "@/api/meetup.api";
-import Auth from "@/api/auth.api";
-import { API_URL } from "@/api/utils/abstract-api";
+import Auth from "@/api/services/auth.api";
+import { API_URL } from "@/api/services/abstract-api";
 
 enum Sender {
   Me = "me",

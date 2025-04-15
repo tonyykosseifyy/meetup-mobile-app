@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import { Header } from "@/components";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Auth from "@/api/auth.api";
+import Auth from "@/api/services/auth.api";
 import { Image, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useQuery } from "react-query";
 import { useMutation, useQueryClient } from "react-query";
 import styles from "@/constants/styles";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { API_URL } from "@/api/utils/abstract-api";
+import { API_URL } from "@/api/services/abstract-api";
 import { router } from "expo-router";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 

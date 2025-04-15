@@ -1,21 +1,18 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios, { Axios, AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { router } from "expo-router";
 import { Alert } from "react-native";
+import AppConfig from "@/config/env-config";
+import axiosInstance from "../http-client/axios";
 
-export const API_URL = "https://fruity-regions-kiss.loca.lt";
+const config = AppConfig.getInstance();
+
+export const API_URL = config.getConfig().API_URL;
 
 console.log("API_URL: ", API_URL);
 // auth/userinfo
 const authRoutes = ["auth/login/", "auth/token/refresh/", "auth/verify-email/"];
 
-const axiosInstance = axios.create({
-  baseURL: API_URL,
-  timeout: 10000,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
 
 type SessionType = {
   accessToken?: string;

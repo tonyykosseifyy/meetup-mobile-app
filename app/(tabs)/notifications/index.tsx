@@ -3,9 +3,9 @@ import { View, Text, FlatList, TouchableOpacity, ActivityIndicator } from "react
 import { useQuery } from "react-query";
 import { Image } from "react-native";
 import { router } from "expo-router";
-import Meetup from "@/api/meetup.api";
-import Auth from "@/api/auth.api";
-import { API_URL } from "@/api/utils/abstract-api";
+import Meetup from "@/api/services/meetup.api";
+import Auth from "@/api/services/auth.api";
+import { API_URL } from "@/api/services/abstract-api";
 // interface MeetupRequestResponse {
 //   id: number;
 //   request_from: IUser;

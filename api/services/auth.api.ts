@@ -14,7 +14,7 @@ import {
   AvatarsReponse,
   IInterest,
 } from "@/interfaces";
-import AbstractApi from "./utils/abstract-api";
+import AbstractApi from "./abstract-api";
 
 type ILookupResponse = IUser[];
 type IUserResponse = IUserInfo;

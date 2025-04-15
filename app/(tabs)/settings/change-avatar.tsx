@@ -4,10 +4,10 @@ import { useNavigation } from "@react-navigation/native";
 import { useQuery } from "react-query";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useMutation, useQueryClient } from "react-query";
-import Auth from "@/api/auth.api";
+import Auth from "@/api/services/auth.api";
 import styles from "@/constants/styles";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { API_URL } from "@/api/utils/abstract-api";
+import { API_URL } from "@/api/services/abstract-api";
 
 export default function ProfileAvatar() {
   const authApi = Auth.getInstance();

@@ -7,8 +7,8 @@ import { calculateAge } from "@/utils/common";
 import { CardProps } from "../../app/(tabs)";
 import { useMutation, useQueryClient } from "react-query";
 import { icons } from "@/app/(auth)/signup-interests/data";
-import { API_URL } from "@/api/utils/abstract-api";
-import Meetup from "@/api/meetup.api";
+import { API_URL } from "@/api/services/abstract-api";
+import Meetup from "@/api/services/meetup.api";
 
 export const Friend = ({ item }: CardProps) => {
   const queryClient = useQueryClient();
