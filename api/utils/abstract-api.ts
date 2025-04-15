@@ -115,6 +115,10 @@ abstract class AbstractApi {
 
       if (secure) {
         const { accessToken } = await this.getTokens();
+        if (!accessToken) {
+          return;
+        }
+        
         requestObject.headers = {
           ...requestObject.headers,
           Authorization: `Bearer ${accessToken}`,
