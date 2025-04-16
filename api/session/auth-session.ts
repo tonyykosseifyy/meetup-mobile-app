@@ -1,5 +1,3 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { router } from "expo-router";
 import AsyncStore from "../storage/async-store";
 
 interface SessionType {
@@ -27,12 +25,12 @@ class AuthSession {
   private isSessionDirty(): boolean {
     return this.sessionDirty;
   }
-  
+
   private setSessionDirty(dirty: boolean): void {
     this.sessionDirty = dirty;
   }
   
-  private async getSession(): Promise<SessionType> {
+  public async getSession(): Promise<SessionType> {
     if (this.isSessionDirty()) {
       const session = await this.store.extractTokensFromStorage();
       this.setSession(session);

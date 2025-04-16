@@ -5,14 +5,15 @@ import { Alert } from "react-native";
 import AppConfig from "@/config/env-config";
 import axiosInstance from "../../client/axios.instance";
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
-
+import HttpClient from "@/api/client/http-client";
+import AuthSession from "@/api/session/auth-session";
+import { ResponseError } from "@/api/error/response-error";
 const config = AppConfig.getInstance();
 
 export const API_URL = config.getConfig().API_URL;
 
 console.log("API_URL: ", API_URL);
 // auth/userinfo
-const authRoutes = ["auth/login/", "auth/token/refresh/", "auth/verify-email/"];
 
 
 type SessionType = {
@@ -30,66 +31,38 @@ interface RequestParams {
 
 abstract class AbstractApi {
   readonly path: string;
-  readonly axiosInstance = axiosInstance;
-  private session: SessionType = {};
-  private sessionDirty: boolean = true;
+  private httpClient: HttpClient;
+  private authSession: AuthSession;
 
   constructor(path: string) {
     this.path = path;
+    this.httpClient = HttpClient.getInstance();
+    this.authSession = AuthSession.getInstance();
   }
 
-  protected getTokens = async (): Promise<SessionType> => {
-    if (this.sessionDirty) {
-      const accessToken = (await AsyncStorage.getItem("accessToken")) ?? "";
-      const refreshToken = (await AsyncStorage.getItem("refreshToken")) ?? "";
-      this.session.accessToken = accessToken;
-      this.session.refreshToken = refreshToken;
-      this.sessionDirty = false;
-    }
-    // console.log("Session: ", this.session);
-    return this.session;
+
+  private navigateToLogin = () => {
+    router.navigate("/login");
   };
 
-  protected clearTokens = async (): Promise<void> => {
-    this.sessionDirty = true;
-    await AsyncStorage.removeItem("accessToken");
-    await AsyncStorage.removeItem("refreshToken");
-  };
-
-  protected setTokens = async (session: SessionType): Promise<void> => {
-    this.sessionDirty = true;
-    if (session.accessToken) {
-      await AsyncStorage.setItem("accessToken", session.accessToken);
-    }
-    if (session.refreshToken) {
-      await AsyncStorage.setItem("refreshToken", session.refreshToken);
-    }
-  };
-
-  private navigateToLogin = async (url: string): Promise<void> => {
-    console.log("url", url);
-    if (url !== "auth/userinfo/") router.navigate("/login");
-  };
-
-  private refreshToken = async (url: string): Promise<void> => {
-    const { refreshToken } = await this.getTokens();
+  private refreshToken = async (): Promise<void> => {
+    const { refreshToken } = await this.authSession.getSession();
 
     if (!refreshToken) {
       console.log("No refresh token found. Redirecting to login...");
-      await this.clearTokens();
-      this.navigateToLogin(url);
+      this.navigateToLogin();
       return;
     }
 
     try {
-      const response = await axiosInstance.post("/auth/token/refresh/", { refresh: refreshToken });
-      console.log("Refreshed the token:", response.data.access);
-      await this.setTokens({ accessToken: response.data.access });
-      console.log("New access token:", response.data.access);
+      const response = await this.httpClient.post<SessionType>("/auth/token/refresh/", { refresh: refreshToken });
+      console.log("Refreshed the token:", response.data.accessToken);
+      const { accessToken: newAccessToken, refreshToken: newRefreshToken } = response.data;
+      this.authSession.updateSession({ accessToken: newAccessToken ?? "", refreshToken: newRefreshToken ?? "" });
     } catch (error) {
       console.log("Error refreshing token:", error);
-      await this.clearTokens();
-      this.navigateToLogin(url);
+      await this.authSession.clearSession();
+      this.navigateToLogin();
     }
   };
 
@@ -97,75 +70,32 @@ abstract class AbstractApi {
     const { pathExtension, method, body, headers } = request;
     const secure = request.secure !== undefined ? request.secure : true;
 
+    const requestObject: AxiosRequestConfig = {
+      url: `${this.path}${pathExtension}`,
+      method,
+    };
+
+    if (body) {
+      requestObject.data = body;
+    }
+
+    if (headers) {
+      requestObject.headers = headers;
+    }
+
     try {
-      const requestObject: AxiosRequestConfig = {
-        url: `${this.path}${pathExtension}`,
-        method,
-      };
-
-      if (body) {
-        requestObject.data = body;
-      }
-
-      if (headers) {
-        requestObject.headers = headers;
-      }
-
-      if (secure) {
-        const { accessToken } = await this.getTokens();
-        if (!accessToken) {
-          return;
-        }
-        
-        requestObject.headers = {
-          ...requestObject.headers,
-          Authorization: `Bearer ${accessToken}`,
-        };
-      }
-
-      // console.log("Request Object: ", requestObject);
-      const response = await axiosInstance(requestObject);
-      // console.log("Response: ", response.data);
+      const response = await this.httpClient.executeRequest(requestObject, secure);
       return response.data;
     } catch (error: any) {
-      if (error instanceof AxiosError) {
-        console.log("Abstract Error: ", error);
-
-        if (!error.response) {
-          console.log("Network Error: ", error.message);
-          Alert.alert("Network Error", "Please check your internet connection and try again.", [
-            {
-              text: "OK",
-            },
-          ]);
-          return Promise.reject(error);
-        }
-
-        if (
-          error.response &&
-          (error.response.status !== 401 || authRoutes.includes(error.response.config.url || ""))
-        ) {
-          return Promise.reject(error);
-        }
-
-        // Refresh the token
-        await this.refreshToken(error.response.config.url ?? "");
-        const { accessToken: newAccessToken } = await this.getTokens();
-        if (!newAccessToken) {
-          return;
-        }
+      if (error instanceof ResponseError && error.status === 401) {
+        await this.refreshToken();
+        console.log("Retrying request with new access token...");
         try {
-          error.response.config.headers["Authorization"] = "Bearer " + newAccessToken;
-          console.log("Retrying request with new access token...", error.response.config);
-          // console.log('error.response.config', error.response.config)
-          const retriedResponse = await this.axiosInstance(error.response.config);
-          console.log("Retried Response: ", retriedResponse.data);
-          return retriedResponse.data;
+          return await this.httpClient.executeRequest(requestObject, secure);
         } catch (err: any) {
           console.log("Error with the retried response:", err);
-          await this.clearTokens();
-          this.navigateToLogin(error.response.config.url ?? "");
-        }
+          Promise.reject(err);
+      }
       } else {
         return Promise.reject(error);
       }
