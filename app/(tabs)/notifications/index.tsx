@@ -5,7 +5,7 @@ import { Image } from "react-native";
 import { router } from "expo-router";
 import Meetup from "@/api/services/meetup.api";
 import Auth from "@/api/services/auth.api";
-import { API_URL } from "@/api/services/abstract-api";
+import { API_URL } from "@/api/services/abstract/abstract-api";
 // interface MeetupRequestResponse {
 //   id: number;
 //   request_from: IUser;

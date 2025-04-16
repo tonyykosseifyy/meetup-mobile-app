@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from "react-query";
 import Auth from "@/api/services/auth.api";
 import styles from "@/constants/styles";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { API_URL } from "@/api/services/abstract-api";
+import { API_URL } from "@/api/services/abstract/abstract-api";
 
 export default function ProfileAvatar() {
   const authApi = Auth.getInstance();

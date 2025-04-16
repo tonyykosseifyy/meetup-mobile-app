@@ -9,7 +9,7 @@ import { useQuery } from "react-query";
 import { useMutation, useQueryClient } from "react-query";
 import styles from "@/constants/styles";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { API_URL } from "@/api/services/abstract-api";
+import { API_URL } from "@/api/services/abstract/abstract-api";
 import { router } from "expo-router";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 

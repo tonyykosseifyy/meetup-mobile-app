@@ -24,7 +24,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import Meetup from "@/api/meetup.api";
 import Auth from "@/api/services/auth.api";
-import { API_URL } from "@/api/services/abstract-api";
+import { API_URL } from "@/api/services/abstract/abstract-api";
 
 enum Sender {
   Me = "me",

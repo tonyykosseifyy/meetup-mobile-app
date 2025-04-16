@@ -4,7 +4,7 @@ import {
   MeetupRequestRequest,
   MeetupRequestResponse,
 } from "@/interfaces";
-import AbstractApi from "./abstract-api";
+import AbstractApi from "./abstract/abstract-api";
 import {
   RequestMeetingsRequest,
   RequestMeetingsResponse,

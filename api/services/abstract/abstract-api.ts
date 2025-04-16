@@ -3,7 +3,8 @@ import { AxiosError } from "axios";
 import { router } from "expo-router";
 import { Alert } from "react-native";
 import AppConfig from "@/config/env-config";
-import axiosInstance from "../http-client/axios";
+import axiosInstance from "../../client/axios.instance";
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const config = AppConfig.getInstance();
 
@@ -97,7 +98,7 @@ abstract class AbstractApi {
     const secure = request.secure !== undefined ? request.secure : true;
 
     try {
-      const requestObject: any = {
+      const requestObject: AxiosRequestConfig = {
         url: `${this.path}${pathExtension}`,
         method,
       };

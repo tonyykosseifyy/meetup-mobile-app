@@ -23,7 +23,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Auth from "@/api/services/auth.api";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { calculateAge } from "@/utils/common";
-import { API_URL } from "@/api/services/abstract-api";
+import { API_URL } from "@/api/services/abstract/abstract-api";
 
 const logoutPrompt = (queryClient: QueryClient) => {
   const authApi = Auth.getInstance();
