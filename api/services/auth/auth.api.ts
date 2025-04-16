@@ -7,38 +7,16 @@ import {
   ISetUserRequest,
   ISetUserResponse,
   IUpdateUserRequest,
-  IUser,
-  IUserInfo,
   IVerifyEmailRequest,
   IVerifyEmailResponse,
   AvatarsReponse,
-  IInterest,
-} from "@/interfaces";
-import AbstractApi from "./abstract/abstract-api";
+} from "@/interfaces";  
+import AuthSession from "@/api/session/auth-session";
+import AbstractApi from "../abstract/abstract-api";
+import { GetMeResponse, IUserResponse } from "./types";
+import { ILookupResponse } from "./types";
 
-type ILookupResponse = IUser[];
-type IUserResponse = IUserInfo;
 
-type GetMeResponse = {
-  id?: number;
-  full_name: string;
-  date_of_birth: string;
-  occupation: string;
-  biography: string;
-  interests: IInterest[];
-  email: string;
-  password: string;
-  loc_lat: number | null;
-  loc_lon: number | null;
-  city: {
-    id: string;
-    name: string;
-  };
-  avatar: {
-    id: number;
-    image_url: string;
-  } | null;
-};
 class Auth extends AbstractApi {
   private static instance: Auth | null = null;
   readonly path = "auth";
@@ -62,13 +40,13 @@ class Auth extends AbstractApi {
       secure: false,
     });
     const { access, refresh } = response;
-    await this.setTokens({ accessToken: access, refreshToken: refresh });
+    await this.authSession.updateSession({ accessToken: access, refreshToken: refresh });
 
     return response as ILoginResponse;
   };
 
   public logout = async (): Promise<void> => {
-    await this.clearTokens();
+    await this.authSession.clearSession();
   };
 
   public register = async (request: IRegisterRequest): Promise<IRegisterResponse> => {
@@ -99,7 +77,7 @@ class Auth extends AbstractApi {
       body: request,
       secure: false,
     });
-    await this.setTokens({ accessToken: response.access, refreshToken: response.refresh });
+    await this.authSession.updateSession({ accessToken: response.access, refreshToken: response.refresh });
     return response as IVerifyEmailResponse;
   };
 

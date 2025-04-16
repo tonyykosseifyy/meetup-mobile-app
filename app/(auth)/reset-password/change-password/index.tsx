@@ -12,7 +12,7 @@ import { useAuth } from "@/providers/auth.provider";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Header } from "@/components";
-import Auth from "@/api/services/auth.api";
+import Auth from "@/api/services/auth/auth.api";
 
 export default function SettingsChangePassword() {
   const { resetPasswordInfo } = useAuth();

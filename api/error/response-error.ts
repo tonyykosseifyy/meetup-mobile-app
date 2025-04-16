@@ -1,18 +1,8 @@
 import { AxiosError } from 'axios';
+import { ErrorData, IResponseError } from './types';
 
-interface ErrorData {
-  name?: string;
-  message?: string;
-}
 
-export interface IResponseError {
-  name: string;
-  message: string;
-  status?: number;
-  isAxiosError: boolean;
-}
-
-export class ResponseError extends Error implements IResponseError {
+class ResponseError extends Error implements IResponseError {
   public name: string;
   public message: string;
   public status?: number;
@@ -80,3 +70,5 @@ export class ResponseError extends Error implements IResponseError {
     };
   }
 }
+
+export default ResponseError;

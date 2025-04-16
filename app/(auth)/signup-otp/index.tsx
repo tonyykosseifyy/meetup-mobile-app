@@ -11,7 +11,7 @@ import { router } from "expo-router";
 import { setTokens } from "@/api/utils/tokens";
 import axios from "axios";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import Auth from "@/api/services/auth.api";
+import Auth from "@/api/services/auth/auth.api";
 
 export default function SignUpOtp() {
   const { registeredUser } = useAuth();

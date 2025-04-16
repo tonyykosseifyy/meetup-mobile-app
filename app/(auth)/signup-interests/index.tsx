@@ -8,7 +8,7 @@ import { interests, icons } from "./data";
 import { useMutation, useQuery } from "react-query";
 import { router } from "expo-router";
 import { IInterest } from "@/interfaces";
-import Auth from "@/api/services/auth.api";
+import Auth from "@/api/services/auth/auth.api";
 import Meetup from "@/api/meetup.api";
 
 // const Skip = (): React.JSX.Element => (

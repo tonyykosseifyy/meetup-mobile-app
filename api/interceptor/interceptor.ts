@@ -1,14 +1,9 @@
-import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AxiosError, AxiosRequestConfig } from 'axios';
 import AuthSession from '../session/auth-session';
-import { Alert } from 'react-native';
-import { router } from "expo-router";
-import { ResponseError } from '../error/response-error';
+import ResponseError from '../error/response-error';
+import { router } from 'expo-router';
 
-interface TokenResponse {
-  accessToken?: string;
-  refreshToken?: string;
-}
-const authRoutes = ["auth/login/", "auth/token/refresh/", "auth/verify-email/"];
+
 
 class Interceptor {
   private static instance: Interceptor;
@@ -23,13 +18,18 @@ class Interceptor {
     return Interceptor.instance;
   }
 
+	private navigateToLogin = () => {
+    router.navigate("/login");
+  };
+
   public async authenticateRequest(config: AxiosRequestConfig): Promise<void> {
     const modifiedConfig = { ...config };
     
     const { accessToken } = await this.authSession.getSession();
       
     if (!accessToken) {
-        // do something 
+			this.navigateToLogin();
+			return;
     }
     modifiedConfig.headers = modifiedConfig.headers || {};
     modifiedConfig.headers.Authorization = `Bearer ${accessToken}`;

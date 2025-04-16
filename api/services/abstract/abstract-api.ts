@@ -1,13 +1,11 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { AxiosError } from "axios";
 import { router } from "expo-router";
-import { Alert } from "react-native";
 import AppConfig from "@/config/env-config";
-import axiosInstance from "../../client/axios.instance";
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import HttpClient from "@/api/client/http-client";
 import AuthSession from "@/api/session/auth-session";
-import { ResponseError } from "@/api/error/response-error";
+import ResponseError from "@/api/error/response-error";
+import { SessionType, RequestParams } from "./types";
+
 const config = AppConfig.getInstance();
 
 export const API_URL = config.getConfig().API_URL;
@@ -16,23 +14,10 @@ console.log("API_URL: ", API_URL);
 // auth/userinfo
 
 
-type SessionType = {
-  accessToken?: string;
-  refreshToken?: string;
-};
-
-interface RequestParams {
-  pathExtension: string;
-  method: "GET" | "POST" | "PATCH" | "DELETE";
-  body?: any;
-  headers?: Record<string, string>;
-  secure?: boolean;
-}
-
 abstract class AbstractApi {
   readonly path: string;
   private httpClient: HttpClient;
-  private authSession: AuthSession;
+  protected authSession: AuthSession;
 
   constructor(path: string) {
     this.path = path;

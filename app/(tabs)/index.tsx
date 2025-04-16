@@ -14,7 +14,7 @@ import { IUser } from "@/interfaces";
 import { Friend } from "@/components/friend";
 import Meetup from "@/api/meetup.api";
 import * as Location from "expo-location";
-import Auth from "@/api/services/auth.api";
+import Auth from "@/api/services/auth/auth.api";
 
 export interface CardProps {
   item: IUser;

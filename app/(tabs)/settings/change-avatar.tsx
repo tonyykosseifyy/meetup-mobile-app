@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useQuery } from "react-query";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useMutation, useQueryClient } from "react-query";
-import Auth from "@/api/services/auth.api";
+import Auth from "@/api/services/auth/auth.api";
 import styles from "@/constants/styles";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { API_URL } from "@/api/services/abstract/abstract-api";

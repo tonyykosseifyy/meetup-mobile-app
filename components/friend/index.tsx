@@ -8,7 +8,7 @@ import { CardProps } from "../../app/(tabs)";
 import { useMutation, useQueryClient } from "react-query";
 import { icons } from "@/app/(auth)/signup-interests/data";
 import { API_URL } from "@/api/services/abstract/abstract-api";
-import Meetup from "@/api/services/meetup.api";
+import Meetup from "@/api/services/meetup/meetup.api";
 
 export const Friend = ({ item }: CardProps) => {
   const queryClient = useQueryClient();

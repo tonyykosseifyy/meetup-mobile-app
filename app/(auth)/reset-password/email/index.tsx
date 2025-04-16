@@ -11,7 +11,7 @@ import { useMutation } from "react-query";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useAuth } from "@/providers/auth.provider";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import Auth from "@/api/services/auth.api";
+import Auth from "@/api/services/auth/auth.api";
 import axios from "axios";
 
 export default function Login() {

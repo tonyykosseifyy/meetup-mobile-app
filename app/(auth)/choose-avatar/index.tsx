@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import { Header } from "@/components";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Auth from "@/api/services/auth.api";
+import Auth from "@/api/services/auth/auth.api";
 import { Image, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useQuery } from "react-query";

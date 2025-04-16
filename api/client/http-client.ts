@@ -19,7 +19,7 @@ class HttpClient {
     return HttpClient.instance;
   }
 
-  async executeRequest<T>(request: AxiosRequestConfig, secure: boolean = true): Promise<AxiosResponse<T>> {
+  async executeRequest<T>(request: AxiosRequestConfig, secure?: boolean): Promise<AxiosResponse<T>> {
     try {
       if (secure) {
         await this.interceptor.authenticateRequest(request);
@@ -30,7 +30,7 @@ class HttpClient {
     }
   }
 
-  async get<T>(url: string, config?: AxiosRequestConfig, secure: boolean = true): Promise<AxiosResponse<T>> {
+  async get<T>(url: string, config?: AxiosRequestConfig, secure?: boolean): Promise<AxiosResponse<T>> {
     const requestConfig: AxiosRequestConfig = {
       ...config,
       method: 'GET',
@@ -39,7 +39,7 @@ class HttpClient {
     return this.executeRequest<T>(requestConfig, secure);
   }
 
-  async post<T>(url: string, data?: any, config?: AxiosRequestConfig, secure: boolean = true): Promise<AxiosResponse<T>> {
+  async post<T>(url: string, data?: any, config?: AxiosRequestConfig, secure?: boolean): Promise<AxiosResponse<T>> {
     const requestConfig: AxiosRequestConfig = {
       ...config,
       method: 'POST',
@@ -49,7 +49,7 @@ class HttpClient {
     return this.executeRequest<T>(requestConfig, secure);
   }
 
-  async put<T>(url: string, data?: any, config?: AxiosRequestConfig, secure: boolean = true): Promise<AxiosResponse<T>> {
+  async put<T>(url: string, data?: any, config?: AxiosRequestConfig, secure?: boolean): Promise<AxiosResponse<T>> {
     const requestConfig: AxiosRequestConfig = {
       ...config,
       method: 'PUT',
@@ -59,7 +59,7 @@ class HttpClient {
     return this.executeRequest<T>(requestConfig, secure);
   }
 
-  async delete<T>(url: string, config?: AxiosRequestConfig, secure: boolean = true): Promise<AxiosResponse<T>> {
+  async delete<T>(url: string, config?: AxiosRequestConfig, secure?: boolean): Promise<AxiosResponse<T>> {
     const requestConfig: AxiosRequestConfig = {
       ...config,
       method: 'DELETE',
@@ -68,7 +68,7 @@ class HttpClient {
     return this.executeRequest<T>(requestConfig, secure);
   }
 
-  async patch<T>(url: string, data?: any, config?: AxiosRequestConfig, secure: boolean = true): Promise<AxiosResponse<T>> {
+  async patch<T>(url: string, data?: any, config?: AxiosRequestConfig, secure?: boolean): Promise<AxiosResponse<T>> {
     const requestConfig: AxiosRequestConfig = {
       ...config,
       method: 'PATCH',
