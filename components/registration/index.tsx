@@ -12,7 +12,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Ionicons } from "@expo/vector-icons";
 import Header from "../header";
 import { useAuth } from "@/providers/auth.provider";
-import Auth from "@/api/auth.api";
+import Auth from "@/api/services/auth.api";
 import RNPickerSelect from "react-native-picker-select";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 import Meetup from "@/api/meetup.api";

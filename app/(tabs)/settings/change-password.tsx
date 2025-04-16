@@ -15,7 +15,7 @@ import axios from "axios";
 import { useQueryClient } from "react-query";
 import styles from "@/constants/styles";
 import { Alert } from "react-native";
-import Auth from "@/api/auth.api";
+import Auth from "@/api/services/auth.api";
 
 export default function SettingsChangePassword() {
   const navigation = useNavigation();

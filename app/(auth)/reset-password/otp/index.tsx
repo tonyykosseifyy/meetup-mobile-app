@@ -6,7 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "@/constants/styles";
 import { useAuth } from "@/providers/auth.provider";
 import { router } from "expo-router";
-import Auth from "@/api/auth.api";
+import Auth from "@/api/services/auth.api";
 import { useMutation } from "react-query";
 import axios from "axios";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
