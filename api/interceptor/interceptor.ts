@@ -22,17 +22,20 @@ class Interceptor {
     router.navigate("/login");
   };
 
-  public async authenticateRequest(config: AxiosRequestConfig): Promise<void> {
+  public async authenticateRequest(config: AxiosRequestConfig): Promise<AxiosRequestConfig> {
     const modifiedConfig = { ...config };
     
     const { accessToken } = await this.authSession.getSession();
       
     if (!accessToken) {
 			this.navigateToLogin();
-			return;
+			// do something
+			return Promise.reject("No access token found");
     }
     modifiedConfig.headers = modifiedConfig.headers || {};
     modifiedConfig.headers.Authorization = `Bearer ${accessToken}`;
+
+		return modifiedConfig;
   }
 
   public async interceptError(error: any): Promise<never> {
@@ -50,10 +53,3 @@ class Interceptor {
 
 			return Promise.reject(ResponseError.fromAxiosError(error));
 		} else {
-			return Promise.reject(ResponseError.unexpectedError());
-		}
-	 }
-
-}
-
-export default Interceptor;

@@ -21,10 +21,11 @@ class HttpClient {
 
   async executeRequest<T>(request: AxiosRequestConfig, secure?: boolean): Promise<AxiosResponse<T>> {
     try {
+      let modifiedRequest = request;
       if (secure) {
-        await this.interceptor.authenticateRequest(request);
+        modifiedRequest = await this.interceptor.authenticateRequest(request);
       }
-      return await this.axiosInstance(request);
+      return await this.axiosInstance(modifiedRequest);
     } catch (error) {
       return await this.interceptor.interceptError(error);
     }
