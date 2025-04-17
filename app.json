@@ -8,7 +8,7 @@
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#d14d72"
     },
@@ -17,12 +17,22 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.selimellieh72.meetupapp"
+      "bundleIdentifier": "com.selimellieh72.meetupapp",
+      "splash": {
+        "image": "./assets/splash.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#d14d72"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.png",
-        "backgroundColor": "#d14d72"
+        "backgroundColor": "#d14d72",
+        "splash": {
+          "image": "./assets/splash.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#d14d72"
+        }
       },
       "package": "com.selimellieh72.meetupapp"
     },

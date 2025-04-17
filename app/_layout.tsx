@@ -11,13 +11,9 @@ import {
 } from "@expo-google-fonts/inter";
 import React, { useState } from "react";
 import { AuthProvider } from "@/providers/auth.provider";
-// import { DevToolsBubble } from "react-native-react-query-devtools";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-// import("react-query-native-devtools").then(({ addPlugin }) => {
-//   addPlugin({ queryClient });
-// });
 
 SplashScreen.preventAutoHideAsync();
 
@@ -61,7 +57,6 @@ function RootLayoutNav() {
           <Stack screenOptions={{ headerShown: false }}></Stack>
         </AuthProvider>
       </GestureHandlerRootView>
-      {/* <DevToolsBubble /> */}
     </QueryClientProvider>
   );
 }

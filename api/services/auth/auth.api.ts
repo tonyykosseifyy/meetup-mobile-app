@@ -11,7 +11,6 @@ import {
   IVerifyEmailResponse,
   AvatarsReponse,
 } from "@/interfaces";  
-import AuthSession from "@/api/session/auth-session";
 import AbstractApi from "../abstract/abstract-api";
 import { GetMeResponse, IUserResponse } from "./types";
 import { ILookupResponse } from "./types";

@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useQuery } from "react-query";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Text, TextInput } from "react-native";
-import { AntDesign, Fontisto, MaterialIcons } from "@expo/vector-icons";
+import { AntDesign, Fontisto, MaterialIcons, Feather } from "@expo/vector-icons";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { formatDate } from "@/utils/common";
 import { useState } from "react";
@@ -17,53 +17,8 @@ import styles from "@/constants/styles";
 import { Alert } from "react-native";
 import Auth from "@/api/services/auth/auth.api";
 import Meetup from "@/api/services/meetup/meetup.api";
-import RNPickerSelect from "react-native-picker-select";
 import { router } from "expo-router";
-
-interface DropdownProps {
-  onValueChange: (value: any) => void;
-  items: { id: string; name: string }[] | null;
-  itemKey: string;
-}
-
-export const Dropdown = ({ onValueChange, items, itemKey }: DropdownProps) => {
-  const additionalProps = itemKey ? { itemKey: itemKey } : {};
-  console.log("item keu", itemKey);
-
-  const formattedDropdownItems = items
-    ? items.map((item) => ({
-        label: item.name,
-        value: item.id,
-        key: item.id,
-      }))
-    : [];
-
-  return (
-    <RNPickerSelect
-      {...additionalProps}
-      placeholder={{
-        label: "",
-        value: null,
-      }}
-      style={{
-        inputIOS: {
-          height: "100%",
-          width: 200,
-          display: "flex",
-          alignItems: "center",
-        },
-        inputAndroid: {
-          height: "100%",
-          width: 200,
-          display: "flex",
-          alignItems: "center",
-        },
-      }}
-      onValueChange={onValueChange}
-      items={formattedDropdownItems}
-    />
-  );
-};
+import Dropdown from "@/components/dropdown";
 
 export default function AccountDetails() {
   const authApi = Auth.getInstance();
@@ -76,18 +31,13 @@ export default function AccountDetails() {
   const [biography, setBiography] = useState<string>("");
   const [dateChanged, setDateChanged] = useState<boolean>(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState<boolean>(false);
-
   const [currentCity, setCurrentCity] = useState<string | null>(null);
 
-  const onCityChange = (cityId: string | null) => {
-    setCurrentCity(cityId);
+  const onCityChange = (cityId: string | number | null) => {
+    setCurrentCity(cityId ? String(cityId) : null);
   };
 
-  useEffect(() => {
-    if (currentCity) {
-      onCityChange(currentCity);
-    }
-  }, [currentCity]);
+  
   console.log("cur city", currentCity);
 
   const { data: citiesData, isLoading: isLoadingCities } = useQuery({
@@ -154,9 +104,11 @@ export default function AccountDetails() {
       setBiography(biography);
       setDate(new Date(date_of_birth));
       setDateChanged(true);
-      onCityChange(city.id);
+      setCurrentCity(city.id.toString());
     }
-  }, [userInfo, router]);
+  }, [userInfo, router, isFetching]);
+
+  
 
   const citySelected =
     citiesData?.findIndex((item) => item.id.toString() === currentCity?.toString()) !== -1;
@@ -202,23 +154,30 @@ export default function AccountDetails() {
             </View>
 
             {/* Current City */}
-            <View className="mt-7 py-2 px-5 bg-white h-14 rounded-lg flex flex-row items-center justify-between border-[1px] border-solid border-cabaret-500">
+            <View className="mt-7 pl-5 bg-white h-14 rounded-lg flex flex-row items-center justify-between border-[1px] border-solid border-cabaret-500">
               <SimpleLineIcons
                 name="location-pin"
                 size={18}
                 color="black"
                 style={{ opacity: 0.5 }}
               />
-              <View className="w-full flex-1 h-6 ml-3 flex flex-row items-center relative">
+              <View className="w-full flex-1 h-full flex flex-row items-center relative">
                 {!citySelected && (
-                  <View className="absolute">
+                  <View className="absolute ml-3">
                     <Text className="text-[#666666]">Your City</Text>
                   </View>
                 )}
-                <Dropdown
-                  itemKey={currentCity ?? ""}
-                  onValueChange={onCityChange}
-                  items={citiesData ?? []}
+                <View className="absolute right-0 mr-1 bg-white z-10 w-10 h-10 flex items-center justify-center">
+                  <Feather name="chevron-down" size={20} color="black" style={{ opacity: 0.5 }} />
+                </View>
+                <Dropdown 
+                  onValueChange={onCityChange} 
+                  items={citiesData?.map(city => ({
+                    id: city.id,
+                    name: city.name,
+                    value: city.name
+                  })) ?? []}
+                  defaultValue={currentCity || undefined} 
                 />
               </View>
             </View>

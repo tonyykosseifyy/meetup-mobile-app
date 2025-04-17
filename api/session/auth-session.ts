@@ -36,7 +36,6 @@ class AuthSession {
       this.setSession(session);
       this.setSessionDirty(false);
     }
-    console.log("this.session", this.session);
     return this.session;
   }
   
@@ -47,6 +46,11 @@ class AuthSession {
   public async updateSession(session: SessionType): Promise<void> {
     await this.store.updateTokensFromStorage(session.accessToken, session.refreshToken);
     this.setSession(session);
+  }
+  
+  public async updateAccessToken(accessToken: string): Promise<void> {
+    await this.store.updateTokensFromStorage(accessToken, this.session.refreshToken);
+    this.setSession({ ...this.session, accessToken });
   }
 
   public async clearSession(): Promise<void> {

@@ -40,10 +40,10 @@ abstract class AbstractApi {
     }
 
     try {
-      const response = await this.httpClient.post<SessionType>("/auth/token/refresh/", { refresh: refreshToken });
-      console.log("Refreshed the token:", response.data.accessToken);
-      const { accessToken: newAccessToken, refreshToken: newRefreshToken } = response.data;
-      this.authSession.updateSession({ accessToken: newAccessToken ?? "", refreshToken: newRefreshToken ?? "" });
+      const response = await this.httpClient.post<{ access: string }>("/auth/token/refresh/", { refresh: refreshToken });
+      console.log("--------Refreshed the token----------:", response, ' access token: ', response.data.access);
+      const access = response.data.access;
+      this.authSession.updateAccessToken(access);
       return true; 
     } catch (error) {
       console.log("Error refreshing token:", error);
@@ -57,9 +57,12 @@ abstract class AbstractApi {
     const { pathExtension, method, body, headers } = request;
     const secure = request.secure !== undefined ? request.secure : true;
 
+    let session = await this.authSession.getSession();
+    console.log("session: ", session);
+
     const requestObject: AxiosRequestConfig = {
       url: `${this.path}${pathExtension}`,
-      method,
+      method, 
     };
 
     if (body) {

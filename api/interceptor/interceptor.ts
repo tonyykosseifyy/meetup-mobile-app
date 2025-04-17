@@ -34,7 +34,7 @@ class Interceptor {
     }
     modifiedConfig.headers = modifiedConfig.headers || {};
     modifiedConfig.headers.Authorization = `Bearer ${accessToken}`;
-
+    
 		return modifiedConfig;
   }
 
@@ -53,3 +53,10 @@ class Interceptor {
 
 			return Promise.reject(ResponseError.fromAxiosError(error));
 		} else {
+			return Promise.reject(ResponseError.unexpectedError());
+		}
+	 }
+
+}
+
+export default Interceptor;
