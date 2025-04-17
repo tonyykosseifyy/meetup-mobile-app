@@ -27,7 +27,7 @@ export default function PreLogin() {
     },
   });
 
-  if (true) {
+  if (isUserLoading) {
     return (
       <>
         <SafeAreaView edges={["top"]} className="flex-1 bg-cabaret-500">

@@ -1,0 +1,3 @@
+import type { DropDownSubListProps } from '../types';
+export declare const PickerItemFlatlist: ({ item: data, openItem, setOpenItem, selectedBtnColor, btnColor, selectedData, onSelect, titleStyle, titleButtonStyle, subButtonStyle, subTitleStyle, disabled, disabledButtonStyle, disabledTitleStyle, selectedSubBtnColor, subBtnColor, SubCheckedIcon, TitleIcon, subViewStyle, selectedSubTitleStyle, selectedSubBtnStyle, titleProps, subTitleProps, checkedIconPosition, SubSeparator, }: DropDownSubListProps) => import("react/jsx-runtime").JSX.Element;
+//# sourceMappingURL=PickerItemFlatlist.d.ts.map

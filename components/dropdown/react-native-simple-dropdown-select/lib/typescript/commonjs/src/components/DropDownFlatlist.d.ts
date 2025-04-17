@@ -1,0 +1,3 @@
+import type { DropDownFlatListProps } from '../types';
+export declare const DropDownFlatlist: ({ data, onSelect, selectedBtnColor, selectedSubBtnColor, btnColor, subBtnColor, selectedData, onSelectTitle, titleStyle, titleButtonStyle, disabledButtonStyle, disabledTitleStyle, subButtonStyle, subTitleStyle, SubCheckedIcon, EmptyListView, dropDownContainerStyle, showsVerticalScrollIndicator, subViewStyle, TitleIcon, titleProps, subTitleProps, checkedIconPosition, onEndReached, parentY, hasLabel, SubSeparator, selectedSubBtnStyle, selectedSubTitleStyle, }: DropDownFlatListProps) => import("react/jsx-runtime").JSX.Element;
+//# sourceMappingURL=DropDownFlatlist.d.ts.map

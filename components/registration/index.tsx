@@ -16,45 +16,8 @@ import Auth from "@/api/services/auth/auth.api";
 import RNPickerSelect from "react-native-picker-select";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 import Meetup from "@/api/services/meetup/meetup.api";
+import Dropdown from "@/components/dropdown";
 
-interface DropdownProps {
-  onValueChange: (value: any) => void;
-  items: { id: string; name: string }[] | null;
-}
-
-export const Dropdown = ({ onValueChange, items }: DropdownProps) => {
-  const formattedDropdownItems = items
-    ? items.map((item) => ({
-        label: item.name,
-        value: item.id,
-      }))
-    : [];
-
-  return (
-    <RNPickerSelect
-      placeholder={{
-        label: "",
-        value: null,
-      }}
-      style={{
-        inputIOS: {
-          height: "100%",
-          width: 200,
-          display: "flex",
-          alignItems: "center",
-        },
-        inputAndroid: {
-          height: "100%",
-          width: 200,
-          display: "flex",
-          alignItems: "center",
-        },
-      }}
-      onValueChange={onValueChange}
-      items={formattedDropdownItems}
-    />
-  );
-};
 
 interface RegistrationProps {
   data: IRegistrationData;
@@ -77,8 +40,8 @@ export default function Registration({ data }: RegistrationProps) {
   const [date, setDate] = useState<Date | null>(null);
   const [currentCity, setCurrentCity] = useState<string | null>(null);
 
-  const onCityChange = (cityId: string | null) => {
-    setCurrentCity(cityId);
+  const onCityChange = (cityId: string | number | null) => {
+    setCurrentCity(cityId ? String(cityId) : null);
   };
 
   const {
@@ -162,6 +125,7 @@ export default function Registration({ data }: RegistrationProps) {
     queryKey: ["meetup", "cities"],
   });
 
+
   const citySelected =
     citiesData?.findIndex((item) => item.id.toString() === currentCity?.toString()) !== -1;
 
@@ -231,19 +195,23 @@ export default function Registration({ data }: RegistrationProps) {
             </View>
 
             {/* Current City */}
-            <View className="mt-7 py-2 px-5 bg-white h-14 rounded-lg flex flex-row items-center justify-between border-[1px] border-solid border-cabaret-500">
+            <View className="mt-7 pl-5 bg-white h-14 rounded-lg flex flex-row items-center justify-between border-[1px] border-solid border-cabaret-500">
               <SimpleLineIcons
                 name="location-pin"
                 size={18}
                 color="black"
                 style={{ opacity: 0.5 }}
               />
-              <View className="w-full flex-1 h-6 ml-3 flex flex-row items-center relative">
-                {!citySelected && (
-                  <View className="absolute">
-                    <Text className="text-[#666666]">Your City</Text>
+              <View className="w-full flex-1 h-full flex flex-row items-center relative">
+                  {!citySelected && (
+                    <View className="absolute ml-3">
+                      <Text className="text-[#666666]">Your City</Text>
+                    </View>
+                  )}
+                  <View className="absolute right-0 mr-1 bg-white z-10 w-10 h-10 flex items-center justify-center">
+                    <Feather name="chevron-down" size={20} color="black" style={{ opacity: 0.5 }} />
+                    {/* <Feather name="chevron-down" size={24} color="black" /> */}
                   </View>
-                )}
                 <Dropdown onValueChange={onCityChange} items={citiesData ?? []} />
               </View>
             </View>

@@ -1,0 +1,1 @@
+{"version":3,"names":["colors","exports","white","error","grey","grey1","grey2","grey3","dark"],"sourceRoot":"../../src","sources":["colors.tsx"],"mappings":";;;;;;AAAO,MAAMA,MAAM,GAAAC,OAAA,CAAAD,MAAA,GAAG;EACpBE,KAAK,EAAE,MAAM;EACbC,KAAK,EAAE,SAAS;EAChBC,IAAI,EAAE,MAAM;EACZC,KAAK,EAAE,SAAS;EAChBC,KAAK,EAAE,SAAS;EAChBC,KAAK,EAAE,SAAS;EAChBC,IAAI,EAAE;AACR,CAAC","ignoreList":[]}
