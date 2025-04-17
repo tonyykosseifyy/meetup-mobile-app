@@ -1,21 +1,14 @@
 import React, { useMemo } from "react";
 import { View, TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { useQuery } from "react-query";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Text, TextInput } from "react-native";
 import { AntDesign, Fontisto, MaterialIcons, Feather } from "@expo/vector-icons";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { formatDate } from "@/utils/common";
 import { useState } from "react";
-import { ActivityIndicator } from "react-native";
 import { useMutation } from "react-query";
 import axios from "axios";
-import { useQueryClient } from "react-query";
 import styles from "@/constants/styles";
 import { Alert } from "react-native";
-import Auth from "@/api/auth.api";
+import Auth from "@/api/services/auth/auth.api";
 
 export default function SettingsChangePassword() {
   const navigation = useNavigation();

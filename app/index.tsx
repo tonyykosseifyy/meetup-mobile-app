@@ -8,7 +8,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useQuery } from "react-query";
 import { theme } from "@/tailwind.config";
 import { LogBox } from "react-native";
-import Auth from "@/api/auth.api";
+import Auth from "@/api/services/auth/auth.api";
 
 LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
@@ -27,15 +27,17 @@ export default function PreLogin() {
     },
   });
 
-  if (isUserLoading) {
+  if (true) {
     return (
       <>
-        <SafeAreaView edges={["top"]} className="flex-1 bg-white">
-          <Header />
-          <View className="flex-1 justify-center items-center">
-            <Text>
-              <ActivityIndicator size="large" color={theme!.extend!.colors!.cabaret[500]} />
-            </Text>
+        <SafeAreaView edges={["top"]} className="flex-1 bg-cabaret-500">
+          <View className="flex-1 w-full">
+            <Image
+              source={require("@/assets/images/splash.png")}
+              alt="Pre Login"
+              className="w-full h-full"
+              resizeMode="contain"
+            />
           </View>
         </SafeAreaView>
       </>

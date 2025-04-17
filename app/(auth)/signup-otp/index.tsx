@@ -8,10 +8,9 @@ import { useAuth } from "@/providers/auth.provider";
 import { useMutation } from "react-query";
 import { IVerifyEmailRequest } from "@/interfaces";
 import { router } from "expo-router";
-import { setTokens } from "@/api/utils/tokens";
 import axios from "axios";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import Auth from "@/api/auth.api";
+import Auth from "@/api/services/auth/auth.api";
 
 export default function SignUpOtp() {
   const { registeredUser } = useAuth();
@@ -44,7 +43,7 @@ export default function SignUpOtp() {
       const { access, refresh } = data;
       
 
-      router.replace("/signup-interests/");
+      router.replace("/signup-interests");
     },
     onError(error) {
       if (axios.isAxiosError(error)) {
