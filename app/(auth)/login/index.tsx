@@ -104,12 +104,11 @@ export default function Login() {
                 {isError && (
                   <View className="mt-8 bg-red-50 p-4 border border-red-500 rounded-lg flex flex-row items-center space-x-2">
                     <MaterialIcons name="error-outline" size={20} color="rgb(239 68 68)" />
-                    <Text className="text-red-500 text-sm leading-[18px]">
+                    <Text className="text-red-500 text-sm leading-[18px] px-2">
                       Whoops!{" "}
                       {axios.isAxiosError(error) && error.response
                         ? (error.response.data.message as any as string)
-                        : "An error occured with registration."}{" "}
-                      Please check your information and try again.
+                        : "An error occured with registration, please check your information and try again"}
                     </Text>
                   </View>
                 )}
