@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Image, Text, TouchableOpacity, Alert } from "react-native";
 import Chip from "@/components/chip";
-import { ScrollView, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import InviteIcon from "@/assets/icons/home/invite.svg";
 import { calculateAge } from "@/utils/common";
 import { CardProps } from "../../app/(tabs)";

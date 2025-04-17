@@ -8,7 +8,7 @@ import { IInterest } from "@/interfaces";
 import { useQueryClient } from "react-query";
 import { useNavigation } from "@react-navigation/native";
 import Auth from "@/api/services/auth/auth.api";
-import Meetup from "@/api/meetup.api";
+import Meetup from "@/api/services/meetup/meetup.api";
 
 export default function SettingsInterests() {
   const authApi = Auth.getInstance();

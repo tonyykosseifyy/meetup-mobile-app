@@ -30,13 +30,13 @@ abstract class AbstractApi {
     router.navigate("/login");
   };
 
-  private refreshToken = async (): Promise<void> => {
+  private refreshToken = async (): Promise<boolean> => {
     const { refreshToken } = await this.authSession.getSession();
 
     if (!refreshToken) {
       console.log("No refresh token found. Redirecting to login...");
       this.navigateToLogin();
-      return;
+      return false;
     }
 
     try {
@@ -44,10 +44,12 @@ abstract class AbstractApi {
       console.log("Refreshed the token:", response.data.accessToken);
       const { accessToken: newAccessToken, refreshToken: newRefreshToken } = response.data;
       this.authSession.updateSession({ accessToken: newAccessToken ?? "", refreshToken: newRefreshToken ?? "" });
+      return true; 
     } catch (error) {
       console.log("Error refreshing token:", error);
       await this.authSession.clearSession();
       this.navigateToLogin();
+      return false;
     }
   };
 
@@ -73,7 +75,10 @@ abstract class AbstractApi {
       return response.data;
     } catch (error: any) {
       if (error instanceof ResponseError && error.status === 401) {
-        await this.refreshToken();
+        const refreshTokenResult: boolean = await this.refreshToken();
+        if (!refreshTokenResult) {
+          return Promise.reject(error);
+        }
         console.log("Retrying request with new access token...");
         try {
           return await this.httpClient.executeRequest(requestObject, secure);

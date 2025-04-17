@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from "react";
-import { Pressable, Text, Animated } from "react-native";
+import React from "react";
+import { Pressable, Text } from "react-native";
 import { ChipProps } from "./interface.chip";
 import styles from "@/constants/styles";
 

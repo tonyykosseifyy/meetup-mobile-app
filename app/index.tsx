@@ -27,15 +27,17 @@ export default function PreLogin() {
     },
   });
 
-  if (isUserLoading) {
+  if (true) {
     return (
       <>
-        <SafeAreaView edges={["top"]} className="flex-1 bg-white">
-          <Header />
-          <View className="flex-1 justify-center items-center">
-            <Text>
-              <ActivityIndicator size="large" color={theme!.extend!.colors!.cabaret[500]} />
-            </Text>
+        <SafeAreaView edges={["top"]} className="flex-1 bg-cabaret-500">
+          <View className="flex-1 w-full">
+            <Image
+              source={require("@/assets/images/splash.png")}
+              alt="Pre Login"
+              className="w-full h-full"
+              resizeMode="contain"
+            />
           </View>
         </SafeAreaView>
       </>

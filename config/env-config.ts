@@ -20,13 +20,14 @@ class AppConfig {
 
   private loadConfig(): Config {
     return {
-      API_URL: this.getEnvKey(this.getAPIUrl, "API_KEY"),
-      API_KEY: this.getEnvKey(this.getAPIKey, "API_KEY"),
+      API_URL: this.getEnvKey(this.getAPIUrl.bind(this), "API_URL"),
+      API_KEY: this.getEnvKey(this.getAPIKey.bind(this), "API_KEY"),
     };
   }
 
   private getEnvKey(extractKey: () => string | undefined, key: string): string {
     const value = extractKey();
+    console.log('value', value);
     if (!value) {
     	throw new Error(`${key} not found in environment variables`);
     }
@@ -34,11 +35,12 @@ class AppConfig {
   }
   
   private getAPIUrl(): string | undefined {
-    return process.env.EXPO_PUBLIC_API_URL;
+    console.log('process.env.EXPO_PUBLIC_API_URL', process.env.EXPO_PUBLIC_API_URL);
+    return "https://le2ini-production.up.railway.app";
   }
 
   private getAPIKey(): string | undefined {
-    return process.env.EXPO_PUBLIC_API_KEY;
+    return "abc123";
   }
 
 	public getConfig(): Config {

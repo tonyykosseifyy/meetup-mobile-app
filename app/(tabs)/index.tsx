@@ -12,7 +12,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { IUser } from "@/interfaces";
 import { Friend } from "@/components/friend";
-import Meetup from "@/api/meetup.api";
+import Meetup from "@/api/services/meetup/meetup.api";
 import * as Location from "expo-location";
 import Auth from "@/api/services/auth/auth.api";
 

@@ -36,6 +36,7 @@ class AuthSession {
       this.setSession(session);
       this.setSessionDirty(false);
     }
+    console.log("this.session", this.session);
     return this.session;
   }
   

@@ -3,7 +3,6 @@ import FontAwesome6 from "@expo/vector-icons/FontAwesome6.js";
 import { Tabs } from "expo-router";
 import { Pressable, View, Text, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import SettingsIcon from "@/assets/icons/navbar/settings.svg";
 import { Animated } from "react-native";
 import { Ionicons, MaterialIcons, Octicons } from "@expo/vector-icons";
 

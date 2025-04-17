@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { View, TouchableOpacity, Text, TextInput, Alert } from "react-native";
-import { Ionicons, AntDesign, Feather } from "@expo/vector-icons";
-import { Header, Footer } from "@/components";
+import { Ionicons } from "@expo/vector-icons";
+import { Header } from "@/components";
 import { router } from "expo-router";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "@/constants/styles";
-import { setTokens, showTokens } from "@/api/utils/tokens";
 import { useMutation } from "react-query";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useAuth } from "@/providers/auth.provider";

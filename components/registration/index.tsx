@@ -15,7 +15,7 @@ import { useAuth } from "@/providers/auth.provider";
 import Auth from "@/api/services/auth/auth.api";
 import RNPickerSelect from "react-native-picker-select";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
-import Meetup from "@/api/meetup.api";
+import Meetup from "@/api/services/meetup/meetup.api";
 
 interface DropdownProps {
   onValueChange: (value: any) => void;
@@ -133,7 +133,7 @@ export default function Registration({ data }: RegistrationProps) {
         loc_lon: null,
         city_id: currentCity ?? "1",
       });
-      router.replace("/signup-otp/");
+      router.replace("/signup-otp");
     },
   });
 

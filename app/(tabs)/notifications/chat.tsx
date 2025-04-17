@@ -7,7 +7,6 @@ import {
   StyleSheet,
   Alert,
 } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useRef, useCallback, useMemo, useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -22,7 +21,7 @@ import TimeIcon from "@/assets/icons/chat/time.svg";
 import { Button } from "@/components";
 import { router, useLocalSearchParams } from "expo-router";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import Meetup from "@/api/meetup.api";
+import Meetup from "@/api/services/meetup/meetup.api";
 import Auth from "@/api/services/auth/auth.api";
 import { API_URL } from "@/api/services/abstract/abstract-api";
 
