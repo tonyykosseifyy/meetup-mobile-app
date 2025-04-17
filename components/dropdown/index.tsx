@@ -9,7 +9,6 @@ const Dropdown = ({ onValueChange, items, defaultValue }: DropdownProps) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState<ListDataSelected | null>(null);
 
-  /* Format data for dropdown */
   const dropdownData = items?.map(i => ({
     id: typeof i.id === 'string' ? parseInt(i.id, 10) || 0 : i.id as number,
     name: i.name,

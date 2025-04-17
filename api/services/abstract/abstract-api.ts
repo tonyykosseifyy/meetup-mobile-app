@@ -1,10 +1,10 @@
 import { router } from "expo-router";
 import AppConfig from "@/config/env-config";
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AxiosRequestConfig } from 'axios';
 import HttpClient from "@/api/client/http-client";
 import AuthSession from "@/api/session/auth-session";
 import ResponseError from "@/api/error/response-error";
-import { SessionType, RequestParams } from "./types";
+import { RequestParams } from "./types";
 
 const config = AppConfig.getInstance();
 

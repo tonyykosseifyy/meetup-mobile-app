@@ -103,7 +103,10 @@ class Auth extends AbstractApi {
     const response = await this.doFetch({
       method: "PATCH",
       pathExtension: "/userinfo/",
-      body: request,
+      body: {
+        ...request,
+        interests_data: request?.interests
+      },
     });
     return response as IUserResponse;
   };

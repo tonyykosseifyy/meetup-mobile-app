@@ -44,22 +44,23 @@ export default function Home() {
   const [location, setLocation] = useState<Location.LocationObject | null>(null);
   const [errorMsg, setErrorMsg] = useState<string>("");
 
-  // const [selectedLanguage, setSelectedLanguage] = useState();
+  const [selectedLanguage, setSelectedLanguage] = useState();
 
   // fetch user info
-  // const { data: userInfo } = useQuery({
-  //   queryKey: "getMe",
-  //   queryFn: () => authApi.getMe(),
-  //   onSettled: (data) => {
-  //     console.log("User info fetched successfully", data);
-  //   }
-  // });
+  const { data: userInfo, isLoading: isUserInfoLoading } = useQuery({
+    queryKey: "getMe",
+    queryFn: () => authApi.getMe(),
+    onSettled: (data) => {
+      console.log("User info fetched successfully", data);
+    }
+  });
 
   const { mutate: submitLocationInfo } = useMutation({
     mutationFn: ({ loc_lat, loc_lon }: { loc_lat: number; loc_lon: number }) =>
       authApi.updateUserInfo({
         loc_lat: loc_lat,
         loc_lon: loc_lon,
+        ...userInfo
       }),
     mutationKey: "/auth/userinfo/update",
     onSuccess: () => {
@@ -77,12 +78,14 @@ export default function Home() {
 
       let userLocation = await Location.getCurrentPositionAsync({});
       setLocation(userLocation);
-      submitLocationInfo({
-        loc_lat: userLocation.coords.latitude,
-        loc_lon: userLocation.coords.longitude,
-      });
+      if (!isUserInfoLoading && userInfo) {
+        submitLocationInfo({
+          loc_lat: userLocation.coords.latitude,
+          loc_lon: userLocation.coords.longitude,
+        });
+      }
     })();
-  }, []);
+  }, [isUserInfoLoading]);
 
   const fetchUsers = useCallback(async () => {
     switch (activeTab) {

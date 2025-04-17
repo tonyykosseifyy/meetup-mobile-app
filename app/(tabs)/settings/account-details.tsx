@@ -68,6 +68,7 @@ export default function AccountDetails() {
         occupation,
         biography,
         city_id: currentCity ?? "1",
+        interests: userInfo?.interests
       }),
     mutationKey: "/auth/userinfo/update",
     retry: false,

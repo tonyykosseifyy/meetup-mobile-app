@@ -25,13 +25,12 @@ export default function SettingsInterests() {
     }
   };
 
-  // fetching interests
   const { data: interests, isLoading: isLoadingAllInterests } = useQuery({
     queryKey: "/meetup/interests/",
     queryFn: () => meetupApi.getAllInterests(),
   });
+  console.log("updatedInterests: ", updatedInterests);
 
-  // mutate function to update interests
   const { isLoading: isSendingLoading, mutate: sendInterests } = useMutation({
     mutationFn: () => authApi.setInterests(updatedInterests),
     mutationKey: "/auth/userinfo/update",
@@ -47,7 +46,7 @@ export default function SettingsInterests() {
       ]);
     },
   });
-  // fetching user info
+  
   const {
     data: userInfo,
     isLoading: isUserLoading,
@@ -59,10 +58,11 @@ export default function SettingsInterests() {
   });
 
   useEffect(() => {
+    console.log("userInfo: ", userInfo);
     if (userInfo && userInfo.interests) {
       setUpdatedInterests(userInfo.interests);
     }
-  }, [userInfo]);
+  }, [userInfo, isFetching]);
 
   const loadingUserInterests = useMemo(
     () => isUserLoading || isLoadingAllInterests || isFetching,
