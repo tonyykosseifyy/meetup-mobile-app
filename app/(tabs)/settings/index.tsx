@@ -20,6 +20,7 @@ import { Alert } from "react-native";
 import { router } from "expo-router";
 import { QueryClient, useQuery, useQueryClient } from "react-query";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+
 import Auth from "@/api/services/auth/auth.api";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { calculateAge } from "@/utils/common";
@@ -120,7 +121,7 @@ export default function Settings() {
       <View className="h-px bg-gray-300 my-6 mx-4" />
 
       <View className="mx-4">
-        <Text className="text-lg mb-4">General</Text>
+        {/* <Text className="text-lg mb-4">General</Text>
 
         <TouchableOpacity className="mb-4 flex p-4 h-16 flex-row items-center justify-between bg-[#F2F2F2] rounded-lg">
           <View className="flex flex-row items-center">
@@ -147,9 +148,9 @@ export default function Settings() {
               style={{ transform: "scale(0.9)" }}
             />
           </View>
-        </View>
+        </View> */}
 
-        <View className="h-px bg-gray-300 my-6" />
+        {/* <View className="h-px bg-gray-300 my-6" /> */}
 
         <Text className="text-lg mb-4 mt-2">Account Information</Text>
 
@@ -207,7 +208,13 @@ export default function Settings() {
           className="mb-4 flex p-4 h-16 flex-row items-center justify-between bg-[#F2F2F2] rounded-lg"
         >
           <View className="flex flex-row items-center">
-            <LogoutIcon width={18} />
+            <MaterialIcons
+                name="logout"
+                style={{ opacity: 0.6 }}
+                size={20}
+                color="#222222"
+              />
+            
             <Text className="ml-3">Logout</Text>
           </View>
           <View>
@@ -215,7 +222,7 @@ export default function Settings() {
           </View>
         </TouchableOpacity>
 
-        <View className="h-px bg-gray-300 my-6" />
+        {/* <View className="h-px bg-gray-300 my-6" />
 
         <Text className="text-lg mb-4 mt-2">Other</Text>
 
@@ -237,7 +244,7 @@ export default function Settings() {
           <View>
             <ArrowIcon width={19} />
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <View className="h-12" />
       </View>
