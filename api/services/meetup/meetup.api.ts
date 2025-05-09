@@ -4,13 +4,12 @@ import {
   MeetupRequestRequest,
   MeetupRequestResponse,
 } from "@/interfaces";
-import AbstractApi from "./utils/abstract-api";
-import {
-  RequestMeetingsRequest,
-  RequestMeetingsResponse,
-  RequestPlaceTimeForMeetingRequest,
-  RequestPlaceTimeForMeetingResponse,
-} from "@/interfaces/meetup.interface";
+import AbstractApi from "../abstract/abstract-api";
+import { RequestPlaceTimeForMeetingRequest } from "./types";
+import { RequestPlaceTimeForMeetingResponse } from "./types";
+import { RequestMeetingsResponse } from "./types";
+import { RequestMeetingsRequest } from "./types";
+
 
 class Meetup extends AbstractApi {
   private static instance: Meetup | null = null;

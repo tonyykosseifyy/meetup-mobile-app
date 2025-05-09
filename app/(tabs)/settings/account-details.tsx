@@ -15,8 +15,8 @@ import axios from "axios";
 import { useQueryClient } from "react-query";
 import styles from "@/constants/styles";
 import { Alert } from "react-native";
-import Auth from "@/api/auth.api";
-import Meetup from "@/api/meetup.api";
+import Auth from "@/api/services/auth/auth.api";
+import Meetup from "@/api/services/meetup/meetup.api";
 import RNPickerSelect from "react-native-picker-select";
 import { router } from "expo-router";
 
